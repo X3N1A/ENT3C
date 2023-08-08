@@ -26,6 +26,7 @@ BINS = [(1:size(BINS,1))',BINS];
 weights = h5read(FN,sprintf('%s/bins/weight',preStr));
 
 chrs = string([h5read(FN,sprintf('%s/bins/chrom',preStr))]);
+
 BIN_TABLE = table(chrs,BINS(:,1),BINS(:,2),BINS(:,3),weights,...
     'VariableNames',{'chrs','binNrALL','START','END','weights'});
 BT=table();binNrCHRS=[];
