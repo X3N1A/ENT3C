@@ -54,6 +54,7 @@ function load_cooler(FN, ChrNr, Resolution)
 	EMPTY_BIN[isnan.(BIN_TABLE.weights)] .= NaN
 
 	BIN_TABLE[!, :CONTACT] = EMPTY_BIN
+        BIN_TABLE[!, :binNrCHRS] = 1:size(BIN_TABLE,1) 
 
 	return CONTACT_MAP, BIN_TABLE
 
@@ -63,6 +64,5 @@ function load_cooler(FN, ChrNr, Resolution)
         #CONTACT_MAP = CONTACT_MAP[600:800,600:800]
         #gr()# pyplot(), gr(), or plotly()
         #heatmap(log.(CONTACT_MAP), aspect_ratio = 1, legend = false, color=:jet, axis = :square)
-
 
 end
