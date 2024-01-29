@@ -1,9 +1,10 @@
 clear all
+close all
 %%%%%%%%%%%%%% PARAMETERS %%%%%%%%%%%%%
 MAX_WINDOWS=1000;
-CHRSPLIT=nan;
-SUB_M_SIZE_FIX=300;
-ChrNr=15;
+CHRSPLIT=7;
+SUB_M_SIZE_FIX=nan;
+ChrNr=1;
 Resolution=40e3;
 WS=1;
 NormM=0;
@@ -13,7 +14,7 @@ NormM=0;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 DATA_PATH='DATA_30e6';
 
-CELL_TYPEs={'G401','HFFc6'};
+CELL_TYPEs={'hESC','G401'};
 
 NUMMEL_BRs=struct();N=0;
 for CELL_TYPE=CELL_TYPEs
