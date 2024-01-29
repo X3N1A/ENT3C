@@ -8,7 +8,7 @@ function [VN_ENT] = ENT3C(M,CELL_TYPE,BR,ChrNr,BIN_TABLE_RED,Resolution,MAX_WIND
 %   SUB_M_SIZE_FIX ... fixed submatrix size n
 %   CHRSPLIT=10; ... determines window/sub-matrix size on which entropy values S(window) are calculated on
 %   WS ... shift size of submatrix alon diagonal
-%   MAX_WINDOWS=500; ... maximum number of entropy values to compute (window shift is reduced until desired window number is reached)
+%   MAX_WINDOWS=500; ... maximum number of entropy values to compute (window shift is increased until desired window number is reached)
 
 % OUTPUT VARS
 %   VN_ENT ... output table with entropy values and other information
