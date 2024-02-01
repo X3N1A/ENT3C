@@ -4,7 +4,7 @@ close all
 MAX_WINDOWS=1000;
 CHRSPLIT=7;
 SUB_M_SIZE_FIX=nan;
-ChrNr=1;
+ChrNr=19;
 Resolution=40e3;
 WS=1;
 NormM=0;
@@ -26,8 +26,8 @@ INTERSECT_EMPTY_BINS=[];k=0;
 for CELL_TYPE=CELL_TYPEs
     CELL_TYPE=CELL_TYPE{1};
     for BR=1:2
-        IN=sprintf('%s/%s.BR%d.%dkb.cool',DATA_PATH,CELL_TYPE,BR,Resolution/1e3);
-
+       % IN=sprintf('%s/%s.BR%d.%dkb.cool',DATA_PATH,CELL_TYPE,BR,Resolution/1e3);
+        IN=sprintf('DATA_30e6/ENCSR079VIJ.BioRep1.mcool')
         [M,BIN_TABLE]=load_cooler(IN,ChrNr,Resolution,NormM);
         eval(sprintf('BIN_TABLE_%s%d=BIN_TABLE;',CELL_TYPE,BR))
         eval(sprintf('CMatrix_%s%d=M;',CELL_TYPE,BR))
