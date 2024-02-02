@@ -1,4 +1,4 @@
-function [VN_ENT] = ENT3C(M,CELL_TYPE,BR,ChrNr,BIN_TABLE_RED,Resolution,MAX_WINDOWS,CHRSPLIT,SUB_M_SIZE_FIX,WS)
+function [VN_ENT] = ENT3C(M,CELL_TYPE,BR,ChrNr,BIN_TABLE_RED,Resolution,WN_MAX,CHRSPLIT,SUB_M_SIZE_FIX,WS)
 % INPUT VARS
 
 %   M ... input matrix
@@ -8,27 +8,26 @@ function [VN_ENT] = ENT3C(M,CELL_TYPE,BR,ChrNr,BIN_TABLE_RED,Resolution,MAX_WIND
 %   SUB_M_SIZE_FIX ... fixed submatrix size n
 %   CHRSPLIT=10; ... determines window/sub-matrix size on which entropy values S(window) are calculated on
 %   WS ... shift size of submatrix alon diagonal
-%   MAX_WINDOWS=500; ... maximum number of entropy values to compute (window shift is increased until desired window number is reached)
+%   WN_MAX=500; ... maximum number of entropy values to compute (window shift is reduced until desired window number is reached)
 
 % OUTPUT VARS
 %   VN_ENT ... output table with entropy values and other information
 
 VN_ENT=[];S_signal=[];
-if SUB_M_SIZE_FIX==0||isnan(SUB_M_SIZE_FIX)
-    SUB_M_SIZE=round(size(M,1)/CHRSPLIT);
-    WN=1+floor((size(M,1)-SUB_M_SIZE)./WS);
-    while WN>MAX_WINDOWS
-        WS=WS+1;
-        WN=1+floor((size(M,1)-SUB_M_SIZE)./WS);
-    end
+
+N=size(M,1);
+if SUB_M_SIZE_FIX==0||ismissing(SUB_M_SIZE_FIX)
+    SUB_M_SIZE=round(N/CHRSPLIT);
 else
-    SUB_M_SIZE=SUB_M_SIZE_FIX;
-    WN=1+floor((size(M,1)-SUB_M_SIZE)./WS);
-    while WN>MAX_WINDOWS
-        WS=WS+1;
-        WN=1+floor((size(M,1)-SUB_M_SIZE)./WS);
-    end
+    SUB_M_SIZE = SUB_M_SIZE_FIX;
 end
+
+WN=1+floor((N-SUB_M_SIZE)./WS);
+while WN>WN_MAX
+    WS=WS+1;
+    WN=1+floor((N-SUB_M_SIZE)./WS);
+end
+
 
 WN=1+floor((size(M,1)-SUB_M_SIZE)./WS);
 R1=1:WS:size(M,1);R1=R1(1:WN);

@@ -1,9 +1,8 @@
+#!/usr/local/JULIA/julia-1.10.0/bin/julia
 push!(LOAD_PATH,".")
-using ENT3C, DataFrames, BenchmarkTools, Plots
-#import .auxilary 
-        # brings only the module name into scope; 
-        # i need to access functions via e.g. auxilary.load_cooler; 
-Nr_Matrices = 2
+using DataFrames, BenchmarkTools, Plots, Statistics, CSV
+
+include("ent3c_functions.jl")
 
 struct INFO
     FN::String
@@ -11,56 +10,109 @@ struct INFO
 end
 
 FNs = [INFO("DATA_30e6/ENCSR079VIJ.BioRep1.mcool","G401_BR1"),
-              INFO("DATA_30e6/ENCSR444WCZ.BioRep1.mcool","A549")]
+       INFO("DATA_30e6/ENCSR079VIJ.BioRep2.mcool","G401_BR2"),
+       INFO("DATA_30e6/ENCSR444WCZ.BioRep1.mcool","A549_BR1"),
+       INFO("DATA_30e6/ENCSR444WCZ.BioRep2.mcool","A549_BR2")]
+	
+function ENT3C(FNs,Resolution,ChrNr,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS)
 
-ChrNr=19
-Resolution::Int=40e3
-SUB_M_SIZE_FIX=300
-CHRSPLIT=7
-WN_MAX::Int=1e3;
-WS=1
-
-
-OUT = DataFrame(Name = Vector{String}[], ChrNr = Vector{Int}[], Resolution = Vector{Int}[],
-                n = Vector{Int}[], WN = Vector{Int}[], WS = Vector{Int}[],  binNrStart = Vector{Int}[], 
-                binNrEnd = Vector{Int}[], START = Vector{Int}[], END = Vector{Int}[],  S = Vector{Float64}[])
-
-#btime vN_entropy(M1,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS)
-EXCLUDE =  Vector{Int64}(undef, 0)
-for f in FNs
-        
-    FN = f.FN
-
-    M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution,0)
-
-    EXCLUDE = vcat(EXCLUDE,BIN_TABLE.binNr[isnan.(BIN_TABLE.CONTACT).||isnan.(BIN_TABLE.weights)])
-    EXCLUDE = unique(EXCLUDE)
-
-    INCLUDE = collect(1:size(M,1))
-    INCLUDE = setdiff(INCLUDE,EXCLUDE)
-    M = M[INCLUDE,INCLUDE]
-
-    BIN_TABLE = BIN_TABLE[INCLUDE,:]
-
-    S, SUB_M_SIZE, WN, WS, BIN_TABLE_NEW = vN_entropy(M,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,BIN_TABLE)
-
-    N = length(INCLUDE)
-
-    vcat(OUT,DataFrame(vec(repeat([f.META],N,1)),vec(repeat([ChrNr],N,1)),
-         vec(repeat([Resolution],N,1)), vec(repeat([SUB_M_SIZE],N,1)),
-         vec(repeat([WN],N,1)), vec(repeat([WS],N,1)),
-         BIN_TABLE.START,BIN_TABLE.END,BIN_TABLE.START,BIN_TABLE.END,S))
-
-    OUT = filter(row -> !(row.binNrStart in EXCLUDE)||!(row.binNrEnd in EXCLUDE), OUT)
+	#btime vN_entropy(M1,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS)
+	##############################################################################
+	#need to filter matrices first otherwise the windows wont coincide in final DF
+	##############################################################################
+	EXCLUDE = 0
+	for f in FNs
+	        
+	    FN = f.FN
+	    M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution,0)
+	    
+	    EXCLUDE = vcat(EXCLUDE,BIN_TABLE.binNr[isnan.(BIN_TABLE.CONTACT).||isnan.(BIN_TABLE.weights)])
+	
+	end
+	
+	EXCLUDE = unique(EXCLUDE)
+	
+	##############################################################################
+	#get ENT3C data frame
+	##############################################################################
+	
+	ENT3C_OUT = DataFrame(Name = Vector{String}[], ChrNr = Vector{Int}[], Resolution = Vector{Int}[],
+	                n = Vector{Int}[], WN = Vector{Int}[], WS = Vector{Int}[],  binNrStart = Vector{Int}[], 
+	                binNrEnd = Vector{Int}[], START = Vector{Int}[], END = Vector{Int}[],  S = Vector{Float64}[])
+	
+	for f in FNs
+	
+	    FN = f.FN
+	    M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution,0)
+	
+	    INCLUDE = collect(1:size(M,1))
+	    INCLUDE = setdiff(INCLUDE,EXCLUDE)
+	    M = M[INCLUDE,INCLUDE]
+	
+	    BIN_TABLE = BIN_TABLE[INCLUDE,:]
+	
+	    S, SUB_M_SIZE1, WN1, WS1, BIN_TABLE_NEW = vN_entropy(M,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,BIN_TABLE)
+	
+	    N = length(S)
+	    print(FN)
+	
+	    OUT1 = DataFrame(Name=fill(f.META,N),ChrNr=fill(ChrNr,N),
+	                  Resolution = fill(Resolution,N), n = fill(SUB_M_SIZE1,N),
+	                  WN = fill(WN1,N), WS = fill(WS1,N), binNrStart = BIN_TABLE_NEW[:,1],
+	                  binNrEnd = BIN_TABLE_NEW[:,2],START = BIN_TABLE_NEW[:,3], END = BIN_TABLE_NEW[:,4],S =S)
+	    ENT3C_OUT = vcat(ENT3C_OUT,OUT1)
+	
+	end
+	
+	
+	#############################################################################
+	#get ENT3C data frame
+	##############################################################################
+	
+	SAMPLES::Array=unique(ENT3C_OUT.Name)
+	comparisons =  get_pairwise_combs(SAMPLES)
+	
+	Similarity = DataFrame(Sample1 = Vector{String}[], Sample2 = Vector{String}[],Q = Vector{Int}[])
+	plotted = []
+	p = plot()
+	for f in 1:size(comparisons,1)
+	        
+	        S1 = filter(row -> row.Name==comparisons[f][1],ENT3C_OUT)
+	        S2 = filter(row -> row.Name==comparisons[f][2],ENT3C_OUT)
+	        Q = cor(S1.S,S2.S)
+	    
+	        Similarity = vcat(Similarity,
+	                          DataFrame(Sample1 = comparisons[f][1],
+	                                    Sample2 = comparisons[f][2], Q = Q))
+	
+	        if !(comparisons[f][1] in plotted)
+	                plot!(p,S1.S, label=comparisons[f][1], linewidth=3)
+	                plotted = vcat(plotted,comparisons[f][1])
+	        end
+	        if !(comparisons[f][2] in plotted)
+	                plot!(p,S2.S, label=comparisons[f][2], linewidth=3)
+	                plotted = vcat(plotted,comparisons[f][2])
+	        end
+	end
+	
+	# display(p)
+	
+        return(ENT3C_OUT,Similarity,p)	
 end
 
 
+Resolution::Int=40e3
+ChrNr::Int=22
+SUB_M_SIZE_FIX::Int=0
+CHRSPLIT::Int=7
+WN_MAX::Int=1e3
+WS::Int=1
+	
+ENT3C_OUT, p = ENT3C(FNs,Resolution,ChrNr,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS)
 
-
-
-
-
-
+savefig(p,"ENT3C_OUT.png")
+CSV.write("ENT3C_OUT.csv", ENT3C_OUT)
+CSV.write("ENT3C_similarity.csv", Similarity)
 
 
 
