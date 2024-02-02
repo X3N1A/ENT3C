@@ -108,7 +108,7 @@ CHRSPLIT::Int=7
 WN_MAX::Int=1e3
 WS::Int=1
 	
-ENT3C_OUT, p = ENT3C(FNs,Resolution,ChrNr,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS)
+ENT3C_OUT, Similarity, p = ENT3C(FNs,Resolution,ChrNr,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS)
 
 savefig(p,"ENT3C_OUT.png")
 CSV.write("ENT3C_OUT.csv", ENT3C_OUT)
