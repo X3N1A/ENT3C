@@ -1,10 +1,9 @@
 clear all
-close all
 %%%%%%%%%%%%%% PARAMETERS %%%%%%%%%%%%%
 MAX_WINDOWS=1000;
-CHRSPLIT=7;
-SUB_M_SIZE_FIX=nan;
-ChrNr=19;
+CHRSPLIT=nan;
+SUB_M_SIZE_FIX=300;
+ChrNr=15;
 Resolution=40e3;
 WS=1;
 NormM=0;
@@ -14,7 +13,7 @@ NormM=0;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 DATA_PATH='DATA_30e6';
 
-CELL_TYPEs={'hESC','G401'};
+CELL_TYPEs={'G401','LNCaP'};
 
 NUMMEL_BRs=struct();N=0;
 for CELL_TYPE=CELL_TYPEs
@@ -26,8 +25,8 @@ INTERSECT_EMPTY_BINS=[];k=0;
 for CELL_TYPE=CELL_TYPEs
     CELL_TYPE=CELL_TYPE{1};
     for BR=1:2
-       % IN=sprintf('%s/%s.BR%d.%dkb.cool',DATA_PATH,CELL_TYPE,BR,Resolution/1e3);
-        IN=sprintf('DATA_30e6/ENCSR079VIJ.BioRep1.mcool')
+        IN=sprintf('%s/%s.BR%d.%dkb.cool',DATA_PATH,CELL_TYPE,BR,Resolution/1e3);
+
         [M,BIN_TABLE]=load_cooler(IN,ChrNr,Resolution,NormM);
         eval(sprintf('BIN_TABLE_%s%d=BIN_TABLE;',CELL_TYPE,BR))
         eval(sprintf('CMatrix_%s%d=M;',CELL_TYPE,BR))
