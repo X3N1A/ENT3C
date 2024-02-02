@@ -102,7 +102,7 @@ end
 
 
 Resolution::Int=40e3
-ChrNr::Int=22
+ChrNr::Int=14
 SUB_M_SIZE_FIX::Int=0
 CHRSPLIT::Int=7
 WN_MAX::Int=1e3
