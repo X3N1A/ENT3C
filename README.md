@@ -1,6 +1,8 @@
 # ENT3C
 ENT3C is a method for qunatifying the similarity of 3C-Seq derived chromosomal contact matrices by comparing the "complexity" of patterns contained in smaller submatrices along their diagonals. It is based on the von Neumann entropy<sup>1</sup> and recent work for entropy quantification of Pearson correlation matrices<sup>2</sup>.
 
+https://doi.org/10.1101/2024.01.30.577923 
+
 Newest implementation in Julia (```example.jl```, ```ent3c_functions.jl```)
 
 *note*: matlab function and example script will be updated soon. 
