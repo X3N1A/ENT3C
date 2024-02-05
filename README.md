@@ -3,12 +3,7 @@ ENT3C is a method for qunatifying the similarity of 3C-Seq derived chromosomal c
 
 https://doi.org/10.1101/2024.01.30.577923 
 
-Newest implementation in Julia (```example.jl```, ```ent3c_functions.jl```)
-
-*note*: matlab function and example script will be updated soon. 
-
-
-**summary of workflow**
+## Summary of ENT3C approach
 1. loads cooler files into MATLAB and looks for shared empty bins
 2. ENT3C will extract smaller submatrices $\hat{a}$ of dimension $n\times n$ along the diagonal of an input contact matrix 
 4. the logarithm of $\hat{a}$ is taken ($nan$s are set to zero)
@@ -22,56 +17,52 @@ Newest implementation in Julia (```example.jl```, ```ent3c_functions.jl```)
 8. this is repeated for subsequent submatrices along the diagonal of the input matrix and stored in the **"entorpy signal"** $S$
 9. the Pearson correlation between $S$ of two matrices, is used as a similarity metric 
 
-![Output entropy signals for G401 and A549](ENT3C_OUT.png "Output entropy signals for G401 and A549"))
+![explaination of ENT3C](Figures/ENT3C_explain.png)
 
-## Requirements
+**Figure:** Exemplary depiction of ENT3C derivation of the entropy signal $S$ of the contact matrix $\mathbf{A}$ of chromosome 14 binned at 40 kb of the HFFc6 cell line (biological replicate 1). ENT3C's parameters: submatrix dimension $n=300$, window shift $WS=10$, maximum number of data points in $S$, $WN_{MAX}=\infty$, were used, resulting in 146 submatrices along the diagonal of the contact matrix. For subsequent Pearson-transformed submatrices $\mathbf{P}$ along the diagonal of $\log{\mathbf{A}}$, ENT3C computes the von Neumann entropies $S_i(\mathbf{P_i})$; the resulting signal $S$ is shown in blue under the matrix. The first two ($\mathbf{P}_{1-2}$), the middle ($\mathbf{P}_{73}$), and the last two Pearson submatrices ($\mathbf{P}_{145-146}$) are shown.
 
-Contact matrices in cool format (https://github.com/open2c/cooler)<sup>3</sup>
-
-! example.m works on 40 kb binned cool files !
-! example.jl works on any cool/mcool file !
+# Requirements
+Julia or MATLAB
 
 # Data
-example.jl was tested on Hi-C contact matrices of two biological replicates of the G401 (ENCSR079VIJ) and A549 (ENCSR444WCZ) cell-lines (hg38)
+Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were tested on Hi-C contact matrices in ```mcool```/```cool``` format of two biological replicates of the G401 (ENCSR079VIJ) and A549 (ENCSR444WCZ) cell-lines (hg38).
 
-example.m was tested on micro-C contact matrices of two biological replicates of the hESC (4DNFI9GMP2J8) cell-line and on Hi-C contact matrices of two biological replicates of the G401 (ENCSR079VIJ) (hg38)
-
- - download contact list-replicate (pairs) files for technical replicates corresponding to biological replicate
- - aggregate pairs using pairtools merge (https://github.com/open2c/pairtools)<sup>4</sup>
- - generate 40kb cool files using cooler cload pairs
+ 1. download pairs files from ENCODE. G401 (ENCFF091BKE) A549 (ENCFF101MYU)
+ 2. generate cooler files with ```cload pairs``` function<sup>2</sup>
+ 3. generate multi-resolution mcool files with ```cload zoomify``` function<sup>2</sup> 
    
-## example.jl
-put file names to analyze here
-```
-FNs = [INFO("DATA_30e6/ENCSR079VIJ.BioRep1.mcool","G401_BR1"),
-       INFO("DATA_30e6/ENCSR079VIJ.BioRep2.mcool","G401_BR2"),
-       INFO("DATA_30e6/ENCSR444WCZ.BioRep1.mcool","A549_BR1"),
-       INFO("DATA_30e6/ENCSR444WCZ.BioRep2.mcool","A549_BR2")] 
-```
-default parameters at end
-```
-Resolution:Int=40e3
-ChrNr::Int=14
-SUB_M_SIZE_FIX::Int=0
-CHRSPLIT::Int=7
-WN_MAX::Int=1e3
-WS::Int=1
+# Configuration Files
+Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) call configuration files in JSON format.
 
-ENT3C_OUT, Similarity, p = ENT3C(FNs,Resolution,ChrNr,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS)
+```config/config.julia.m```
 ```
+{
+  "WN_MAX": 1000,
+  "CHRSPLIT": 7,
+  "SUB_M_SIZE_FIX": null,
+  "ChrNr": 14,
+  "Resolution": 40000,
+  "WS": 1,
+  "NormM": 0,
+  "DATA_PATH": "DATA_30e6",
+  "FILES": [
+    "ENCSR079VIJ.BioRep1.mcool",
+    "G401_BR1",
+    "ENCSR079VIJ.BioRep2.mcool",
+    "G401_BR2",
+    "ENCSR444WCZ.BioRep1.mcool",
+    "A549_BR1",
+    "ENCSR444WCZ.BioRep2.mcool",
+    "A549_BR2"
+  ],
+  "OUT_DIR": "OUTPUT/JULIA",
+  "OUT_PREFIX": "Chr14_40kb"
+}
 ```
-cat ENT3C_similarity.csv
-Sample1,Sample2,Q
-G401_BR1,G401_BR2,0.9761518917035111
-G401_BR1,A549_BR1,0.5577613608825013
-G401_BR1,A549_BR2,0.6166927743995316
-G401_BR2,A549_BR1,0.4117476379916582
-G401_BR2,A549_BR2,0.4878112361590029
-A549_BR1,A549_BR2,0.9754631389486167
-```
+# Running main scripts 
 
-## References
+
+# References
 1. Neumann, J. von., Thermodynamik quantenmechanischer Gesamtheiten. Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen, Mathematisch-Physikalische Klasse 1927, 1927, 273-291.
 2. Felippe, H., et. al., Threshold-free estimation of entropy from a pearson matrix. EPL, 141(3):31003, 2023.
 3. Abdennur,N., and Mirny, L.A., Cooler: scalable storage for Hi-C data and other genomically labeled arrays, Bioinformatics, 2020.
-4. Open2C*, et. al., Pairtools: from sequencing data to chromosome contacts. bioRxiv, 2023.
