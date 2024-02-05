@@ -3,7 +3,7 @@ function [S, SUB_M_SIZE, WN, WS, BIN_TABLE_NEW] = vN_entropy(M,SUB_M_SIZE_FIX,CH
 S=[];BIN_TABLE_NEW=[];
 N=size(M,1);
 
-if SUB_M_SIZE_FIX==0||ismissing(SUB_M_SIZE_FIX)
+if isempty(SUB_M_SIZE_FIX)
     SUB_M_SIZE=round(N/CHRSPLIT);
 else
     SUB_M_SIZE = SUB_M_SIZE_FIX;

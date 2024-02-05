@@ -1,0 +1,23 @@
+{
+  "WN_MAX": 1000,
+  "CHRSPLIT": 7,
+  "SUB_M_SIZE_FIX": null,
+  "ChrNr": 14,
+  "Resolution": 40000,
+  "WS": 1,
+  "NormM": 0,
+  "DATA_PATH": "DATA_30e6",
+  "FILES": [
+    "ENCSR079VIJ.BioRep1.mcool",
+    "G401_BR1",
+    "ENCSR079VIJ.BioRep2.mcool",
+    "G401_BR2",
+    "ENCSR444WCZ.BioRep1.mcool",
+    "A549_BR1",
+    "ENCSR444WCZ.BioRep2.mcool",
+    "A549_BR2"
+  ],
+  "OUT_DIR": "OUTPUT/JULIA",
+  "OUT_PREFIX": "Chr14_40kb"
+}
+
