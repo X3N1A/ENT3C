@@ -1,20 +1,28 @@
 clear all
+addpath('MATLAB/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Parameters
+% load json file
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-WN_MAX=1000;
-CHRSPLIT=7;
-SUB_M_SIZE_FIX=nan;
-ChrNr=14;
-Resolution=40e3;
-WS=1;
-NormM=0;
+config = fileread('config/config.matlab.json');
+config = jsondecode(config);
+
+WN_MAX=config.WN_MAX;
+CHRSPLIT=config.CHRSPLIT;
+SUB_M_SIZE_FIX=config.SUB_M_SIZE_FIX;
+ChrNr=config.ChrNr;
+Resolution=config.Resolution;
+WS=config.WS;
+NormM=config.NormM;
 DATA_PATH='DATA_30e6';
-FILES = {sprintf("%s/ENCSR079VIJ.BioRep1.mcool",DATA_PATH),"G401_BR1",
-         sprintf("%s/ENCSR079VIJ.BioRep2.mcool",DATA_PATH),"G401_BR2",
-         sprintf("%s/ENCSR444WCZ.BioRep1.mcool",DATA_PATH),"A549_BR1",
-         sprintf("%s/ENCSR444WCZ.BioRep2.mcool",DATA_PATH),"A549_BR2"};
-OUT_DIR='OUTPUT/MATLAB';
+FILES = config.FILES;
+FILES = reshape(FILES, 2,4)';
+FILES = [cellfun(@(file) fullfile(DATA_PATH, file), FILES(:,1), 'UniformOutput', false), FILES(:, 2)];
+OUT_DIR=config.OUT_DIR;
+OUT_PREFIX=config.OUT_PREFIX;
+if isempty(OUT_PREFIX)
+    OUT_PREFIX=sprintf('Chr%d_%dkb',ChrNr,Resolution/1e3);
+end
+
 if ~exist(OUT_DIR, 'dir')
     mkdir(OUT_DIR);
 end
@@ -56,7 +64,7 @@ for f = 1:numel(FNs)
 
     N = length(S);
 
-    OUT1 = table(repmat(FNs(f).META,N,1),...
+    OUT1 = table(repmat({FNs(f).META},N,1),...
         repmat(ChrNr,N,1),repmat(Resolution,N,1),...
         repmat(WN1,N,1),repmat(WS1,N,1),...
         BIN_TABLE_NEW(:,1),BIN_TABLE_NEW(:,2),...
@@ -98,9 +106,9 @@ legend(L.META)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % save output
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-figure(1);saveas(gcf,sprintf('%s/ENT3C_OUT.png',OUT_DIR))
-writetable(ENT3C_OUT,sprintf('%s/ENT3C_OUT.csv',OUT_DIR),'Delimiter','tab')
-writetable(ENT3C_OUT,sprintf('%s/ENT3C_similarity.csv',OUT_DIR),'Delimiter','tab')
 
+figure(1);saveas(gcf,sprintf('%s/%s_ENT3C_signals.png',OUT_DIR,OUT_PREFIX))
+writetable(ENT3C_OUT,sprintf('%s/%s_ENT3C_OUT.csv',OUT_DIR,OUT_PREFIX),'Delimiter','tab')
+writetable(Similarity,sprintf('%s/%s_ENT3C_similarity.csv',OUT_DIR,OUT_PREFIX),'Delimiter','tab')
 
 
