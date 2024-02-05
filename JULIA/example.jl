@@ -4,21 +4,26 @@ using DataFrames, BenchmarkTools, Plots, Statistics, CSV
 
 include("ent3c_functions.jl")
 
-struct INFO
-    FN::String
-    META::String # sample short name: e.g. G401_BR1
-end
-
-FNs = [INFO("DATA_30e6/ENCSR079VIJ.BioRep1.mcool","G401_BR1"),
-       INFO("DATA_30e6/ENCSR079VIJ.BioRep2.mcool","G401_BR2"),
-       INFO("DATA_30e6/ENCSR444WCZ.BioRep1.mcool","A549_BR1"),
-       INFO("DATA_30e6/ENCSR444WCZ.BioRep2.mcool","A549_BR2")]
+# input: <file_name.mcool> <short_name>
+FILES=["DATA_30e6/ENCSR079VIJ.BioRep1.mcool","G401_BR1",
+       "DATA_30e6/ENCSR079VIJ.BioRep2.mcool","G401_BR2",
+       "DATA_30e6/ENCSR444WCZ.BioRep1.mcool","A549_BR1",
+       "DATA_30e6/ENCSR444WCZ.BioRep2.mcool","A549_BR2"]
 	
-function ENT3C(FNs,Resolution,ChrNr,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS)
+function main(FILES,Resolution,ChrNr,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS)
 
-	#btime vN_entropy(M1,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS)
+        struct INFO
+            FN::String
+            META::String # sample short name: e.g. G401_BR1
+        end
+
+        FNs=[]
+        for f in 1:Int(length(FILES)/2)
+            FNs = vcat(FNs,INFO(FILES[f*2-1],FILES[(f*2-1)+1]))
+        end
+
 	##############################################################################
-	#need to filter matrices first otherwise the windows wont coincide in final DF
+	# extract common empty bins of input matrices
 	##############################################################################
 	EXCLUDE = 0
 	for f in FNs
@@ -27,15 +32,11 @@ function ENT3C(FNs,Resolution,ChrNr,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS)
 	    M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution,0)
 	    
 	    EXCLUDE = vcat(EXCLUDE,BIN_TABLE.binNr[isnan.(BIN_TABLE.CONTACT).||isnan.(BIN_TABLE.weights)])
-	
 	end
-	
 	EXCLUDE = unique(EXCLUDE)
-	
 	##############################################################################
-	#get ENT3C data frame
+	#produce ENT3C data frame
 	##############################################################################
-	
 	ENT3C_OUT = DataFrame(Name = Vector{String}[], ChrNr = Vector{Int}[], Resolution = Vector{Int}[],
 	                n = Vector{Int}[], WN = Vector{Int}[], WS = Vector{Int}[],  binNrStart = Vector{Int}[], 
 	                binNrEnd = Vector{Int}[], START = Vector{Int}[], END = Vector{Int}[],  S = Vector{Float64}[])
@@ -63,10 +64,8 @@ function ENT3C(FNs,Resolution,ChrNr,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS)
 	    ENT3C_OUT = vcat(ENT3C_OUT,OUT1)
 	
 	end
-	
-	
 	#############################################################################
-	#get ENT3C data frame
+	# similarity table
 	##############################################################################
 	
 	SAMPLES::Array=unique(ENT3C_OUT.Name)
@@ -102,7 +101,7 @@ end
 
 
 Resolution::Int=40e3
-ChrNr::Int=14
+ChrNr::Int=22
 SUB_M_SIZE_FIX::Int=0
 CHRSPLIT::Int=7
 WN_MAX::Int=1e3

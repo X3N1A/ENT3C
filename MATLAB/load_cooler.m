@@ -15,7 +15,6 @@ else
     preStr=[];
 end
 
-ChrSizes=ChrInfo(FN,preStr);
 % h5disp(FN,sprintf('%s',preStr))
 % h5disp(FN,'/resolutions')
 
@@ -29,19 +28,19 @@ weights = h5read(FN,sprintf('%s/bins/weight',preStr));
 
 chrs = string([h5read(FN,sprintf('%s/bins/chrom',preStr))]);
 BIN_TABLE = table(chrs,BINS(:,1),BINS(:,2),BINS(:,3),weights,...
-    'VariableNames',{'chrs','binNrALL','START','END','weights'});
-BT=table();binNrCHRS=[];
+    'VariableNames',{'chrs','BINS_ALL','START','END','weights'});
+BT=table();binNr=[];
 for c=1:length(ChrNr)
     BT = [BT;BIN_TABLE(BIN_TABLE.chrs==string(['chr',num2str(ChrNr(c))]),:)];
-    binNrCHRS=[binNrCHRS;transpose(1:sum(BIN_TABLE.chrs==string(['chr',num2str(ChrNr(c))])))];
+    binNr=[binNr;transpose(1:sum(BIN_TABLE.chrs==string(['chr',num2str(ChrNr(c))])))];
 end
 BIN_TABLE=BT;clear BT
 
-BIN_TABLE = addvars(BIN_TABLE,binNrCHRS,'After','binNrALL');
+BIN_TABLE = addvars(BIN_TABLE,binNr,'After','BINS_ALL');
 
 %get individual chromosome
-f=find(BINIDs(:,1)>=min(BIN_TABLE.binNrALL(:))&BINIDs(:,2)>=min(BIN_TABLE.binNrALL(:))&...
-    BINIDs(:,1)<=max(BIN_TABLE.binNrALL(:))&BINIDs(:,2)<=max(BIN_TABLE.binNrALL(:)));
+f=find(BINIDs(:,1)>=min(BIN_TABLE.BINS_ALL(:))&BINIDs(:,2)>=min(BIN_TABLE.BINS_ALL(:))&...
+    BINIDs(:,1)<=max(BIN_TABLE.BINS_ALL(:))&BINIDs(:,2)<=max(BIN_TABLE.BINS_ALL(:)));
 
 BINIDs=BINIDs(f,:);
 counts=counts(f,:);
@@ -62,4 +61,4 @@ EMPTY_BIN=nan(size(BIN_TABLE,1),1);
 EMPTY_BIN(INCLUDE)=1;
 EMPTY_BIN(isnan(BIN_TABLE.weights))=nan;
 
-BIN_TABLE = addvars(BIN_TABLE,EMPTY_BIN,'After','binNrALL','NewVariableNames',{'CONTACT'});
+BIN_TABLE = addvars(BIN_TABLE,EMPTY_BIN,'After','BINS_ALL','NewVariableNames',{'CONTACT'});
