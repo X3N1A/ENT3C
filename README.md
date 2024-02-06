@@ -1,4 +1,4 @@
-# ENT3C
+# ENT3C :duck:
 ENT3C is a method for qunatifying the similarity of 3C-Seq derived chromosomal contact matrices by comparing the "complexity" of patterns contained in smaller submatrices along their diagonals. It is based on the von Neumann entropy<sup>1</sup> and recent work for entropy quantification of Pearson correlation matrices<sup>2</sup>.
 
 https://doi.org/10.1101/2024.01.30.577923 
@@ -6,7 +6,7 @@ https://doi.org/10.1101/2024.01.30.577923
 ## Summary of ENT3C approach
 1. loads cooler files into MATLAB and looks for shared empty bins
 2. ENT3C will extract smaller submatrices $\hat{a}$ of dimension $n\times n$ along the diagonal of an input contact matrix 
-4. the logarithm of $\hat{a}$ is taken ($nan$s are set to zero)
+4. the logarithm of $\hat{a}$ is taken ($nan$ values are set to zero)
 5. $\hat{a}$ is transformed into a Pearson correlation matrix $\hat{P}$ ($nan$ values are set to zero)
 6. $\hat{P}$ is transformed into $\hat{\rho}=\hat{P}/n$ to fulfill the conditions for computing the von Neumann entropy
 7. the von Neumann entropy of $\hat{\rho}$ is computed as
@@ -17,48 +17,51 @@ https://doi.org/10.1101/2024.01.30.577923
 8. this is repeated for subsequent submatrices along the diagonal of the input matrix and stored in the **"entorpy signal"** $S$
 9. the Pearson correlation between $S$ of two matrices, is used as a similarity metric 
 
-![explaination of ENT3C](Figures/ENT3C_explain.png)
+<figure>
+    <img src="Figures/ENT3C_explain.png width="200" height="100"
+         alt="explaination of ENT3C">
+    <figcaption> **Figure** Exemplary depiction of ENT3C derivation of the entropy signal $S$ of the contact matrix $\mathbf{A}$ of chromosome 14 binned at 40 kb of the HFFc6 cell line (biological replicate 1). ENT3C's parameters: submatrix dimension $n=300$, window shift $WS=10$, maximum number of data points in $S$, $WN_{MAX}=\infty$, were used, resulting in 146 submatrices along the diagonal of the contact matrix. For subsequent Pearson-transformed submatrices $\mathbf{P}$ along the diagonal of $\log{\mathbf{A}}$, ENT3C computes the von Neumann entropies $S_i(\mathbf{P_i})$; the resulting signal $S$ is shown in blue under the matrix. The first two ($\mathbf{P}_{1-2}$), the middle ($\mathbf{P}_{73}$), and the last two Pearson submatrices ($\mathbf{P}_{145-146}$) are shown.
+</figure>
 
-**Figure:** Exemplary depiction of ENT3C derivation of the entropy signal $S$ of the contact matrix $\mathbf{A}$ of chromosome 14 binned at 40 kb of the HFFc6 cell line (biological replicate 1). ENT3C's parameters: submatrix dimension $n=300$, window shift $WS=10$, maximum number of data points in $S$, $WN_{MAX}=\infty$, were used, resulting in 146 submatrices along the diagonal of the contact matrix. For subsequent Pearson-transformed submatrices $\mathbf{P}$ along the diagonal of $\log{\mathbf{A}}$, ENT3C computes the von Neumann entropies $S_i(\mathbf{P_i})$; the resulting signal $S$ is shown in blue under the matrix. The first two ($\mathbf{P}_{1-2}$), the middle ($\mathbf{P}_{73}$), and the last two Pearson submatrices ($\mathbf{P}_{145-146}$) are shown.
 
 # Requirements
 Julia or MATLAB
 
 # Data
-Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were tested on Hi-C contact matrices in ```mcool```/```cool``` format of two biological replicates of the G401 (ENCSR079VIJ) and A549 (ENCSR444WCZ) cell-lines (hg38).
+Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were tested on Hi-C contact matrices in ```mcool```/```cool``` format of two biological replicates of the G401 (ENCSR079VIJ) and A549 (ENCSR444WCZ) cell-lines (hg38):
 
- 1. download pairs files from ENCODE. G401 (ENCFF091BKE) A549 (ENCFF101MYU)
- 2. generate cooler files with ```cload pairs``` function<sup>2</sup>
- 3. generate multi-resolution mcool files with ```cload zoomify``` function<sup>2</sup> 
+ 1. pairs files downloaded from ENCODE. 
+	G401 (ENCFF091BKE) A549 (ENCFF101MYU)
+ 2. generate 5kb coolers with ```cload pairs``` function<sup>2</sup>
+	```cooler cload pairs -c1 2 -p1 3 -c2 4 -p2 5 --assembly hg38 <CHRSIZE_FILE:5000> <IN_PAIRS> <OUT_COOL>```
+ 3. generate multi-resolution mcool files by coarsening <OUT_COOL>  with ```cload zoomify```<sup>2</sup> 
+	```cooler zoomify --resolutions 5000,10000,25000,40000,50000,100000,250000,500000,1000000,2500000,5000000,10000000 --balance --balance-args '--max-iters 300' -o <OUT_MCOOL> <OUT_COOL>
+
    
 # Configuration Files
-Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) call configuration files in JSON format.
+Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) call configuration files in JSON format. 
+
+:bulb: The main ENT3C parameter affecting the final entropy signal $S$ is the dimension of the submatrices ```SUB_M_SIZE_FIX```. This can be either be fixed by or alternatively, one can specify ```CHRSPLIT```; in this case ```SUB_M_SIZE_FIX``` will be computed internally to fit the number of desired times the contact matrix is to be paritioned into. 
+
+```WN=1+floor((N-SUB_M_SIZE)./WS)```
+
+where ```N``` is the size of the input contact matrix, ```WN``` is the number of evaluated submatrices (consequently the number of data points in $S$).
+
 
 ```config/config.julia.m```
-```
-{
-  "WN_MAX": 1000,
-  "CHRSPLIT": 7,
-  "SUB_M_SIZE_FIX": null,
-  "ChrNr": 14,
-  "Resolution": 40000,
-  "WS": 1,
-  "NormM": 0,
-  "DATA_PATH": "DATA_30e6",
-  "FILES": [
-    "ENCSR079VIJ.BioRep1.mcool",
-    "G401_BR1",
-    "ENCSR079VIJ.BioRep2.mcool",
-    "G401_BR2",
-    "ENCSR444WCZ.BioRep1.mcool",
-    "A549_BR1",
-    "ENCSR444WCZ.BioRep2.mcool",
-    "A549_BR2"
-  ],
-  "OUT_DIR": "OUTPUT/JULIA",
-  "OUT_PREFIX": "Chr14_40kb"
-}
-```
+
+```DATA_PATH: "DATA_30e6"```$\dots$ input data path. 
+```FILES: ["ENCSR079VIJ.BioRep1.mcool","G401_BR1" ...] ``` $\dots$ input files in format: ```[<MCOOL_FILENAME>, <SHORT_NAME>]```
+```OUT_DIR: "OUTPUT/JULIA"```$\dots$ output directory. :warning: only difference to MATLAB config file ```config/config.matlab.m```.
+```OUT_PREFIX: "Chr14_40kb" $\dots$ prefix for output files. 
+```Resolution: 40000```$\dots$ resolution to be evaluated.
+```ChrNr: 14```$\dots$ chromosome number to be evaluated.
+```NormM: 0```$\dots$ input contact matrices can be balanced. If ```NormM:1```, balancing weights in cooler are applied.
+```SUB_M_SIZE_FIX: null```$\dots$ fixed submatrix dimension. 
+```CHRSPLIT: 7```$\dots$ number of submatrices into which the contact matrix is partitioned into.
+```WS: 1```$\dots$ number of bins to the next matrix.
+```WN_MAX: 1000```$\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. If set, $WS$ is increased until $WN \approx WN_{MAX}$. (optional)
+
 # Running main scripts 
 
 
