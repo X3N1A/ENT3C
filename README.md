@@ -20,7 +20,7 @@ https://doi.org/10.1101/2024.01.30.577923
 <figure>
     <img src="Figures/ENT3C_explain.png width="200" height="100"
          alt="explaination of ENT3C">
-    <figcaption> **Figure** Exemplary depiction of ENT3C derivation of the entropy signal $S$ of the contact matrix $\mathbf{A}$ of chromosome 14 binned at 40 kb of the HFFc6 cell line (biological replicate 1). ENT3C's parameters: submatrix dimension $n=300$, window shift $WS=10$, maximum number of data points in $S$, $WN_{MAX}=\infty$, were used, resulting in 146 submatrices along the diagonal of the contact matrix. For subsequent Pearson-transformed submatrices $\mathbf{P}$ along the diagonal of $\log{\mathbf{A}}$, ENT3C computes the von Neumann entropies $S_i(\mathbf{P_i})$; the resulting signal $S$ is shown in blue under the matrix. The first two ($\mathbf{P}_{1-2}$), the middle ($\mathbf{P}_{73}$), and the last two Pearson submatrices ($\mathbf{P}_{145-146}$) are shown.
+    <figcaption> **Figure** Exemplary depiction of ENT3C derivation of the entropy signal $S$ of the contact matrix $\mathbf{A}$ of chromosome 14 binned at 40 kb of the HFFc6 cell line (biological replicate 1). ENT3C's parameters: submatrix dimension $n=300$, window shift $WS=10$, maximum number of data points in $S$, $WN_{MAX}=\infty$, were used, resulting in 146 submatrices along the diagonal of the contact matrix. For subsequent Pearson-transformed submatrices $\mathbf{P}$ along the diagonal of $\log{\mathbf{A}}$, ENT3C computes the von Neumann entropies $S_i(\mathbf{P_i})$; the resulting signal $S$ is shown in blue under the matrix. The first two ($\mathbf{P}_{1-2}$), the middle ($\mathbf{P}_{73}$), and the last two Pearson submatrices ($\mathbf{P}_{145-146}$) are shown. </figcaption>
 </figure>
 
 
