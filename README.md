@@ -34,11 +34,11 @@ Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were te
   
 	G401 (ENCFF091BKE) A549 (ENCFF101MYU)
 
- 4. generate 5kb coolers with ```cload pairs``` function<sup>2</sup>
+ 4. generate 5kb coolers with ```cload pairs``` function<sup>3</sup>
  
 	```cooler cload pairs -c1 2 -p1 3 -c2 4 -p2 5 --assembly hg38 <CHRSIZE_FILE:5000> <IN_PAIRS> <OUT_COOL>```
 
- 5. generate multi-resolution mcool files by coarsening <OUT_COOL>  with ```cload zoomify```<sup>2</sup>
+ 5. generate multi-resolution mcool files by coarsening <OUT_COOL>  with ```cload zoomify```<sup>3</sup>
     
 	```cooler zoomify --resolutions 5000,10000,25000,40000,50000,100000,250000,500000,1000000,2500000,5000000,10000000 --balance --balance-args '--max-iters 300' -o <OUT_MCOOL> <OUT_COOL>```
 
