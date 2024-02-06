@@ -57,27 +57,27 @@ where ```N``` is the size of the input contact matrix, ```WS``` is the window sh
 
 **ENT3C parameters set in ```config/config.julia.m```**
 
-&nbsp;&nbsp;&nbsp;&nbsp;```DATA_PATH: "DATA_30e6"``` $\dots$ input data path. 
+```DATA_PATH: "DATA_30e6"``` $\dots$ input data path. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;```FILES: ["ENCSR079VIJ.BioRep1.mcool","G401_BR1" ...]``` $\dots$ input files in format: ```[<MCOOL_FILENAME>, <SHORT_NAME>]```
+```FILES: ["ENCSR079VIJ.BioRep1.mcool","G401_BR1" ...]``` $\dots$ input files in format: ```[<MCOOL_FILENAME>, <SHORT_NAME>]```
 
-&nbsp;&nbsp;&nbsp;&nbsp;```OUT_DIR: "OUTPUT/JULIA"``` $\dots$ output directory. &rarr :warning: This is the only difference to MATLAB config file ```config/config.matlab.m```.
+```OUT_DIR: "OUTPUT/JULIA"``` $\dots$ output directory. &rarr :warning: This is the only difference to MATLAB config file ```config/config.matlab.m```.
 
-&nbsp;&nbsp;&nbsp;&nbsp;```OUT_PREFIX: "Chr14_40kb"``` $\dots$ prefix for output files.
+```OUT_PREFIX: "Chr14_40kb"``` $\dots$ prefix for output files.
 
-&nbsp;&nbsp;&nbsp;&nbsp;```Resolution: 40000``` $\dots$ resolution to be evaluated.
+```Resolution: 40000``` $\dots$ resolution to be evaluated.
 
-&nbsp;&nbsp;&nbsp;&nbsp;```ChrNr: 14``` $\dots$ chromosome number to be evaluated.
+```ChrNr: 14``` $\dots$ chromosome number to be evaluated.
 
-&nbsp;&nbsp;&nbsp;&nbsp;```NormM: 0``` $\dots$ input contact matrices can be balanced. If ```NormM:1```, balancing weights in cooler are applied.
+```NormM: 0``` $\dots$ input contact matrices can be balanced. If ```NormM:1```, balancing weights in cooler are applied.
 
-&nbsp;&nbsp;&nbsp;&nbsp;```SUB_M_SIZE_FIX: null``` $\dots$ fixed submatrix dimension.
+```SUB_M_SIZE_FIX: null``` $\dots$ fixed submatrix dimension.
 
-&nbsp;&nbsp;&nbsp;&nbsp;```CHRSPLIT: 7``` $\dots$ number of submatrices into which the contact matrix is partitioned into.
+```CHRSPLIT: 7``` $\dots$ number of submatrices into which the contact matrix is partitioned into.
 
-&nbsp;&nbsp;&nbsp;&nbsp;```WS: 1``` $\dots$ number of bins to the next matrix.
+```WS: 1``` $\dots$ number of bins to the next matrix.
 
-&nbsp;&nbsp;&nbsp;&nbsp;```WN_MAX: 1000``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. If set, $WS$ is increased until $WN \approx WN_{MAX}$. (optional)
+```WN_MAX: 1000``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. If set, $WS$ is increased until $WN \approx WN_{MAX}$. (optional)
 
 # Running main scripts 
 
