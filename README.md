@@ -77,7 +77,7 @@ where ```N``` is the size of the input contact matrix, ```WS``` is the window sh
 
 ```WS: 1``` $\dots$ number of bins to the next matrix.
 
-```WN_MAX: 1000``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. If set, $WS$ is increased until $WN \approx WN_{MAX}$. (optional)
+```WN_MAX: 1000``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. If set, $WS$ is increased until $WN \approx WN_{MAX}$.
 
 # Running main scripts 
 
