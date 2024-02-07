@@ -42,8 +42,8 @@ Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were te
     
 	```cooler zoomify --resolutions 5000,10000,25000,40000,50000,100000,250000,500000,1000000,2500000,5000000,10000000 --balance --balance-args '--max-iters 300' -o <OUT_MCOOL> <OUT_COOL>```
 
-# Configuration Files
-Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) call configuration files in JSON format. 
+# Configuration File
+Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) call a configuration file in JSON format. 
 
 :bulb: The main ENT3C parameter affecting the final entropy signal $S$ is the dimension of the submatrices ```SUB_M_SIZE_FIX```. 
 
@@ -55,13 +55,13 @@ where ```N``` is the size of the input contact matrix, ```WS``` is the window sh
 
 <br>
 
-**ENT3C parameters set in ```config/config.julia.m```**
+**ENT3C parameters set in ```config/config.json```**
 
 ```DATA_PATH: "DATA_30e6"``` $\dots$ input data path. 
 
 ```FILES: ["ENCSR079VIJ.BioRep1.mcool","G401_BR1" ...]``` $\dots$ input files in format: ```[<MCOOL_FILENAME>, <SHORT_NAME>]```
 
-```OUT_DIR: "OUTPUT/JULIA"``` $\dots$ output directory. :warning: This is the only difference to MATLAB config file ```config/config.matlab.m```.
+```OUT_DIR: "OUTPUT/"``` $\dots$ output directory. :warning: ```OUT_DIR``` be concatenated with ```OUTPUT/JULIA/``` or ```OUTPUT/MATLAB/```.
 
 ```OUT_PREFIX: "Chr14_40kb"``` $\dots$ prefix for output files.
 
@@ -81,8 +81,9 @@ where ```N``` is the size of the input contact matrix, ```WS``` is the window sh
 
 # Running main scripts 
 
-Upon configuring the file as desired, ```ENT3C.jl``` and ```ENT3C.m``` will run with using specified parameters. 
-Associated functions are contained in directories "*JULIA/*" and "*MATLAB/*".
+Upon modifying ```config/config.json``` as desired, ```ENT3C.jl``` and ```ENT3C.m``` will run with using specified parameters.
+
+Associated functions are contained in directories ```JULIA_functions/``` and ```MATLAB_functions/```.
 
 **Output files:**
 ```Chr14_40kb_ENT3C_similarity.csv``` $\dots$ will contain all combinations of comparisons. The first two columns contain the short names specified in ```FILES``` and the third column Q the corresponding similarity score.  
