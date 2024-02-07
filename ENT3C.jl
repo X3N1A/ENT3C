@@ -1,8 +1,8 @@
 using DataFrames, BenchmarkTools, JSON, Printf
 
-include("JULIA/ent3c_functions.jl")
+include("JULIA_functions/ent3c_functions.jl")
 
-config = JSON.parsefile("config/config.julia.json")
+config = JSON.parsefile("config/config.json")
 
 SUB_M_SIZE_FIX = config["SUB_M_SIZE_FIX"]
 ChrNr = config["ChrNr"]
@@ -19,6 +19,7 @@ if OUT_PREFIX === nothing
     OUT_PREFIX = @sprintf("Chr%d_%dkb",ChrNr,Resolution/1e3)
 end
 OUT_DIR = config["OUT_DIR"]
+OUT_DIR = string(OUT_DIR,"JULIA")
 if !isdir(OUT_DIR)
     mkpath(OUT_DIR)
 end
