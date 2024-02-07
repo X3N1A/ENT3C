@@ -17,7 +17,7 @@
     "ENCSR444WCZ.BioRep2.mcool",
     "A549_BR2"
   ],
-  "OUT_DIR": "OUTPUT/JULIA",
+  "OUT_DIR": "OUTPUT/",
   "OUT_PREFIX": "Chr14_40kb"
 }
 

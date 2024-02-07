@@ -1,9 +1,9 @@
 clear all
-addpath('MATLAB/')
+addpath('MATLAB_functions/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % load json file
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-config = fileread('config/config.matlab.json');
+config = fileread('config/config.json');
 config = jsondecode(config);
 
 WN_MAX=config.WN_MAX;
@@ -18,11 +18,11 @@ FILES = config.FILES;
 FILES = reshape(FILES, 2,4)';
 FILES = [cellfun(@(file) fullfile(DATA_PATH, file), FILES(:,1), 'UniformOutput', false), FILES(:, 2)];
 OUT_DIR=config.OUT_DIR;
+OUT_DIR=[OUT_DIR,'MATLAB'];
 OUT_PREFIX=config.OUT_PREFIX;
 if isempty(OUT_PREFIX)
     OUT_PREFIX=sprintf('Chr%d_%dkb',ChrNr,Resolution/1e3);
 end
-
 if ~exist(OUT_DIR, 'dir')
     mkdir(OUT_DIR);
 end
