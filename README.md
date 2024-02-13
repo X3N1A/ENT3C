@@ -61,7 +61,7 @@ where ```N``` is the size of the input contact matrix, ```WS``` is the window sh
 
 ```FILES: ["ENCSR079VIJ.BioRep1.mcool","G401_BR1" ...]``` $\dots$ input files in format: ```[<MCOOL_FILENAME>, <SHORT_NAME>]```
 
-```OUT_DIR: "OUTPUT/"``` $\dots$ output directory. :warning: ```OUT_DIR``` be concatenated with ```OUTPUT/JULIA/``` or ```OUTPUT/MATLAB/```.
+```OUT_DIR: "OUTPUT/"``` $\dots$ output directory. :warning: ```OUT_DIR``` will be concatenated with ```OUTPUT/JULIA/``` or ```OUTPUT/MATLAB/```.
 
 ```OUT_PREFIX: "Chr14_40kb"``` $\dots$ prefix for output files.
 
@@ -86,7 +86,7 @@ Upon modifying ```config/config.json``` as desired, ```ENT3C.jl``` and ```ENT3C.
 Associated functions are contained in directories ```JULIA_functions/``` and ```MATLAB_functions/```.
 
 **Output files:**
-```Chr14_40kb_ENT3C_similarity.csv``` $\dots$ will contain all combinations of comparisons. The first two columns contain the short names specified in ```FILES``` and the third column Q the corresponding similarity score.  
+```Chr14_40kb_ENT3C_similarity.csv``` $\dots$ will contain all combinations of comparisons. The first two columns contain the short names specified in ```FILES``` and the third column ```Q``` the corresponding similarity score.  
 ```
 Sample1		Sample2		Q
 A549_BR1	A549_BR2	0.975160965862958
