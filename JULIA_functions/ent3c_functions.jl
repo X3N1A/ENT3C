@@ -22,7 +22,7 @@ function main(FILES,Resolution,ChrNr,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS)
             FN = f.FN
             M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution,0)
 
-            EXCLUDE = vcat(EXCLUDE,BIN_TABLE.binNr[isnan.(BIN_TABLE.CONTACT).||isnan.(BIN_TABLE.weights)])
+            EXCLUDE = vcat(EXCLUDE,BIN_TABLE.binNr[isnan.(BIN_TABLE.CONTACT)])
         end
         EXCLUDE = unique(EXCLUDE)
         ##############################################################################
@@ -103,7 +103,11 @@ function load_cooler(FN, ChrNr, Resolution, NormM)
         
         BINS = hcat(h5read(FN, "$preStr/bins/start"), h5read(FN, "$preStr/bins/end"))
         BINS = hcat(1:size(BINS, 1), BINS)
-        weights = h5read(FN, "$preStr/bins/weight")
+        if NormM==1
+                weights = h5read(FN, "$preStr/bins/weight")
+            else
+                 weights = fill(NaN, size(BINS,1))
+        end
 
         chrs = h5read(FN, "$preStr/bins/chrom") .|> x -> x+1 .|> x -> "chr" .* string.(x)
         chrs[chrs .== "chr23"] .= "chrX"
@@ -134,7 +138,6 @@ function load_cooler(FN, ChrNr, Resolution, NormM)
        	INCLUDE = unique(findall(sum(isnan.(CONTACT_MAP), dims=2) .< size(CONTACT_MAP, 2)))
 	EMPTY_BIN = fill(NaN, size(BIN_TABLE, 1))
 	EMPTY_BIN[INCLUDE] .= 1
-	EMPTY_BIN[isnan.(BIN_TABLE.weights)] .= NaN
 
 	BIN_TABLE[!, :CONTACT] = EMPTY_BIN
         BIN_TABLE[!, :binNr] = 1:size(BIN_TABLE,1) 
