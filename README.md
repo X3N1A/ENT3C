@@ -22,7 +22,7 @@ https://doi.org/10.1101/2024.01.30.577923
          alt="explaination of ENT3C">
 </figure>
 
-Exemplary depiction of ENT3C derivation of the entropy signal $S$ of the contact matrix $\mathbf{A}$ of chromosome 14 binned at 40 kb of the HFFc6 cell line (biological replicate 1). ENT3C's parameters: submatrix dimension $n=300$, window shift $WS=10$, maximum number of data points in $S$, $WN_{MAX}=\infty$, were used, resulting in 146 submatrices along the diagonal of the contact matrix. For subsequent Pearson-transformed submatrices $\mathbf{P}$ along the diagonal of $\log{\mathbf{A}}$, ENT3C computes the von Neumann entropies $S_i(\mathbf{P_i})$; the resulting signal $S$ is shown in blue under the matrix. The first two ($\mathbf{P_{1-2}}$), the middle ($\mathbf{P_{73}}$), and the last two Pearson submatrices ($\mathbf{P_{145-146}}$) are shown.
+Exemplary depiction of ENT3C derivation of the entropy signal $S$ of the contact matrix $\mathbf{A}$ of chromosome 14 binned at 40 kb of the HFFc6 cell line (biological replicate 1). ENT3C's parameters: submatrix dimension $n=300$, window shift $WS=10$, maximum number of data points in $S$, $\mathit{WN}_{\max}=\infty$, were used, resulting in 146 submatrices along the diagonal of the contact matrix. For subsequent Pearson-transformed submatrices $\mathbf{P}$ along the diagonal of $\log{\mathbf{A}}$, ENT3C computes the von Neumann entropies $S_i(\mathbf{P_i})$; the resulting signal $S$ is shown in blue under the matrix. The first two ($\mathbf{P_{1-2}}$), the middle ($\mathbf{P_{73}}$), and the last two Pearson submatrices ($\mathbf{P_{145-146}}$) are shown.
 
 # Requirements
 Julia or MATLAB
@@ -79,7 +79,8 @@ where ```N``` is the size of the input contact matrix, ```WS``` is the window sh
 
 ```DATA_PATH: "DATA_30e6"``` $\dots$ input data path. 
 
-```FILES: ["ENCSR079VIJ.BioRep1.40kb.cool","G401_BR1" ...]``` $\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]``` :bulb: ENT3C also takes ```mcool``` files as input
+```FILES: ["ENCSR079VIJ.BioRep1.40kb.cool","G401_BR1" ...]``` $\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]``` 
+:bulb: ENT3C also takes ```mcool``` files as input
 
 ```OUT_DIR: "OUTPUT/"``` $\dots$ output directory. :warning: ```OUT_DIR``` will be concatenated with ```OUTPUT/JULIA/``` or ```OUTPUT/MATLAB/```.
 
@@ -97,7 +98,8 @@ where ```N``` is the size of the input contact matrix, ```WS``` is the window sh
 
 ```WS: 1``` $\dots$ number of bins to the next matrix.
 
-```WN_MAX: 1000``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. If set, $WS$ is increased until $WN \approx WN_{MAX}$.
+```WN_MAX: 1000``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. 
+If set, $\mathit{WS}$ is increased until $\mathit{WN} \approx \mathit{WN}_{\max}$.
 
 # Running main scripts 
 
@@ -135,7 +137,7 @@ Each row corresponds to an evaluated submatrix with fields ```Name``` (the short
 ```Chr14_40kb_ENT3C_signals.png``` $\dots$ simple visualization of entropy signals $S$:
 
 <figure>
-    <img src="OUTPUT/MATLAB/Chr14_40kb_ENT3C_OUT.png" width="500" height="300" 
+    <img src="OUTPUT/MATLAB/Chr14_40kb_ENT3C_signals.png" width="500" height="300" 
          alt="ENT3C MATLAB Output">
 </figure>
 
