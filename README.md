@@ -22,7 +22,7 @@ https://doi.org/10.1101/2024.01.30.577923
          alt="explaination of ENT3C">
 </figure>
 
-Exemplary depiction of ENT3C derivation of the entropy signal $S$ of the contact matrix $\mathbf{A}$ of chromosome 14 binned at 40 kb of the HFFc6 cell line (biological replicate 1). ENT3C's parameters: submatrix dimension $n=300$, window shift $WS=10$, maximum number of data points in $S$, $\mathit{WN}_{\max}=\infty$, were used, resulting in 146 submatrices along the diagonal of the contact matrix. For subsequent Pearson-transformed submatrices $\mathbf{P}$ along the diagonal of $\log{\mathbf{A}}$, ENT3C computes the von Neumann entropies $S_i(\mathbf{P_i})$; the resulting signal $S$ is shown in blue under the matrix. The first two ($\mathbf{P_{1-2}}$), the middle ($\mathbf{P_{73}}$), and the last two Pearson submatrices ($\mathbf{P_{145-146}}$) are shown.
+Exemplary depiction of ENT3C derivation of the entropy signal $S$ of the contact matrix $\mathbf{A}$ of chromosome 14 binned at 40 kb of the HFFc6 cell line (biological replicate 1). ENT3C's parameters: submatrix dimension $n=300$, window shift $WS=10$, maximum number of data points in $S$, $WN_{\max}=\infty$, were used, resulting in 146 submatrices along the diagonal of the contact matrix. For subsequent Pearson-transformed submatrices $\mathbf{P}$ along the diagonal of $\log{\mathbf{A}}$, ENT3C computes the von Neumann entropies $S_i(\mathbf{P_i})$; the resulting signal $S$ is shown in blue under the matrix. The first two ($\mathbf{P_{1-2}}$), the middle ($\mathbf{P_{73}}$), and the last two Pearson submatrices ($\mathbf{P_{145-146}}$) are shown.
 
 # Requirements
 Julia or MATLAB
@@ -99,7 +99,7 @@ where ```N``` is the size of the input contact matrix, ```WS``` is the window sh
 ```WS: 1``` $\dots$ number of bins to the next matrix.
 
 ```WN_MAX: 1000``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. 
-If set, $\mathit{WS}$ is increased until $\mathit{WN} \approx \mathit{WN}_{\max}$.
+If set, $WS$ is increased until $WN \approx WN_{\max}$.
 
 # Running main scripts 
 
