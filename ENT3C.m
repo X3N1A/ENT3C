@@ -15,8 +15,8 @@ WS=config.WS;
 NormM=config.NormM;
 DATA_PATH='DATA_30e6';
 FILES = config.FILES;
-FILES = reshape(FILES, 2,4)';
-FILES = [cellfun(@(file) fullfile(DATA_PATH, file), FILES(:,1), 'UniformOutput', false), FILES(:, 2)];
+FILES = reshape(FILES,2,size(FILES,1)/2);
+FILES = [cellfun(@(file) fullfile(DATA_PATH, file), FILES(1,:), 'UniformOutput', false); FILES(2,:)];
 OUT_DIR=config.OUT_DIR;
 OUT_DIR=[OUT_DIR,'MATLAB'];
 OUT_PREFIX=config.OUT_PREFIX;
@@ -31,10 +31,10 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 INFO = struct('FN', '', 'META', '');
 FNs = [];
-for f = 1:size(FILES,1)
+for f = 1:size(FILES,2)
     FNs = [FNs, INFO];
-    FNs(end).FN = FILES{f, 1};
-    FNs(end).META = FILES{f, 2};
+    FNs(end).FN = FILES{1,f};
+    FNs(end).META = FILES{2,f};
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % extract common empty bins of input matrices
@@ -43,7 +43,7 @@ EXCLUDE=[];
 for f = 1:numel(FNs)
         FN=FNs(f).FN;
         [M,BIN_TABLE]=load_cooler(FN,ChrNr,Resolution,NormM);
-        EXCLUDE=[EXCLUDE;BIN_TABLE.binNr(isnan(BIN_TABLE.weights)|isnan(BIN_TABLE.CONTACT))];
+        EXCLUDE=[EXCLUDE;BIN_TABLE.binNr(isnan(BIN_TABLE.CONTACT))];
 end
 EXCLUDE=unique(EXCLUDE);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -80,6 +80,7 @@ end
 SAMPLES=unique(ENT3C_OUT.Name);
 comparisons = get_pairwise_combs(SAMPLES);
 Similarity = [];plotted = "tempstring";
+
 for f=1:size(comparisons,1)
 
     S1 = ENT3C_OUT(strcmp(ENT3C_OUT.Name,comparisons{f,1}),:);
@@ -91,24 +92,26 @@ for f=1:size(comparisons,1)
         'VariableNames',{'Sample1','Sample2','Q'})];
 
     if ~ismember(comparisons{f,1}, plotted)
-        figure(1);plot(S1.S);hold on;
+        figure(1);plot(S1.S);hold on;axis tight
         plotted = [plotted;comparisons{f,1}];
     end
     if ~ismember(comparisons{f,2}, plotted)
-        figure(1);plot(S2.S);hold on;
+        figure(1);plot(S2.S);hold on;axis tight
         plotted = [plotted;comparisons{f,2}];
     end
+
+
 end
-
 L = arrayfun(@(s) setfield(s, 'META', strrep(s.META, '_', ' ')), FNs);
-
 legend(L.META)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % save output
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 figure(1);saveas(gcf,sprintf('%s/%s_ENT3C_signals.png',OUT_DIR,OUT_PREFIX))
 writetable(ENT3C_OUT,sprintf('%s/%s_ENT3C_OUT.csv',OUT_DIR,OUT_PREFIX),'Delimiter','tab')
 writetable(Similarity,sprintf('%s/%s_ENT3C_similarity.csv',OUT_DIR,OUT_PREFIX),'Delimiter','tab')
+
+
+
 
 
