@@ -78,7 +78,7 @@ where ```N``` is the size of the input contact matrix, ```WS``` is the window sh
 
 **ENT3C parameters set in ```config/config.json```**
 
-```DATA_PATH: "DATA_30e6"``` $\dots$ input data path. 
+```DATA_PATH: "DATA"``` $\dots$ input data path. 
 
 ```FILES: ["ENCSR079VIJ.BioRep1.40kb.cool","G401_BR1" ...]``` $\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]``` 
 :bulb: ENT3C also takes ```mcool``` files as input
