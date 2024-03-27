@@ -1,91 +1,61 @@
-using HDF5, DataFrames, LinearAlgebra, Plots, Statistics, Combinatorics, Plots, CSV
+using HDF5, DataFrames, LinearAlgebra, Plots, NaNStatistics, Statistics, Combinatorics, Plots, CSV
 
 struct INFO
         FN::String
         META::String # sample short name: e.g. G401_BR1
 end
 
-function main(FILES,Resolution,ChrNr,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS)
+function main(FILES,Resolution,ChrNrs,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,NormM)
 
-
-        FNs=[]
-        for f in 1:Int(size(FILES,1))
-            FNs = vcat(FNs,INFO(FILES[f,1],FILES[f,2]))
-        end
-
-        ##############################################################################
-        # extract common empty bins of input matrices
-        ##############################################################################
-        EXCLUDE = 0
-        for f in FNs
-
-            FN = f.FN
-            M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution,0)
-
-            EXCLUDE = vcat(EXCLUDE,BIN_TABLE.binNr[isnan.(BIN_TABLE.CONTACT)])
-        end
-        EXCLUDE = unique(EXCLUDE)
-        ##############################################################################
-        #produce ENT3C data frame
-        ##############################################################################
         ENT3C_OUT = DataFrame(Name = Vector{String}[], ChrNr = Vector{Int}[], Resolution = Vector{Int}[],
-                        n = Vector{Int}[], WN = Vector{Int}[], WS = Vector{Int}[],  binNrStart = Vector{Int}[],
-                        binNrEnd = Vector{Int}[], START = Vector{Int}[], END = Vector{Int}[],  S = Vector{Float64}[])
-
-        for f in FNs
-
-            FN = f.FN
-            M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution,0)
-
-            INCLUDE = collect(1:size(M,1))
-            INCLUDE = setdiff(INCLUDE,EXCLUDE)
-            M = M[INCLUDE,INCLUDE]
-
-            BIN_TABLE = BIN_TABLE[INCLUDE,:]
-
-            S, SUB_M_SIZE1, WN1, WS1, BIN_TABLE_NEW = vN_entropy(M,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,BIN_TABLE)
-
-            N = length(S)
-
-            OUT1 = DataFrame(Name=fill(f.META,N),ChrNr=fill(ChrNr,N),
-                          Resolution = fill(Resolution,N), n = fill(SUB_M_SIZE1,N),
-                          WN = fill(WN1,N), WS = fill(WS1,N), binNrStart = BIN_TABLE_NEW[:,1],
-                          binNrEnd = BIN_TABLE_NEW[:,2],START = BIN_TABLE_NEW[:,3], END = BIN_TABLE_NEW[:,4],S =S)
-            ENT3C_OUT = vcat(ENT3C_OUT,OUT1)
-
-        end
-        #############################################################################
-        # similarity table
-        ##############################################################################
-        SAMPLES::Array=unique(ENT3C_OUT.Name)
-        comparisons =  get_pairwise_combs(SAMPLES)
-
-        Similarity = DataFrame(Sample1 = Vector{String}[], Sample2 = Vector{String}[],Q = Vector{Int}[])
-        plotted = []
-        p = plot()
-        for f in 1:size(comparisons,1)
-
-                S1 = filter(row -> row.Name==comparisons[f][1],ENT3C_OUT)
-                S2 = filter(row -> row.Name==comparisons[f][2],ENT3C_OUT)
-                Q = cor(S1.S,S2.S)
-
-                Similarity = vcat(Similarity,
-                                  DataFrame(Sample1 = comparisons[f][1],
-                                            Sample2 = comparisons[f][2], Q = Q))
-
-                if !(comparisons[f][1] in plotted)
-                        plot!(p,S1.S, label=comparisons[f][1], linewidth=3)
-                        plotted = vcat(plotted,comparisons[f][1])
-                end
-                if !(comparisons[f][2] in plotted)
-                        plot!(p,S2.S, label=comparisons[f][2], linewidth=3)
-                        plotted = vcat(plotted,comparisons[f][2])
-                end
-        end
-
-        # display(p)
-
-        return(ENT3C_OUT,Similarity,p)
+	                        n = Vector{Int}[], WN = Vector{Int}[], WS = Vector{Int}[],  binNrStart = Vector{Int}[],
+	                        binNrEnd = Vector{Int}[], START = Vector{Int}[], END = Vector{Int}[],  S = Vector{Float64}[])
+        for ChrNr in ChrNrs
+	
+	        FNs=[]
+	        for f in 1:Int(size(FILES,1))
+	            FNs = vcat(FNs,INFO(FILES[f,1],FILES[f,2]))
+	        end
+	
+	        ##############################################################################
+	        # extract common empty bins of input matrices
+	        ##############################################################################
+	        EXCLUDE = 0
+	        for f in FNs
+	
+	            FN = f.FN
+	            M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution,NormM)
+	
+	            EXCLUDE = vcat(EXCLUDE,BIN_TABLE.binNr[isnan.(BIN_TABLE.CONTACT)])
+	        end
+	        EXCLUDE = unique(EXCLUDE)
+	        ##############################################################################
+	        #produce ENT3C_OUT data frame
+	        ##############################################################################
+	        for f in FNs
+	
+	            FN = f.FN
+	            M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution,0)
+	
+	            INCLUDE = collect(1:size(M,1))
+	            INCLUDE = setdiff(INCLUDE,EXCLUDE)
+	            M = M[INCLUDE,INCLUDE]
+	
+	            BIN_TABLE = BIN_TABLE[INCLUDE,:]
+	
+	            S, SUB_M_SIZE1, WN1, WS1, BIN_TABLE_NEW = vN_entropy(M,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,BIN_TABLE)
+	
+	            N = length(S)
+	
+	            OUT1 = DataFrame(Name=fill(f.META,N),ChrNr=fill(ChrNr,N),
+	                          Resolution = fill(Resolution,N), n = fill(SUB_M_SIZE1,N),
+	                          WN = fill(WN1,N), WS = fill(WS1,N), binNrStart = BIN_TABLE_NEW[:,1],
+	                          binNrEnd = BIN_TABLE_NEW[:,2],START = BIN_TABLE_NEW[:,3], END = BIN_TABLE_NEW[:,4],S =S)
+	            ENT3C_OUT = vcat(ENT3C_OUT,OUT1)
+	
+	        end
+	end
+       return ENT3C_OUT
 end
 
 
@@ -181,13 +151,22 @@ function vN_entropy(M::Matrix{Float64},SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,BIN_TAB
 	for rr in 1:WN
             m=M[R[rr,1]:R[rr,2],R[rr,1]:R[rr,2]]
             replace!(m,NaN=>minimum(filter(!isnan,m)))
-            P = cor(m);replace!(P,NaN=>0)
+            P = cor(m);
+
+            zero_variance_indices = all(m .== 0, dims=2) .& all(m .== 0, dims=1)
+            P[zero_variance_indices] .= 0
+            replace!(P,NaN=>0)
+
             rho=P./size(P,1);
 		
             #lam = eigen(rho);lam = lam.values
             lam = eigvals(rho)
 	    lam = lam[lam.>0];
 	
+            #gr()
+            #heatmap(rho, aspect_ratio = 1, legend = false, color=:jet, axis = :square)
+
+
 	    ENT = -sum(real(lam.*log.(lam)));
 	
 	    S = vcat(S,ENT)
@@ -214,4 +193,72 @@ function get_pairwise_combs(SAMPLES)
         return comparisons
 
 end
+
+function get_similarity_table(ENT3C_OUT)
+
+        Similarity = DataFrame(ChrNr= Vector{Int}[], Sample1 = Vector{String}[], Sample2 = Vector{String}[],Q = Vector{Int}[])
+        PLT=[]
+        for ChrNr in ChrNrs
+	        SAMPLES::Array=unique(ENT3C_OUT.Name)
+	        comparisons =  get_pairwise_combs(SAMPLES)
+                pal = cgrad(:twelvebitrainbow)
+	        plt = plot()
+	        plotted = []
+	        c=1
+	        for f in 1:size(comparisons,1)
+
+	                S1 = filter(row -> row.Name==comparisons[f][1]&&row.ChrNr==ChrNr,ENT3C_OUT)
+	                S2 = filter(row -> row.Name==comparisons[f][2]&&row.ChrNr==ChrNr,ENT3C_OUT)
+	                Q = cor(S1.S,S2.S)
+	
+	                Similarity = vcat(Similarity,
+	                DataFrame(ChrNr = ChrNr, Sample1 = comparisons[f][1],
+	                Sample2 = comparisons[f][2], Q = Q))
+	
+	                if !(comparisons[f][1] in plotted)
+	                        plot!(plt,S1.S, linewidth=1,label=comparisons[f][1], linecolor=pal[c]);c=c+1
+	                        xlims!(1,length(S1.S))
+	                        plotted = vcat(plotted,comparisons[f][1])
+	                end
+	                if !(comparisons[f][2] in plotted)
+	                        plot!(plt,S2.S, linewidth=1,label=comparisons[f][2], linecolor=pal[c]);c=c+1
+                                plotted = vcat(plotted,comparisons[f][2])
+	                end
+                end
+	        plot!(plt, grid=true)
+                if ChrNr!=ChrNrs[end]
+	                plot!(plt, legend=false)
+                else
+                        plot!(plt, legend=:outertopright)
+                end
+	        #@df Similarity plot(1:size(Similarity,1), [:Sample1, :Sample2], group = :Replicate, colour = )
+	        cell_line(x) = match(r"^(.*?)_", x).captures[1] # r==regex, ^(.*?) = any chars, then underscore
+	        BR = filter(row -> cell_line(row.Sample1)==cell_line(row.Sample2) && row.ChrNr==ChrNr,Similarity)
+	        BR = mean(BR.Q)
+	        nonBR = filter(row -> cell_line(row.Sample1)!=cell_line(row.Sample2) && row.ChrNr==ChrNr,Similarity)
+	        nonBR = mean(nonBR.Q)
+	        title!(plt,@sprintf("Chr%d \$\\overline{Q}_{BR}=%4.2f\$ \$\\overline{Q}_{nonBR}=%4.2f\$", ChrNr, BR, nonBR), fontsize=12, interpreter=:latex)
+	        push!(PLT, plt)
+        end
+        PLT=plot(PLT...,size=(1801,935))
+
+        return(Similarity,PLT)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

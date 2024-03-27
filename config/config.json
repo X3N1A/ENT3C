@@ -1,6 +1,6 @@
 {
   "WN_MAX": 1000,
-  "CHRSPLIT": 7,
+  "CHRSPLIT": null,
   "SUB_M_SIZE_FIX": null,
   "ChrNr": 14,
   "Resolution": 40000,

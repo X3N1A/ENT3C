@@ -20,12 +20,13 @@ R2=R1+SUB_M_SIZE-1;R2=R2(1:WN);
 R=[R1',R2'];
 
 M=log(M);
-
 for rr=1:WN
     m=M(R(rr,1):R(rr,2),R(rr,1):R(rr,2));
+    %E=[E;sum(isnan(m(:)))/numel(m)];
     m(isnan(m))=nanmin(m(:));
 
     P = corrcoef(m,'rows','complete');
+    
     P(isnan(P))=0;
 
     rho=P./size(P,1);

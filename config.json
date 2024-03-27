@@ -1,0 +1,37 @@
+{
+  "WN_MAX": 5e3,
+  "CHRSPLIT": 10,
+  "SUB_M_SIZE_FIX": null,
+  "ChrNr": "15:22",
+  "Resolution": 40000,
+  "WS": 1,
+  "NormM": 0,
+  "DATA_PATH": "DATA",
+  "FILES": [
+	"ENCSR079VIJ.BioRep1.40kb.cool",
+	"G401_BR1",
+	"ENCSR079VIJ.BioRep2.40kb.cool",
+	"G401_BR2",
+	"ENCSR444WCZ.BioRep1.40kb.cool",
+	"A549_BR1",
+	"ENCSR444WCZ.BioRep2.40kb.cool",
+	"A549_BR2",
+	"ENCSR346DCU.BioRep1.40kb.cool",
+	"LNCap_BR1",
+	"ENCSR346DCU.BioRep2.40kb.cool",
+	"LNCap_BR2",
+	"4DNESWST3UBH.BioRep1.40kb.cool",
+	"HFFc6_BR1",
+	"4DNESWST3UBH.BioRep2.40kb.cool",
+	"HFFc6_BR2",
+	"4DNESWST3UBH.BioRep3.40kb.cool",
+	"HFFc6_BR3",
+	"4DNFI9GMP2J8.BioRep1.40kb.cool",
+	"H1-hESC_BR1",
+	"4DNFI9GMP2J8.BioRep2.40kb.cool",
+	"H1-hESC_BR2"
+	],
+  "OUT_DIR": "OUTPUT/",
+  "OUT_PREFIX": "40kb"
+}
+

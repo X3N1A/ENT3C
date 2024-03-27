@@ -22,7 +22,8 @@ https://doi.org/10.1101/2024.01.30.577923
          alt="explaination of ENT3C">
 </figure>
 
-Exemplary depiction of ENT3C derivation of the entropy signal $S$ of the contact matrix $\mathbf{A}$ of chromosome 14 binned at 40 kb of the HFFc6 cell line (biological replicate 1). ENT3C's parameters: submatrix dimension $n=300$, window shift $WS=10$, maximum number of data points in $S$, $WN_{\max}=\infty$, were used, resulting in 146 submatrices along the diagonal of the contact matrix. For subsequent Pearson-transformed submatrices $\mathbf{P}$ along the diagonal of $\log{\mathbf{A}}$, ENT3C computes the von Neumann entropies $S_i(\mathbf{P_i})$; the resulting signal $S$ is shown in blue under the matrix. The first two ($\mathbf{P_{1-2}}$), the middle ($\mathbf{P_{73}}$), and the last two Pearson submatrices ($\mathbf{P_{145-146}}$) are shown.
+Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of a contact matrix $\mathbf{A}$. The analysis is exemplified for the pooled BR contact matrix of the HFFc6 cell line for chromosome 14 binned at 40 kb (Methods). ENT3C's was run with  submatrix dimension $n=300$, window shift $\WS=10$, and maximum number of data points in $\mathbf{S}$ $\WN_{\max}=\infty$, resulting in $\WN=146$ submatrices along the diagonal of the contact matrix. For subsequent scaled Pearson-transformed submatrices, $\boldsymbol{\rho}_i$, along the diagonal of $\log{\mathbf{A}}$, ENT3C computes the von Neumann entropies $S(\boldsymbol{\rho}_1), S(\boldsymbol{\rho}_2), \ldots, S(\boldsymbol{\rho}_\WN)$. The resulting signal $\mathbf{S} = \langle S(\boldsymbol{\rho}_1), S(\boldsymbol{\rho}_2), \ldots, S(\boldsymbol{\rho}_\WN) \rangle$ is shown in blue under the matrix. The first two ($\boldsymbol{\rho}_{1-2}$), middle ($\boldsymbol{\rho}_{73}$), and last two submatrices ($\boldsymbol{\rho}_{145-146}$) are shown.
+
 
 # Requirements
 Julia or MATLAB
@@ -84,7 +85,7 @@ where ```N``` is the size of the input contact matrix, ```WS``` is the window sh
 
 ```OUT_DIR: "OUTPUT/"``` $\dots$ output directory. :warning: ```OUT_DIR``` will be concatenated with ```OUTPUT/JULIA/``` or ```OUTPUT/MATLAB/```.
 
-```OUT_PREFIX: "Chr14_40kb"``` $\dots$ prefix for output files.
+```OUT_PREFIX: "40kb"``` $\dots$ prefix for output files.
 
 ```Resolution: 40000``` $\dots$ resolution to be evaluated.
 
@@ -94,7 +95,7 @@ where ```N``` is the size of the input contact matrix, ```WS``` is the window sh
 
 ```SUB_M_SIZE_FIX: null``` $\dots$ fixed submatrix dimension.
 
-```CHRSPLIT: 7``` $\dots$ number of submatrices into which the contact matrix is partitioned into.
+```CHRSPLIT: 10``` $\dots$ number of submatrices into which the contact matrix is partitioned into.
 
 ```WS: 1``` $\dots$ number of bins to the next matrix.
 
@@ -108,47 +109,46 @@ Upon modifying ```config/config.json``` as desired, ```ENT3C.jl``` and ```ENT3C.
 Associated functions are contained in directories ```JULIA_functions/``` and ```MATLAB_functions/```.
 
 **Output files:**
-```Chr14_40kb_ENT3C_similarity.csv``` $\dots$ will contain all combinations of comparisons. The first two columns contain the short names specified in ```FILES``` and the third column ```Q``` the corresponding similarity score.  
+```40kb_ENT3C_similarity.csv``` $\dots$ will contain all combinations of comparisons. The second two columns contain the short names specified in ```FILES``` and the third column ```Q``` the corresponding similarity score.  
 ```
-Sample1		Sample2		Q
-A549_BR1	A549_BR2	0.97407874045475
-A549_BR1	G401_BR1	0.532713480341338
-A549_BR1	G401_BR2	0.44848560340492
-A549_BR1	H1-hESC_BR1	0.132105516752097
-A549_BR1	H1-hESC_BR2	0.0969584300611457
+ChrNr	Sample1	Sample2	Q
+15	A549_BR1	A549_BR2	0.991055440056682
+15	A549_BR1	G401_BR1	0.558213759737198
+15	A549_BR1	G401_BR2	0.593612526651996
 .		.		.
 .		.		.
 .		.		.
 ```
 
-```Chr14_40kb_ENT3C_OUT.csv``` $\dots$ ENT3C output table. 
+```40kb_ENT3C_OUT.csv``` $\dots$ ENT3C output table. 
 ```
-Name		ChrNr	Resolution	WN	WS	binNrStart	binNrEND	START		END		S
-G401_BR1	14	40000		949	2	1		375		0		15000000	3.39298802293101
-G401_BR1	14	40000		949	2	3		377		80000		15080000	3.39929098881715
-G401_BR1	14	40000		949	2	57		379		2240000		15160000	3.38486517014127
-
+Name	ChrNr	Resolution	sub_m_dim	WN	WS	binNrStart	binNrEND	START	END	S
+G401_BR1	15	40000	205	1841	1	1	282	0	11280000	3.27338758846104
+G401_BR1	15	40000	205	1841	1	2	283	40000	11320000	3.27061968317512
+G401_BR1	15	40000	205	1841	1	3	284	80000	11360000	3.25483843736616
 .		.	.		.	.	.		.		.		.		.
 .		.	.		.	.	.		.		.		.		.
 .		.	.		.	.	.		.		.		.		.
 ```
-Each row corresponds to an evaluated submatrix with fields ```Name``` (the short name specified in ```FILES```), ```ChrNr```, ```Resolution```, ```WN=1+floor((N-SUB_M_SIZE)./WS)```, ```binNrStart``` and ```binNrEnd``` correspond to the start and end bin of the submatrix, ```START``` and ```END``` are the corresponding genomic coordinates and ```S``` is the computed von Neumann entropy.
+Each row corresponds to an evaluated submatrix with fields ```Name``` (the short name specified in ```FILES```), ```ChrNr```, ```Resolution```, the sub-matrix dimension ```sub_m_dim```, ```WN=1+floor((N-SUB_M_SIZE)./WS)```, ```binNrStart``` and ```binNrEnd``` correspond to the start and end bin of the submatrix, ```START``` and ```END``` are the corresponding genomic coordinates and ```S``` is the computed von Neumann entropy.
 
-```Chr14_40kb_ENT3C_signals.png``` $\dots$ simple visualization of entropy signals $S$:
+```40kb_ENT3C_signals.png``` $\dots$ simple visualization of entropy signals $S$:
 
+
+Entropy signals $S$ generated by the Julia script ```ENT3C.jl``` for contact matrices of chromosome 15-22 binned at 40 kb in various cell lines:
 <figure>
-    <img src="OUTPUT/MATLAB/Chr14_40kb_ENT3C_signals.png" width="500" height="300" 
-         alt="ENT3C MATLAB Output">
-</figure>
-
-Entropy signals $S$ generated by ```ENT3C.m``` for contact matrices of chromosome 14 binned at 40 kb in various cell lines.
-
-<figure>
-    <img src="OUTPUT/JULIA/Chr14_40kb_ENT3C_OUT.png" width="500" height="300" 
+    <img src="OUTPUT/JULIA/40kb_ENT3C_OUT.png" width="500" height="300" 
          alt="ENT3C Julia Output">
 </figure>
 
-Entropy signals $S$ generated by ```ENT3C.jl``` for contact matrices of chromosome 14 binned at 40 kb in various cell lines.
+
+
+Entropy signals $S$ generated by the MATLAB script ```ENT3C.m``` for contact matrices of chromosomes 15-22 binned at 40 kb in various cell lines.
+<figure>
+    <img src="OUTPUT/MATLAB/40kb_ENT3C_signals.png" width="500" height="300" 
+         alt="ENT3C MATLAB Output">
+</figure>
+
 
 # References
 1. Neumann, J. von., Thermodynamik quantenmechanischer Gesamtheiten. Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen. Mathematisch-Physikalische Klasse 1927. 1927. 273-291.
