@@ -1,28 +1,32 @@
-# ENT3C :duck:
-ENT3C is a method for qunatifying the similarity of 3C-Seq derived chromosomal contact matrices by comparing the "complexity" of patterns contained in smaller submatrices along their diagonals. It is based on the von Neumann entropy<sup>1</sup> and recent work on entropy quantification of Pearson correlation matrices<sup>2</sup>.
+![logo](Figures/LogoSmall.png)
+
+# 
+
+ENT3C is a method for qunatifying the similarity of micro-C/Hi-C derived chromosomal contact matrices. It is based on the von Neumann entropy<sup>1</sup> and recent work on entropy quantification of Pearson correlation matrices<sup>2</sup>.
+For a contact matrix, ENT3C records the change in local pattern *complexity* of smaller Pearson-transformed submatrices along a matrix diagonal to generate a characteristic signal. Similarity is defined as the Pearson correlation between the respective entropy signals of two contact matrices.
 
 https://doi.org/10.1101/2024.01.30.577923 
 
 ## Summary of ENT3C approach
-1. loads cooler files into MATLAB and looks for shared empty bins
-2. ENT3C will extract smaller submatrices $\mathbf{a}$ of dimension $n\times n$ along the diagonal of an input contact matrix 
-4. the logarithm of $\mathbf{a}$ is taken ($nan$ values are set to zero)
-5. $\mathbf{a}$ is transformed into a Pearson correlation matrix $\mathbf{P}$ ($nan$ values are set to zero)
-6. $\mathbf{P}$ is transformed into $\boldsymbol{\rho}=\mathbf{P}/n$ to fulfill the conditions for computing the von Neumann entropy
-7. the von Neumann entropy of $\boldsymbol{\rho}$ is computed as
+1. Loads cooler files and looks for shared empty bins.
+2. ENT3C will extract smaller submatrices $\mathbf{a}$ of dimension $n\times n$ along the diagonal of an input contact matrix $\mathbf{M}$
+4. The logarithm of $\mathbf{a}$ is taken ($nan$ values are set to zero).
+5. $\mathbf{a}$ is transformed into a Pearson correlation matrix $\mathbf{P}$ ($nan$ values are set to zero).
+6. $\mathbf{P}$ is transformed into $\boldsymbol{\rho}=\mathbf{P}/n$ to fulfill the conditions for computing the von Neumann entropy.
+7. The von Neumann entropy of $\boldsymbol{\rho}$ is computed as
 
    $S(\boldsymbol{\rho})=\sum_j \lambda_j \log \lambda_j$
 
    where $\lambda_j$ is the $j$ th eigenvalue of $\boldsymbol{\rho}$
-8. this is repeated for subsequent submatrices along the diagonal of the input matrix and stored in the **"entorpy signal"** $S$
-9. the Pearson correlation between $S$ of two matrices, is used as a similarity metric 
+8. This is repeated for subsequent submatrices along the diagonal of the input matrix and stored in the *entropy signal* $\mathbf{S}\_{M}$.
+9. Similarity $Q$ is defined as the Pearson correlation $r$ between the entropy signals of two matrices: $Q(\mathbf{M}\_1,\mathbf{M}\_2) = r(\mathbf{S}\_{\mathbf{M}\_1},\mathbf{S}\_{\mathbf{M}\_2})$.
 
 <figure>
-    <img src="Figures/ENT3C_explain.png" width="297.358" height="318.837" 
+    <img src="Figures/ENT3C_explain_2cells.png" width="600" 
          alt="explaination of ENT3C">
 </figure>
 
-Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of a contact matrix $\mathbf{A}$. The analysis is exemplified for the pooled BR contact matrix of the HFFc6 cell line for chromosome 14 binned at 40 kb (Methods). ENT3C's was run with  submatrix dimension $n=300$, window shift $WS=10$, and maximum number of data points in $\boldsymbol{S}$, $WN_{\max}=\infty$, resulting in $WN=146$ submatrices along the diagonal of the contact matrix. For subsequent scaled Pearson-transformed submatrices, $\boldsymbol{\rho}\_i$, along the diagonal of $\log{\boldsymbol{A}}$, ENT3C computes the von Neumann entropies $S(\boldsymbol{\rho}\_1), S(\boldsymbol{\rho}\_2), \ldots, S(\boldsymbol{\rho}\_{WN})$. The resulting signal $\mathbf{S} = \langle S(\boldsymbol{\rho}\_{1}), S(\boldsymbol{\rho}\_{2}), \ldots, S(\boldsymbol{\rho}\_{WN}) \rangle$ is shown in blue under the matrix. The first two ($\boldsymbol{\rho}\_{1-2}$), middle ($\boldsymbol{\rho}\_{73}$), and last two submatrices ($\boldsymbol{\rho}\_{145-146}$) are shown.
+Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two contact matrices $\mathbf{M}\_1$ and $\mathbf{M}\_2$. ENT3C's was run with  submatrix dimension $n=300$, window shift $WS=10$, and maximum number of data points in $\boldsymbol{S}$, $WN_{\max}=\infty$, resulting in $WN=147$ submatrices. For subsequent scaled Pearson-transformed submatrices, $\boldsymbol{\rho}\_i$, along the diagonal of $\log{\boldsymbol{A}}$, ENT3C computes the von Neumann entropies $S(\boldsymbol{\rho}\_1), S(\boldsymbol{\rho}\_2), \ldots, S(\boldsymbol{\rho}\_{WN})$. The resulting signal $\mathbf{S} = \langle S(\boldsymbol{\rho}\_{1}), S(\boldsymbol{\rho}\_{2}), \ldots, S(\boldsymbol{\rho}\_{WN}) \rangle$ is shown in blue under the matrix. The first two ($\boldsymbol{\rho}\_{1-2}$), middle ($\boldsymbol{\rho}\_{73}$), and last two submatrices ($\boldsymbol{\rho}\_{146-147}$) are shown.
 
 
 # Requirements
