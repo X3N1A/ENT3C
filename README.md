@@ -1,4 +1,6 @@
-![logo](Figures/LogoSmall.png)
+<figure>
+    <img src="Figures/LogoSmall.png" width="200" >
+</figure>
 
 # 
 
