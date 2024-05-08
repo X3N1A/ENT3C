@@ -87,9 +87,9 @@ where ```N``` is the size of the input contact matrix, ```WS``` is the window sh
 ```DATA_PATH: "DATA"``` $\dots$ input data path. 
 
 ```FILES: ["ENCSR079VIJ.BioRep1.40kb.cool","G401_BR1" ...]``` $\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]``` 
-:bulb: ENT3C also takes ```mcool``` files as input
+:bulb: ENT3C also takes ```mcool``` files as input. Please refer to biological replicates as "_BR%d" in the <SHORT_NAME>.
 
-```OUT_DIR: "OUTPUT/"``` $\dots$ output directory. :warning: ```OUT_DIR``` will be concatenated with ```OUTPUT/JULIA/``` or ```OUTPUT/MATLAB/```.
+```OUT_DIR: "OUTPUT/"``` $\dots$ output directory. ```OUT_DIR``` will be concatenated with ```OUTPUT/JULIA/``` or ```OUTPUT/MATLAB/```.
 
 ```OUT_PREFIX: "40kb"``` $\dots$ prefix for output files.
 
