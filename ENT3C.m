@@ -16,6 +16,11 @@ DATA_PATH=config.DATA_PATH;
 FILES = config.FILES;
 FILES = reshape(FILES,2,size(FILES,1)/2);
 FILES = [cellfun(@(file) fullfile(DATA_PATH, file), FILES(1,:), 'UniformOutput', false); FILES(2,:)];
+if any(contains(FILES(2,:),'_'))% only important in case of computing mean(Q_BRs) mean(Q_nonBRs)
+    Biologicap_replicates=true;
+else
+    Biologicap_replicates=false;
+end
 OUT_DIR=config.OUT_DIR;
 OUT_DIR=[OUT_DIR,'MATLAB'];
 OUT_PREFIX=config.OUT_PREFIX;
@@ -112,23 +117,29 @@ for ChrNr=ChrNrs
             plotted = [plotted;comparisons{f,2}];c=c+1;
         end
     end
-    title(sprintf('Chr%d $\\overline{Q}_{BR}=%4.2f$ $\\overline{Q}_{nonBR}=%4.2f$',...
-        ChrNr,...
+if Biologicap_replicates
+    title(sprintf('Chr%d %dkb $\\overline{Q}_{BR}=%4.2f$ $\\overline{Q}_{nonBR}=%4.2f$',...
+        ChrNr,Resolution/1e3,...
         mean(Similarity.Q(Similarity.ChrNr==ChrNr&strcmp(extractBefore(Similarity.Sample1,'_'),extractBefore(Similarity.Sample2,'_')))),...
         mean(Similarity.Q(Similarity.ChrNr==ChrNr&~strcmp(extractBefore(Similarity.Sample1,'_'),extractBefore(Similarity.Sample2,'_'))))),...
         'interpreter','latex','fontsize',12)
+else
+   title(sprintf('Chr%d %dkb',ChrNr,Resolution/1e3),'interpreter','latex','fontsize',12)
+end
 
     if ChrNr==ChrNrs(end)
         L = arrayfun(@(s) setfield(s, 'META', strrep(s.META, '_', ' ')), FNs);
         legend(L.META,'location','northeastoutside')
     end
+    set(gca,'FontSize',20)
+
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % save output
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 figure(1);
 set(gcf,'Position',[1 189 1920 920])
-saveas(gcf,sprintf('%s/%s_ENT3C_signals.png',OUT_DIR,OUT_PREFIX))
+saveas(gcf,sprintf('%s/%s_ENT3C_signals.svg',OUT_DIR,OUT_PREFIX))
 writetable(ENT3C_OUT,sprintf('%s/%s_ENT3C_OUT.csv',OUT_DIR,OUT_PREFIX),'Delimiter','tab')
 writetable(Similarity,sprintf('%s/%s_ENT3C_similarity.csv',OUT_DIR,OUT_PREFIX),'Delimiter','tab')
 

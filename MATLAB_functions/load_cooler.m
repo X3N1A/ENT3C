@@ -6,7 +6,6 @@ function [microC,BIN_TABLE]=load_cooler(FN,ChrNr,Resolution,Norm)
 % INCLUDE ... index of non-empty bins
 
 % h5disp(FN);
-% 
 
 
 if contains(FN,'mcool')

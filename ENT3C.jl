@@ -11,6 +11,7 @@ WS = config["WS"]
 NormM = config["NormM"]
 DATA_PATH = config["DATA_PATH"]
 FILES = config["FILES"]
+Biological_replicates = any(x -> contains(x, '_'), FILES[2, :])
 FILES = hcat(joinpath.(DATA_PATH, FILES[1:2:end-1]), FILES[2:2:end])
 OUT_PREFIX = config["OUT_PREFIX"]
 CHRSPLIT = config["CHRSPLIT"]
@@ -40,9 +41,9 @@ ENT3C_OUT = main(FILES,Resolution,ChrNrs,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,NormM
 #############################################################################
 # similarity table
 ##############################################################################
-Similarity, PLT = get_similarity_table(ENT3C_OUT)
+Similarity, PLT = get_similarity_table(ENT3C_OUT,Biological_replicates)
 
-savefig(PLT,@sprintf("%s/%s_ENT3C_OUT.png",OUT_DIR,OUT_PREFIX))
+savefig(PLT,@sprintf("%s/%s_ENT3C_OUT.svg",OUT_DIR,OUT_PREFIX))
 CSV.write(@sprintf("%s/%s_ENT3C_OUT.csv",OUT_DIR,OUT_PREFIX), ENT3C_OUT)
 CSV.write(@sprintf("%s/%s_ENT3C_similarity.csv",OUT_DIR,OUT_PREFIX), Similarity)
 	
