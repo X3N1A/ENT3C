@@ -194,7 +194,7 @@ function get_pairwise_combs(SAMPLES)
 
 end
 
-function get_similarity_table(ENT3C_OUT)
+function get_similarity_table(ENT3C_OUT,Biological_replicates)
 
         Similarity = DataFrame(ChrNr= Vector{Int}[], Sample1 = Vector{String}[], Sample2 = Vector{String}[],Q = Vector{Int}[])
         PLT=[]
@@ -232,12 +232,16 @@ function get_similarity_table(ENT3C_OUT)
                         plot!(plt, legend=:outertopright)
                 end
 	        #@df Similarity plot(1:size(Similarity,1), [:Sample1, :Sample2], group = :Replicate, colour = )
-	        cell_line(x) = match(r"^(.*?)_", x).captures[1] # r==regex, ^(.*?) = any chars, then underscore
-	        BR = filter(row -> cell_line(row.Sample1)==cell_line(row.Sample2) && row.ChrNr==ChrNr,Similarity)
-	        BR = mean(BR.Q)
-	        nonBR = filter(row -> cell_line(row.Sample1)!=cell_line(row.Sample2) && row.ChrNr==ChrNr,Similarity)
-	        nonBR = mean(nonBR.Q)
-	        title!(plt,@sprintf("Chr%d \$\\overline{Q}_{BR}=%4.2f\$ \$\\overline{Q}_{nonBR}=%4.2f\$", ChrNr, BR, nonBR), fontsize=12, interpreter=:latex)
+                if Biological_replicates==true
+        	        cell_line(x) = match(r"^(.*?)_?", x).captures[1] # r==regex, ^(.*?) = any chars, then underscore
+	                BR = filter(row -> cell_line(row.Sample1)==cell_line(row.Sample2) && row.ChrNr==ChrNr,Similarity)
+	                BR = mean(BR.Q)
+	                nonBR = filter(row -> cell_line(row.Sample1)!=cell_line(row.Sample2) && row.ChrNr==ChrNr,Similarity)
+	                nonBR = mean(nonBR.Q)
+	                title!(plt,@sprintf("Chr%d \$\\overline{Q}_{BR}=%4.2f\$ \$\\overline{Q}_{nonBR}=%4.2f\$", ChrNr, BR, nonBR), fontsize=12, interpreter=:latex)
+                else
+                        title!(plt,@sprintf("Chr%d",ChrNr))
+                end
 	        push!(PLT, plt)
         end
         PLT=plot(PLT...,size=(1801,935))
