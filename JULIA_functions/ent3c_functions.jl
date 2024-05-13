@@ -134,10 +134,13 @@ function vN_entropy(M::Matrix{Float64},SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,BIN_TAB
         end
 
         WN=Int(1+floor((N-SUB_M_SIZE)./WS))
-	while WN>WN_MAX
-            WS=WS+1
-            WN=Int(1+floor((N-SUB_M_SIZE)./WS))
-	end
+        if WN_MAX!=nothing
+            while WN>WN_MAX
+               WS=WS+1
+               WN=Int(1+floor((N-SUB_M_SIZE)./WS))
+            end
+        end
+
 
         R1=collect(1:WS:N)
         R1=R1[1:WN]
