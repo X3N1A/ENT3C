@@ -24,8 +24,16 @@ counts = h5read(FN,sprintf('%s/pixels/count',preStr));
 
 BINS = [h5read(FN,sprintf('%s/bins/start',preStr)) h5read(FN,sprintf('%s/bins/end',preStr))];
 BINS = [(1:size(BINS,1))',BINS];
+<<<<<<< Updated upstream:load_cooler.m
 weights = h5read(FN,sprintf('%s/bins/weight',preStr));
 
+=======
+if Norm==1
+    weights = h5read(FN,sprintf('%s/bins/weight',preStr));
+else
+    weights = nan(size(BINS,1),1);
+end
+>>>>>>> Stashed changes:MATLAB_functions/load_cooler.m
 chrs = string([h5read(FN,sprintf('%s/bins/chrom',preStr))]);
 BIN_TABLE = table(chrs,BINS(:,1),BINS(:,2),BINS(:,3),weights,...
     'VariableNames',{'chrs','binNrALL','START','END','weights'});
