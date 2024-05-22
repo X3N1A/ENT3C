@@ -93,7 +93,7 @@ where ```N``` is the size of the input contact matrix, ```WS``` is the window sh
 
 ```OUT_PREFIX: "40kb"``` $\dots$ prefix for output files.
 
-```Resolution: 40000``` $\dots$ resolution to be evaluated.
+```Resolution: "40e3,100e3"``` $\dots$ resolutions to be evaluated.
 
 ```ChrNr: 14``` $\dots$ chromosome number to be evaluated.
 

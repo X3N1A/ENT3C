@@ -2,10 +2,10 @@
   "WN_MAX": 5e3,
   "CHRSPLIT": 10,
   "SUB_M_SIZE_FIX": null,
-  "ChrNr": "1:22",
-  "Resolution": 40000,
+  "ChrNr": "21:22",
+  "Resolution": "40e3,100e3",
   "WS": 1,
-  "NormM": 1,
+  "NormM": 0,
   "DATA_PATH": "/HDD3/DocumentsHDD3/07_2022-/Mapping",
   "FILES": [
 	"ENCSR079VIJ_G401/PreProcessed/ENCSR079VIJ_G401combined.mcool",
@@ -20,6 +20,6 @@
 	"H1-hESC"
 	],
   "OUT_DIR": "OUTPUT/",
-  "OUT_PREFIX": "40kb_normalized"
+  "OUT_PREFIX": "multi_resolutions"
 }
 
