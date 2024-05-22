@@ -3,7 +3,7 @@
   "CHRSPLIT": 10,
   "SUB_M_SIZE_FIX": null,
   "ChrNr": "15:22",
-  "Resolution": 40000,
+  "Resolution": "40000",
   "WS": 1,
   "NormM": 0,
   "DATA_PATH": "DATA",
