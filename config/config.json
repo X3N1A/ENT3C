@@ -31,7 +31,7 @@
 	"4DNFI9GMP2J8.BioRep2.40kb.cool",
 	"H1-hESC_BR2"
 	],
-  "OUT_DIR": "OUTPUT/",
+  "OUT_DIR": "OUTPUT_TEMP/",
   "OUT_PREFIX": "40kb"
 }
 

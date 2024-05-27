@@ -129,6 +129,7 @@ end
 function vN_entropy(M::Matrix{Float64},SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,BIN_TABLE)
         S=Vector{Float64}(undef, 0)
         N::Int=size(M,1)
+        
 	if SUB_M_SIZE_FIX==nothing
 	    SUB_M_SIZE=round(N/CHRSPLIT)
         else
@@ -190,11 +191,13 @@ function get_pairwise_combs(SAMPLES)
 
 
         SAMPLE_IDX = 1:length(SAMPLES)
-        
+        if SAMPLE_IDX>1 
         comparisons = collect(combinations(SAMPLE_IDX,2))
 
         comparisons = map(comp -> SAMPLES[comp], comparisons)
-
+        else
+        comparisons = SAMPLES
+        end
         return comparisons
 
 end

@@ -19,7 +19,7 @@
 	"4DNFI9GMP2J8_H1-hESC/PreProcessed/4DNFI9GMP2J8_H1-hESCcombined.mcool",
 	"H1-hESC"
 	],
-  "OUT_DIR": "OUTPUT/",
+  "OUT_DIR": "OUTPUT_TEMP/",
   "OUT_PREFIX": "multi_resolutions"
 }
 

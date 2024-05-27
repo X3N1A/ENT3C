@@ -2,7 +2,7 @@ using DataFrames, BenchmarkTools, JSON, Printf, Plots, ColorSchemes
 
 include("JULIA_functions/ent3c_functions.jl")
 
-config = JSON.parsefile("config/config.pooledBRs.json")
+config = JSON.parsefile("config/config.json")
 
 SUB_M_SIZE_FIX = config["SUB_M_SIZE_FIX"]
 WN_MAX = config["WN_MAX"]
@@ -42,9 +42,11 @@ ENT3C_OUT = main(FILES,Resolutions,ChrNrs,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,Norm
 
 #############################################################################
 # similarity table
-##############################################################################
-Similarity = get_similarity_table(ENT3C_OUT,ChrNrs,Resolutions,Biological_replicates)
-
+#############################################################################
+SAMPLES::Array=unique(ENT3C_OUT.Name)
+if length(SAMPLES)>1 
+        Similarity = get_similarity_table(ENT3C_OUT,ChrNrs,Resolutions,Biological_replicates)
+        CSV.write(@sprintf("%s/%s_ENT3C_similarity.csv",OUT_DIR,OUT_PREFIX), Similarity)
+end
 CSV.write(@sprintf("%s/%s_ENT3C_OUT.csv",OUT_DIR,OUT_PREFIX), ENT3C_OUT)
-CSV.write(@sprintf("%s/%s_ENT3C_similarity.csv",OUT_DIR,OUT_PREFIX), Similarity)
 	

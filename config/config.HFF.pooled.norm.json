@@ -1,0 +1,17 @@
+{
+  "WN_MAX": 4000,
+  "CHRSPLIT": null,
+  "SUB_M_SIZE_FIX": 300,
+  "ChrNr": "6",
+  "Resolution": "10000",
+  "WS": 1,
+  "NormM": 1,
+  "DATA_PATH": "/HDD3/DocumentsHDD3/07_2022-/Mapping",
+  "FILES": [
+	"4DNESWST3UBH_HFFc6/PreProcessed/4DNESWST3UBH_HFFc6combined.mcool",
+	"HFFc6"
+	],
+  "OUT_DIR": "OUTPUT/HFFc6/",
+  "OUT_PREFIX": "HFFc6_normalized_pooled"
+}
+
