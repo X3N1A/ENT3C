@@ -27,12 +27,10 @@ if !isdir(OUT_DIR)
     mkpath(OUT_DIR)
 end
 
-if contains(config["ChrNr"],":")
-        ChrNrs_1, ChrNrs_2 = parse.(Int, split(config["ChrNr"], ':'))
-        ChrNrs = ChrNrs_1:ChrNrs_2
-    else
-        ChrNrs = parse.(Int, config["ChrNr"])
-end
+ChrNrs = config["ChrNr"]
+ChrNrs = split(ChrNrs, ",")
+ChrNrs = [parse(Float64, c) |> Int for c in ChrNrs]
+
 
 #############################################################################
 # ENT3C table

@@ -95,7 +95,7 @@ where ```N``` is the size of the input contact matrix, ```WS``` is the window sh
 
 ```Resolution: "40e3,100e3"``` $\dots$ resolutions to be evaluated.
 
-```ChrNr: 14``` $\dots$ chromosome number to be evaluated.
+```ChrNr: "14,15"``` $\dots$ chromosome numbers to be evaluated.
 
 ```NormM: 0``` $\dots$ input contact matrices can be balanced. If ```NormM:1```, balancing weights in cooler are applied.
 
