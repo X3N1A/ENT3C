@@ -2,10 +2,10 @@
   "WN_MAX": 5e3,
   "CHRSPLIT": 10,
   "SUB_M_SIZE_FIX": null,
-  "ChrNr": "15:22",
-  "Resolution": "40000",
+  "ChrNr": "20,21,22",
+  "Resolution": "40000,100000",
   "WS": 1,
-  "NormM": 0,
+  "NormM": 1,
   "DATA_PATH": "DATA",
   "FILES": [
 	"ENCSR079VIJ.BioRep1.40kb.cool",
@@ -32,6 +32,6 @@
 	"H1-hESC_BR2"
 	],
   "OUT_DIR": "OUTPUT_TEMP/",
-  "OUT_PREFIX": "40kb"
+  "OUT_PREFIX": "normalized"
 }
 

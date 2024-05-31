@@ -36,16 +36,16 @@ function main(FILES,Resolutions,ChrNrs,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,NormM)
 		        for f in FNs
 		
 		            FN = f.FN
-		            M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution,0)
+		            M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution,NormM)
 		
 		            INCLUDE = collect(1:size(M,1))
 		            INCLUDE = setdiff(INCLUDE,EXCLUDE)
 		            M = M[INCLUDE,INCLUDE]
 		
 		            BIN_TABLE = BIN_TABLE[INCLUDE,:]
-		
-		            S, SUB_M_SIZE1, WN1, WS1, BIN_TABLE_NEW = vN_entropy(M,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,BIN_TABLE)
-		
+		            S, SUB_M_SIZE1, WN1, WS1, BIN_TABLE_NEW = vN_entropy(M,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,BIN_TABLE,FN)
+	                    print(Resolution," ",ChrNr," ",FN,"\n")	
+
 		            N = length(S)
 		
 		            OUT1 = DataFrame(Name=fill(f.META,N),ChrNr=fill(ChrNr,N),
@@ -126,7 +126,8 @@ function load_cooler(FN, ChrNr, Resolution, NormM)
 end
 
 
-function vN_entropy(M::Matrix{Float64},SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,BIN_TABLE)
+function vN_entropy(M::Matrix{Float64},SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,BIN_TABLE,F)
+        print(F,"\n")
         S=Vector{Float64}(undef, 0)
         N::Int=size(M,1)
         
@@ -154,6 +155,7 @@ function vN_entropy(M::Matrix{Float64},SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,BIN_TAB
 
         M=log.(M)
         BIN_TABLE_NEW = Array{Int64}(undef, 0,4)
+        m=[]
 	for rr in 1:WN
             m=M[R[rr,1]:R[rr,2],R[rr,1]:R[rr,2]]
             replace!(m,NaN=>minimum(filter(!isnan,m)))
@@ -189,9 +191,9 @@ end
 
 function get_pairwise_combs(SAMPLES)
 
-
+        comparisons=[]
         SAMPLE_IDX = 1:length(SAMPLES)
-        if SAMPLE_IDX>1 
+        if length(SAMPLE_IDX)>1 
         comparisons = collect(combinations(SAMPLE_IDX,2))
 
         comparisons = map(comp -> SAMPLES[comp], comparisons)
