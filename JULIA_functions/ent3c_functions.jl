@@ -158,30 +158,36 @@ function vN_entropy(M::Matrix{Float64},SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,BIN_TAB
         m=[]
 	for rr in 1:WN
             m=M[R[rr,1]:R[rr,2],R[rr,1]:R[rr,2]]
-            replace!(m,NaN=>minimum(filter(!isnan,m)))
-            P = cor(m);
+            if !all(isnan, m)
+                    replace!(m,NaN=>minimum(filter(!isnan,m)))
+                    P = cor(m);
 
-            zero_variance_indices = all(m .== 0, dims=2) .& all(m .== 0, dims=1)
-            P[zero_variance_indices] .= 0
-            replace!(P,NaN=>0)
-
-            rho=P./size(P,1);
+                    zero_variance_indices = all(m .== 0, dims=2) .& all(m .== 0, dims=1)
+	            P[zero_variance_indices] .= 0
+	            replace!(P,NaN=>0)
+	
+	            rho=P./size(P,1);
+			
+	            #lam = eigen(rho);lam = lam.values
+	            lam = eigvals(rho)
+		    lam = lam[lam.>0];
 		
-            #lam = eigen(rho);lam = lam.values
-            lam = eigvals(rho)
-	    lam = lam[lam.>0];
+	            #gr()
+	            #heatmap(rho, aspect_ratio = 1, legend = false, color=:jet, axis = :square)
 	
-            #gr()
-            #heatmap(rho, aspect_ratio = 1, legend = false, color=:jet, axis = :square)
-
-
-	    ENT = -sum(real(lam.*log.(lam)));
 	
-	    S = vcat(S,ENT)
+		    ENT = -sum(real(lam.*log.(lam)));
+            else
+                    ENT = 0
+            end
+        	    S = vcat(S,ENT)
 
-            BIN_TABLE_NEW = vcat(BIN_TABLE_NEW,
+                    BIN_TABLE_NEW = vcat(BIN_TABLE_NEW,
                                  [BIN_TABLE.binNr[R[rr,1]],BIN_TABLE.binNr[R[rr,2]],
                                   BIN_TABLE.START[R[rr,1]],BIN_TABLE.END[R[rr,2]]]')
+                
+                    
+               
 	end
 
 	return(S,SUB_M_SIZE,WN,WS,BIN_TABLE_NEW)
