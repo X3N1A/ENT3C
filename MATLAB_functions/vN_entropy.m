@@ -1,4 +1,4 @@
-function [S, SUB_M_SIZE, WN, WS, BIN_TABLE_NEW] = vN_entropy(M,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,BIN_TABLE)
+function [S, SUB_M_SIZE, WN, phi, BIN_TABLE_NEW] = vN_entropy(M,SUB_M_SIZE_FIX,CHRSPLIT,PHI_MAX,phi,BIN_TABLE)
 
 S=[];BIN_TABLE_NEW=[];
 N=size(M,1);
@@ -9,13 +9,13 @@ else
     SUB_M_SIZE = SUB_M_SIZE_FIX;
 end
 
-WN=1+floor((N-SUB_M_SIZE)./WS);
-while WN>WN_MAX
-    WS=WS+1;
-    WN=1+floor((N-SUB_M_SIZE)./WS);
+WN=1+floor((N-SUB_M_SIZE)./phi);
+while WN>PHI_MAX
+    phi=phi+1;
+    WN=1+floor((N-SUB_M_SIZE)./phi);
 end
 
-R1=1:WS:size(M,1);R1=R1(1:WN);
+R1=1:phi:size(M,1);R1=R1(1:WN);
 R2=R1+SUB_M_SIZE-1;R2=R2(1:WN);
 R=[R1',R2'];
 

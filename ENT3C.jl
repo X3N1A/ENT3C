@@ -2,7 +2,7 @@ using DataFrames, BenchmarkTools, JSON, Printf, Plots, ColorSchemes
 
 include("JULIA_functions/ent3c_functions.jl")
 
-config = JSON.parsefile("config/config.json")
+config = JSON.parsefile("config/config.multiResolution.pooledBRs.json")
 
 SUB_M_SIZE_FIX = config["SUB_M_SIZE_FIX"]
 PHI_MAX = config["PHI_MAX"]

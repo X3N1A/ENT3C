@@ -8,7 +8,7 @@ end
 function main(FILES, Resolutions, ChrNrs, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, NormM)
 
     ENT3C_OUT = DataFrame(Name=Vector{String}[], ChrNr=Vector{Int}[], Resolution=Vector{Int}[],
-        n=Vector{Int}[], WN=Vector{Int}[], phi=Vector{Int}[], binNrStart=Vector{Int}[],
+        n=Vector{Int}[], PHI=Vector{Int}[], phi=Vector{Int}[], binNrStart=Vector{Int}[],
         binNrEnd=Vector{Int}[], START=Vector{Int}[], END=Vector{Int}[], S=Vector{Float64}[])
     for Resolution in Resolutions
         for ChrNr in ChrNrs
@@ -47,14 +47,14 @@ function main(FILES, Resolutions, ChrNrs, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi
 
                 BIN_TABLE = BIN_TABLE[INCLUDE, :]
 
-                S, SUB_M_SIZE1, WN1, phi1, BIN_TABLE_NEW = vN_entropy(M, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, BIN_TABLE, FN)
+                S, SUB_M_SIZE1, PHI_1, phi_1, BIN_TABLE_NEW = vN_entropy(M, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, BIN_TABLE, FN)
                 print(Resolution, " ", ChrNr, " ", FN, "\n")
 
                 N = length(S)
 
                 OUT1 = DataFrame(Name=fill(f.META, N), ChrNr=fill(ChrNr, N),
                     Resolution=fill(Resolution, N), n=fill(SUB_M_SIZE1, N),
-                    WN=fill(WN1, N), phi=fill(phi1, N), binNrStart=BIN_TABLE_NEW[:, 1],
+                    PHI=fill(PHI_1, N), phi=fill(phi_1, N), binNrStart=BIN_TABLE_NEW[:, 1],
                     binNrEnd=BIN_TABLE_NEW[:, 2], START=BIN_TABLE_NEW[:, 3], END=BIN_TABLE_NEW[:, 4], S=S)
                 ENT3C_OUT = vcat(ENT3C_OUT, OUT1)
 
@@ -141,26 +141,26 @@ function vN_entropy(M::Matrix{Float64}, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, 
         SUB_M_SIZE = SUB_M_SIZE_FIX
     end
 
-    WN = Int(1 + floor((N - SUB_M_SIZE) ./ phi))
+    PHI = Int(1 + floor((N - SUB_M_SIZE) ./ phi))
     if PHI_MAX != nothing
-        while WN > PHI_MAX
+        while PHI > PHI_MAX
             phi = phi + 1
-            WN = Int(1 + floor((N - SUB_M_SIZE) ./ phi))
+            PHI = Int(1 + floor((N - SUB_M_SIZE) ./ phi))
         end
     end
 
 
     R1 = collect(1:phi:N)
-    R1 = R1[1:WN]
+    R1 = R1[1:PHI]
     R2 = R1 .+ SUB_M_SIZE .- 1
-    R2 = R2[1:WN]
+    R2 = R2[1:PHI]
     R = hcat(R1, R2)
     R = convert(Matrix{Int64}, R)
 
     M = log.(M)
     BIN_TABLE_NEW = Array{Int64}(undef, 0, 4)
     m = []
-    for rr in 1:WN
+    for rr in 1:PHI
         m = M[R[rr, 1]:R[rr, 2], R[rr, 1]:R[rr, 2]]
         if !all(isnan, m)
             replace!(m, NaN => minimum(filter(!isnan, m)))
@@ -193,7 +193,7 @@ function vN_entropy(M::Matrix{Float64}, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, 
 
     end
 
-    return (S, SUB_M_SIZE, WN, phi, BIN_TABLE_NEW)
+    return (S, SUB_M_SIZE, PHI, phi, BIN_TABLE_NEW)
 
 end
 

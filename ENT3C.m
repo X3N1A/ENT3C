@@ -3,7 +3,7 @@ addpath('MATLAB_functions/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % load json file
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-config = fileread('config/config.json');
+config = fileread('config/config.multiResolution.pooledBRs.json');
 config = jsondecode(config);
 PHI_MAX=config.PHI_MAX;
 CHRSPLIT=config.CHRSPLIT;
@@ -75,15 +75,15 @@ for Resolution=Resolutions
 
             writetable(BIN_TABLE,sprintf('%s_chr%d_BINMATRIXMATLAB.csv',FN,ChrNr),'Delimiter','tab')
 
-            [S, SUB_M_SIZE1, WN1, WS1, BIN_TABLE_NEW] = vN_entropy(M,SUB_M_SIZE_FIX,CHRSPLIT,PHI_MAX,phi,BIN_TABLE);
+            [S, SUB_M_SIZE1, PHI_1, phi_1, BIN_TABLE_NEW] = vN_entropy(M,SUB_M_SIZE_FIX,CHRSPLIT,PHI_MAX,phi,BIN_TABLE);
             N = length(S);
 
             OUT1 = table(repmat({FNs(f).META},N,1),...
                 repmat(ChrNr,N,1),repmat(Resolution,N,1),...
-                repmat(SUB_M_SIZE1,N,1),repmat(WN1,N,1),repmat(WS1,N,1),...
+                repmat(SUB_M_SIZE1,N,1),repmat(PHI_1,N,1),repmat(phi_1,N,1),...
                 BIN_TABLE_NEW(:,1),BIN_TABLE_NEW(:,2),...
                 BIN_TABLE_NEW(:,3),BIN_TABLE_NEW(:,4),S,...
-                'VariableNames',{'Name','ChrNr','Resolution','sub_m_dim','WN','phi',...
+                'VariableNames',{'Name','ChrNr','Resolution','n','PHI','phi',...
                 'binNrStart','binNrEND','START','END','S'});
 
             ENT3C_OUT=[ENT3C_OUT;OUT1];
@@ -148,7 +148,6 @@ if numel(SAMPLES)>1
                 legend(plotted,'location','northeastoutside')
             end
             set(gca,'FontSize',9)
-            plotted
         end
 
         figure(Resolution);
