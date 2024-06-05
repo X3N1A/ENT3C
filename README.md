@@ -28,7 +28,7 @@ https://doi.org/10.1101/2024.01.30.577923
          alt="explaination of ENT3C">
 </figure>
 
-Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two contact matrices $\mathbf{M}\_1$ and $\mathbf{M}\_2$. ENT3C's was run with  submatrix dimension $n=300$, window shift $WS=10$, and maximum number of data points in $\boldsymbol{S}$, $WN_{\max}=\infty$, resulting in $WN=147$ submatrices. For subsequent scaled Pearson-transformed submatrices, $\boldsymbol{\rho}\_i$, along the diagonal of $\log{\boldsymbol{A}}$, ENT3C computes the von Neumann entropies $S(\boldsymbol{\rho}\_1), S(\boldsymbol{\rho}\_2), \ldots, S(\boldsymbol{\rho}\_{WN})$. The resulting signal $\mathbf{S} = \langle S(\boldsymbol{\rho}\_{1}), S(\boldsymbol{\rho}\_{2}), \ldots, S(\boldsymbol{\rho}\_{WN}) \rangle$ is shown in blue under the matrix. The first two ($\boldsymbol{\rho}\_{1-2}$), middle ($\boldsymbol{\rho}\_{73}$), and last two submatrices ($\boldsymbol{\rho}\_{146-147}$) are shown.
+Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two contact matrices $\mathbf{M}\_1$ and $\mathbf{M}\_2$. ENT3C's was run with  submatrix dimension $n=300$, window shift $phi=10$, and maximum number of data points in $\boldsymbol{S}$, $PHI_{\max}=\infty$, resulting in $PHI=147$ submatrices. For subsequent scaled Pearson-transformed submatrices, $\boldsymbol{\rho}\_i$, along the diagonal of $\log{\boldsymbol{A}}$, ENT3C computes the von Neumann entropies $S(\boldsymbol{\rho}\_1), S(\boldsymbol{\rho}\_2), \ldots, S(\boldsymbol{\rho}\_{PHI})$. The resulting signal $\mathbf{S} = \langle S(\boldsymbol{\rho}\_{1}), S(\boldsymbol{\rho}\_{2}), \ldots, S(\boldsymbol{\rho}\_{PHI}) \rangle$ is shown in blue under the matrix. The first two ($\boldsymbol{\rho}\_{1-2}$), middle ($\boldsymbol{\rho}\_{73}$), and last two submatrices ($\boldsymbol{\rho}\_{146-147}$) are shown.
 
 
 # Requirements
@@ -43,9 +43,9 @@ Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were te
 | --- | --- | --- | --- |
 | H1-hESC | 1 | 4DNES21D8SP8 | 4DNFING6ZFD, 4DNFIBMG8YA3, 4DNFIMT4PHZ1, 4DNFI8GM4EL9 |
 | H1-hESC | 2 | 4DNES21D8SP8 | 4DNFIIYUGYBU, 4DNFI89L17XY, 4DNFIXP9MVBU, 4DNFI2YHYAJO, 4DNFIULY29IQ |
-| HFFc6   | 1 | 4DNESWST3UBH | 4DNFIN7IIIY6, 4DNFIJZDEIZ3, 4DNFIYBTHGNA, 4DNFIK8UIB5B |
-| HFFc6   | 2 | 4DNESWST3UBH | 4DNFIF5F4HRG, 4DNFIK82YRNM, 4DNFIATCW955, 4DNFIZU6ADT1, 4DNFIKWV6BY2  |
-| HFFc6   | 3 | 4DNESWST3UBH | 4DNFIFJL4JIH, 4DNFIONHB78N, 4DNFIG1ZOVIM, 4DNFIPKVL9YI, 4DNFIJM966UR, 4DNFIV8JNJB8 |
+| HFFc6   | 1 | 4DNESphiT3UBH | 4DNFIN7IIIY6, 4DNFIJZDEIZ3, 4DNFIYBTHGNA, 4DNFIK8UIB5B |
+| HFFc6   | 2 | 4DNESphiT3UBH | 4DNFIF5F4HRG, 4DNFIK82YRNM, 4DNFIATCW955, 4DNFIZU6ADT1, 4DNFIKWV6BY2  |
+| HFFc6   | 3 | 4DNESphiT3UBH | 4DNFIFJL4JIH, 4DNFIONHB78N, 4DNFIG1ZOVIM, 4DNFIPKVL9YI, 4DNFIJM966UR, 4DNFIV8JNJB8 |
 
 **Hi-C** 
 | Cell line | Biological Replicate (BR) | Accession (Experiemnt set)  | Accession (```BAM```) |
@@ -76,9 +76,9 @@ Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) call a 
 
 ```SUB_M_SIZE_FIX``` can be either be fixed by or alternatively, one can specify ```CHRSPLIT```; in this case ```SUB_M_SIZE_FIX``` will be computed internally to fit the number of desired times the contact matrix is to be paritioned into. 
 
-```WN=1+floor((N-SUB_M_SIZE)./WS)```
+```PHI=1+floor((N-SUB_M_SIZE)./phi)```
 
-where ```N``` is the size of the input contact matrix, ```WS``` is the window shift, ```WN``` is the number of evaluated submatrices (consequently the number of data points in $S$).
+where ```N``` is the size of the input contact matrix, ```phi``` is the window shift, ```PHI``` is the number of evaluated submatrices (consequently the number of data points in $S$).
 
 <br>
 
@@ -93,20 +93,20 @@ where ```N``` is the size of the input contact matrix, ```WS``` is the window sh
 
 ```OUT_PREFIX: "40kb"``` $\dots$ prefix for output files.
 
-```Resolution: "40e3,100e3"``` $\dots$ resolutions to be evaluated.
+```Resolution: "40e3,100e3"``` $\dots$ resolutions to be evaluated. 
 
-```ChrNr: "14,15"``` $\dots$ chromosome numbers to be evaluated.
+```ChrNr: "15:22"``` $\dots$ chromosome numbers to be evaluated. Set individual chromosomes as ```ChrNr: "15,17,22"```. 
 
-```NormM: 0``` $\dots$ input contact matrices can be balanced. If ```NormM:1```, balancing weights in cooler are applied.
+```NormM: 0``` $\dots$ input contact matrices can be balanced. If ```NormM: 1```, balancing weights in cooler are applied.
 
 ```SUB_M_SIZE_FIX: null``` $\dots$ fixed submatrix dimension.
 
 ```CHRSPLIT: 10``` $\dots$ number of submatrices into which the contact matrix is partitioned into.
 
-```WS: 1``` $\dots$ number of bins to the next matrix.
+```phi: 1``` $\dots$ number of bins to the next matrix.
 
-```WN_MAX: 1000``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. 
-If set, $WS$ is increased until $WN \approx WN_{\max}$.
+```PHI_MAX: 1000``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. 
+If set, $phi$ is increased until $PHI \approx PHI_{\max}$.
 
 # Running main scripts 
 
@@ -117,26 +117,28 @@ Associated functions are contained in directories ```JULIA_functions/``` and ```
 **Output files:**
 ```40kb_ENT3C_similarity.csv``` $\dots$ will contain all combinations of comparisons. The second two columns contain the short names specified in ```FILES``` and the third column ```Q``` the corresponding similarity score.  
 ```
-ChrNr	Sample1	Sample2	Q
-15	A549_BR1	A549_BR2	0.991055440056682
-15	A549_BR1	G401_BR1	0.558213759737198
-15	A549_BR1	G401_BR2	0.593612526651996
-.		.		.
-.		.		.
-.		.		.
+Resolution	ChrNr	Sample1	Sample2	Q
+40000	15	A549_BR1	A549_BR2	0.995462832813044
+40000	15	A549_BR1	G401_BR1	0.565465091507697
+40000	15	A549_BR1	G401_BR2	0.587395560010108
+40000	15	A549_BR1	H1-hESC_BR1	0.511892949109715
+40000	15	A549_BR1	H1-hESC_BR2	0.46675009291503
+.		.	.		.	.	.		.		.		.		.
+.		.	.		.	.	.		.		.		.		.
+.		.	.		.	.	.		.		.		.		.
 ```
 
 ```40kb_ENT3C_OUT.csv``` $\dots$ ENT3C output table. 
 ```
-Name	ChrNr	Resolution	sub_m_dim	WN	WS	binNrStart	binNrEND	START	END	S
-G401_BR1	15	40000	205	1841	1	1	282	0	11280000	3.27338758846104
-G401_BR1	15	40000	205	1841	1	2	283	40000	11320000	3.27061968317512
-G401_BR1	15	40000	205	1841	1	3	284	80000	11360000	3.25483843736616
+Name	ChrNr	Resolution	sub_m_dim	WN	phi	binNrStart	binNrEND	START	END	S
+G401_BR1	15	40000	292	877	2	1	369	0	14760000	3.70691992953067
+G401_BR1	15	40000	292	877	2	3	371	80000	14840000	3.68605952020314
+G401_BR1	15	40000	292	877	2	12	373	440000	14920000	3.67630110653009
 .		.	.		.	.	.		.		.		.		.
 .		.	.		.	.	.		.		.		.		.
 .		.	.		.	.	.		.		.		.		.
 ```
-Each row corresponds to an evaluated submatrix with fields ```Name``` (the short name specified in ```FILES```), ```ChrNr```, ```Resolution```, the sub-matrix dimension ```sub_m_dim```, ```WN=1+floor((N-SUB_M_SIZE)./WS)```, ```binNrStart``` and ```binNrEnd``` correspond to the start and end bin of the submatrix, ```START``` and ```END``` are the corresponding genomic coordinates and ```S``` is the computed von Neumann entropy.
+Each row corresponds to an evaluated submatrix with fields ```Name``` (the short name specified in ```FILES```), ```ChrNr```, ```Resolution```, the sub-matrix dimension ```sub_m_dim```, ```PHI=1+floor((N-SUB_M_SIZE)./phi)```, ```binNrStart``` and ```binNrEnd``` correspond to the start and end bin of the submatrix, ```START``` and ```END``` are the corresponding genomic coordinates and ```S``` is the computed von Neumann entropy.
 
 ```40kb_ENT3C_signals.png``` $\dots$ simple visualization of entropy signals $S$:
 
@@ -146,8 +148,6 @@ Entropy signals $S$ generated by the Julia script ```ENT3C.jl``` for contact mat
     <img src="OUTPUT/JULIA/40kb_ENT3C_OUT.png" style="max-width:100%;"
          alt="ENT3C Julia Output">
 </figure>
-
-
 
 Entropy signals $S$ generated by the MATLAB script ```ENT3C.m``` for contact matrices of chromosomes 15-22 binned at 40 kb in various cell lines.
 <figure>
