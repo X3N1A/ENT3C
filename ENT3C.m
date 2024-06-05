@@ -5,12 +5,11 @@ addpath('MATLAB_functions/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 config = fileread('config/config.json');
 config = jsondecode(config);
-
-WN_MAX=config.WN_MAX;
+PHI_MAX=config.PHI_MAX;
 CHRSPLIT=config.CHRSPLIT;
 SUB_M_SIZE_FIX=config.SUB_M_SIZE_FIX;
 Resolutions=str2num(config.Resolution);
-WS=config.WS;
+phi=config.phi;
 NormM=config.NormM;
 DATA_PATH=config.DATA_PATH;
 FILES = config.FILES;
@@ -30,8 +29,8 @@ end
 if ~exist(OUT_DIR, 'dir')
     mkdir(OUT_DIR);
 end
-
 ChrNrs=str2num(config.ChrNr);
+
 ENT3C_OUT=[];
 for Resolution=Resolutions
     for ChrNr=ChrNrs
@@ -54,7 +53,11 @@ for Resolution=Resolutions
         for f = 1:numel(FNs)
             FN=FNs(f).FN;
             [M,BIN_TABLE]=load_cooler(FN,ChrNr,Resolution,NormM);
-            EXCLUDE=[EXCLUDE;BIN_TABLE.binNr(isnan(BIN_TABLE.CONTACT))];
+            if NormM==0
+                EXCLUDE=[EXCLUDE;BIN_TABLE.binNr(isnan(BIN_TABLE.CONTACT))];
+                    elseif NormM==1
+                EXCLUDE=[EXCLUDE;BIN_TABLE.binNr(isnan(BIN_TABLE.CONTACT));BIN_TABLE.binNr(isnan(BIN_TABLE.weights))];
+            end
         end
         EXCLUDE=unique(EXCLUDE);
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -70,8 +73,9 @@ for Resolution=Resolutions
             M = M(INCLUDE,INCLUDE);
             BIN_TABLE = BIN_TABLE(INCLUDE,:);
 
+            writetable(BIN_TABLE,sprintf('%s_chr%d_BINMATRIXMATLAB.csv',FN,ChrNr),'Delimiter','tab')
 
-            [S, SUB_M_SIZE1, WN1, WS1, BIN_TABLE_NEW] = vN_entropy(M,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,BIN_TABLE);
+            [S, SUB_M_SIZE1, WN1, WS1, BIN_TABLE_NEW] = vN_entropy(M,SUB_M_SIZE_FIX,CHRSPLIT,PHI_MAX,phi,BIN_TABLE);
             N = length(S);
 
             OUT1 = table(repmat({FNs(f).META},N,1),...
@@ -79,7 +83,7 @@ for Resolution=Resolutions
                 repmat(SUB_M_SIZE1,N,1),repmat(WN1,N,1),repmat(WS1,N,1),...
                 BIN_TABLE_NEW(:,1),BIN_TABLE_NEW(:,2),...
                 BIN_TABLE_NEW(:,3),BIN_TABLE_NEW(:,4),S,...
-                'VariableNames',{'Name','ChrNr','Resolution','sub_m_dim','WN','WS',...
+                'VariableNames',{'Name','ChrNr','Resolution','sub_m_dim','WN','phi',...
                 'binNrStart','binNrEND','START','END','S'});
 
             ENT3C_OUT=[ENT3C_OUT;OUT1];
@@ -88,24 +92,24 @@ for Resolution=Resolutions
     end
 end
 
-
 writetable(ENT3C_OUT,sprintf('%s/%s_ENT3C_OUT.csv',OUT_DIR,OUT_PREFIX),'Delimiter','tab')
 
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % fill similarity table
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 SAMPLES=unique(ENT3C_OUT.Name);
 
 Similarity = [];
 if numel(SAMPLES)>1
-
     for Resolution=Resolutions
         figure(Resolution);hold on;tiledlayout('flow');hold on
         for ChrNr=ChrNrs
             figure(Resolution);nexttile
 
             comparisons = get_pairwise_combs(SAMPLES);
+
             plotted = "tempstring";
             c=1;
             for f=1:size(comparisons,1)
@@ -128,27 +132,28 @@ if numel(SAMPLES)>1
                 end
             end
             if Biologicap_replicates
-                title(sprintf('Chr%d %dkb $\\overline{Q}_{BR}=%4.2f$ $\\overline{Q}_{nonBR}=%4.2f$',...
+                title(sprintf('Chr%d %dkb\n$\\overline{Q}_{BR}=%4.2f$ $\\overline{Q}_{nonBR}=%4.2f$',...
                     ChrNr,Resolution/1e3,...
                     mean(Similarity.Q(Similarity.ChrNr==ChrNr&Similarity.Resolution==Resolution&...
                     strcmp(extractBefore(Similarity.Sample1,'_'),extractBefore(Similarity.Sample2,'_')))),...
                     mean(Similarity.Q(Similarity.ChrNr==ChrNr&Similarity.Resolution==Resolution&...
                     ~strcmp(extractBefore(Similarity.Sample1,'_'),extractBefore(Similarity.Sample2,'_'))))),...
-                    'interpreter','latex','fontsize',12)
+                    'interpreter','latex','fontsize',10)
             else
-                title(sprintf('Chr%d %dkb',ChrNr,Resolution/1e3),'interpreter','latex','fontsize',12)
+                title(sprintf('Chr%d %dkb',ChrNr,Resolution/1e3),'interpreter','latex','fontsize',9)
             end
 
             if ChrNr==ChrNrs(end)
-                L = arrayfun(@(s) setfield(s, 'META', strrep(s.META, '_', ' ')), FNs);
-                legend(L.META,'location','northeastoutside')
+                plotted(1)=[];plotted=strrep(plotted,'_',' ');
+                legend(plotted,'location','northeastoutside')
             end
-            set(gca,'FontSize',20)
-
+            set(gca,'FontSize',9)
+            plotted
         end
+
         figure(Resolution);
         set(gcf,'Position',[52 215 1717 813])
-        saveas(gcf,sprintf('%s/%s_%d_ENT3C_signals.svg',OUT_DIR,OUT_PREFIX,Resolution))
+        saveas(gcf,sprintf('%s/%s_ENT3C_signals.svg',OUT_DIR,OUT_PREFIX))
 
     end
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -5,11 +5,11 @@ include("JULIA_functions/ent3c_functions.jl")
 config = JSON.parsefile("config/config.json")
 
 SUB_M_SIZE_FIX = config["SUB_M_SIZE_FIX"]
-WN_MAX = config["WN_MAX"]
+PHI_MAX = config["PHI_MAX"]
 Resolutions = config["Resolution"]
 Resolutions = split(Resolutions, ",")
 Resolutions = [parse(Float64, res) |> Int for res in Resolutions]
-WS = config["WS"]
+phi = config["phi"]
 NormM = config["NormM"]
 DATA_PATH = config["DATA_PATH"]
 FILES = config["FILES"]
@@ -28,15 +28,22 @@ if !isdir(OUT_DIR)
 end
 
 ChrNrs = config["ChrNr"]
-ChrNrs = split(ChrNrs, ",")
-ChrNrs = [parse(Float64, c) |> Int for c in ChrNrs]
+if contains(ChrNrs, ",")
+    ChrNrs = split(ChrNrs, ",")
+    ChrNrs = [parse(Float64, c) |> Int for c in ChrNrs]
+elseif contains(ChrNrs, ":")
+    ChrNrs = split(ChrNrs, ":")
+    ChrNrs = [parse(Float64, c) |> Int for c in ChrNrs]
+    ChrNrs = collect(ChrNrs[1]:ChrNrs[end])
+elseif isinteger(parse(Int8, ChrNrs))
+    ChrNrs = parse(Int8, ChrNrs)
+end
 
 
 #############################################################################
 # ENT3C table
 ##############################################################################
-ENT3C_OUT = main(FILES,Resolutions,ChrNrs,SUB_M_SIZE_FIX,CHRSPLIT,WN_MAX,WS,NormM)
-#ENT3C_OUT =  CSV.File(@sprintf("%s/%s_ENT3C_OUT.csv",OUT_DIR,OUT_PREFIX)) |> DataFrame
+ENT3C_OUT = main(FILES,Resolutions,ChrNrs,SUB_M_SIZE_FIX,CHRSPLIT,PHI_MAX,phi,NormM)
 
 #############################################################################
 # similarity table
