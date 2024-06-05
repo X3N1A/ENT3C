@@ -11,9 +11,10 @@ https://doi.org/10.1101/2024.01.30.577923
 
 ## Summary of ENT3C approach
 1. Loads cooler files and looks for shared empty bins.
-2. ENT3C will extract smaller submatrices $\mathbf{a}$ of dimension $n\times n$ along the diagonal of an input contact matrix $\mathbf{M}$
-4. The logarithm of $\mathbf{a}$ is taken ($nan$ values are set to zero).
-5. $\mathbf{a}$ is transformed into a Pearson correlation matrix $\mathbf{P}$ ($nan$ values are set to zero).
+2. ENT3C will first take the logarithm of an input matrix $\mathbf{M}$
+2. Next, smaller submatrices $\mathbf{a}$ of dimension $n\times n$ are extracted along the diagonal of an input contact matrix $\mathbf{M}$
+4. $nan$ values in $\mathbf{a}$ are set to the minimum value in $\mathbf{a}$.
+5. $\mathbf{a}$ is transformed into a Pearson correlation matrix $\mathbf{P}$.
 6. $\mathbf{P}$ is transformed into $\boldsymbol{\rho}=\mathbf{P}/n$ to fulfill the conditions for computing the von Neumann entropy.
 7. The von Neumann entropy of $\boldsymbol{\rho}$ is computed as
 
@@ -28,7 +29,7 @@ https://doi.org/10.1101/2024.01.30.577923
          alt="explaination of ENT3C">
 </figure>
 
-Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two contact matrices $\mathbf{M}\_1$ and $\mathbf{M}\_2$. ENT3C's was run with  submatrix dimension $n=300$, window shift $phi=10$, and maximum number of data points in $\boldsymbol{S}$, $PHI_{\max}=\infty$, resulting in $PHI=147$ submatrices. For subsequent scaled Pearson-transformed submatrices, $\boldsymbol{\rho}\_i$, along the diagonal of $\log{\boldsymbol{A}}$, ENT3C computes the von Neumann entropies $S(\boldsymbol{\rho}\_1), S(\boldsymbol{\rho}\_2), \ldots, S(\boldsymbol{\rho}\_{PHI})$. The resulting signal $\mathbf{S} = \langle S(\boldsymbol{\rho}\_{1}), S(\boldsymbol{\rho}\_{2}), \ldots, S(\boldsymbol{\rho}\_{PHI}) \rangle$ is shown in blue under the matrix. The first two ($\boldsymbol{\rho}\_{1-2}$), middle ($\boldsymbol{\rho}\_{73}$), and last two submatrices ($\boldsymbol{\rho}\_{146-147}$) are shown.
+Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two contact matrices $\mathbf{M}\_1$ and $\mathbf{M}\_2$. ENT3C's was run with  submatrix dimension $n=300$, window shift $\varphi=10$, and maximum number of data points in $\boldsymbol{S}$, $\Phi\_{\max}=\infty$, resulting in $\Phi=147$ submatrices. For subsequent scaled Pearson-transformed submatrices, $\boldsymbol{\rho}\_i$, along the diagonal of $\log{\boldsymbol{M}}$, ENT3C computes the von Neumann entropies $S(\boldsymbol{\rho}\_1), S(\boldsymbol{\rho}\_2), \ldots, S(\boldsymbol{\rho}\_{PHI})$. The resulting signal $\mathbf{S} = \langle S(\boldsymbol{\rho}\_{1}), S(\boldsymbol{\rho}\_{2}), \ldots, S(\boldsymbol{\rho}\_{\Phi}) \rangle$ is shown in blue under the matrix. The first two ($\boldsymbol{\rho}\_{1-2}$), middle ($\boldsymbol{\rho}\_{73}$), and last two submatrices ($\boldsymbol{\rho}\_{146-147}$) are shown.
 
 
 # Requirements
@@ -84,29 +85,41 @@ where ```N``` is the size of the input contact matrix, ```phi``` is the window s
 
 **ENT3C parameters set in ```config/config.json```**
 
-```DATA_PATH: "DATA"``` $\dots$ input data path. 
+```"DATA_PATH": "DATA"``` $\dots$ input data path. 
 
-```FILES: ["ENCSR079VIJ.BioRep1.40kb.cool","G401_BR1" ...]``` $\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]``` 
+```
+"FILES": [
+	"ENCSR079VIJ.BioRep1.40kb.cool",
+ 
+	"G401_BR1",
+ 
+	"ENCSR079VIJ.BioRep2.40kb.cool",
+ 
+	"G401_BR2"]
+```
+ 
+$\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]```
+
 :bulb: ENT3C also takes ```mcool``` files as input. Please refer to biological replicates as "_BR%d" in the <SHORT_NAME>.
 
-```OUT_DIR: "OUTPUT/"``` $\dots$ output directory. ```OUT_DIR``` will be concatenated with ```OUTPUT/JULIA/``` or ```OUTPUT/MATLAB/```.
+```"`OUT_DIR": "OUTPUT/"``` $\dots$ output directory. ```OUT_DIR``` will be concatenated with ```OUTPUT/JULIA/``` or ```OUTPUT/MATLAB/```.
 
-```OUT_PREFIX: "40kb"``` $\dots$ prefix for output files.
+```"OUT_PREFIX": "40kb"``` $\dots$ prefix for output files.
 
-```Resolution: "40e3,100e3"``` $\dots$ resolutions to be evaluated. 
+```"Resolution": "40e3,100e3"``` $\dots$ resolutions to be evaluated. 
 
-```ChrNr: "15:22"``` $\dots$ chromosome numbers to be evaluated. Set individual chromosomes as ```ChrNr: "15,17,22"```. 
+```"ChrNr": "15:22"``` $\dots$ chromosome numbers to be evaluated. Set individual chromosomes as ```ChrNr: "15,17,22"```. 
 
-```NormM: 0``` $\dots$ input contact matrices can be balanced. If ```NormM: 1```, balancing weights in cooler are applied.
+```"NormM": 0``` $\dots$ input contact matrices can be balanced. If ```NormM: 1```, balancing weights in cooler are applied.
 
-```SUB_M_SIZE_FIX: null``` $\dots$ fixed submatrix dimension.
+```"SUB_M_SIZE_FIX": null``` $\dots$ fixed submatrix dimension.
 
-```CHRSPLIT: 10``` $\dots$ number of submatrices into which the contact matrix is partitioned into.
+```"CHRSPLIT": 10``` $\dots$ number of submatrices into which the contact matrix is partitioned into.
 
-```phi: 1``` $\dots$ number of bins to the next matrix.
+```"phi": 1``` $\dots$ number of bins to the next matrix.
 
-```PHI_MAX: 1000``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. 
-If set, $phi$ is increased until $PHI \approx PHI_{\max}$.
+```"PHI_MAX": 1000``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. 
+If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
 
 # Running main scripts 
 
