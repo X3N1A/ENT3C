@@ -2,10 +2,10 @@
   "PHI_MAX": 5e3,
   "CHRSPLIT": 10,
   "SUB_M_SIZE_FIX": null,
-  "ChrNr": "21:22",
+  "ChrNr": "20:22",
   "Resolution": "40e3,100e3",
   "phi": 1,
-  "NormM": 0,
+  "NormM": 1,
   "DATA_PATH": "/HDD3/DocumentsHDD3/07_2022-/Mapping",
   "FILES": [
 	"ENCSR079VIJ_G401/PreProcessed/ENCSR079VIJ_G401combined.mcool",
@@ -14,12 +14,12 @@
 	"A549",
 	"ENCSR346DCU_LNCaP/PreProcessed/ENCSR346DCU_LNCaPcombined.mcool",
 	"LNCap",
-	"4DNESphiT3UBH_HFFc6/PreProcessed/4DNESphiT3UBH_HFFc6combined.mcool",
+	"4DNESWST3UBH_HFFc6/PreProcessed/4DNESWST3UBH_HFFc6combined.mcool",
 	"HFFc6",
 	"4DNFI9GMP2J8_H1-hESC/PreProcessed/4DNFI9GMP2J8_H1-hESCcombined.mcool",
 	"H1-hESC"
 	],
-  "OUT_DIR": "OUTPUT_TEMP/",
-  "OUT_PREFIX": "multi_resolutions"
+  "OUT_DIR": "OUTPUT/",
+  "OUT_PREFIX": "multi_resolutions_normalized"
 }
 
