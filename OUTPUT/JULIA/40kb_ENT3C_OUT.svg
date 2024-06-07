@@ -5,7 +5,7 @@
    viewBox="0 0 7204 3740"
    version="1.1"
    id="svg807"
-   sodipodi:docname="40kb_40000_ENT3C_OUT.svg"
+   sodipodi:docname="40kb_ENT3C_OUT.svg"
    inkscape:export-filename="40kb_40000_ENT3C_OUT.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
@@ -24,8 +24,8 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="0.39089395"
-     inkscape:cx="900.5"
-     inkscape:cy="468.15767"
+     inkscape:cx="900.49999"
+     inkscape:cy="483.5071"
      inkscape:window-width="1920"
      inkscape:window-height="1068"
      inkscape:window-x="1920"
@@ -44,6 +44,13 @@
          id="rect1" />
     </clipPath>
   </defs>
+  <rect
+     style="fill:#ffffff;stroke:#ffffff;stroke-width:1.51181;stroke-opacity:1;fill-opacity:1"
+     id="rect4"
+     width="7204"
+     height="3740"
+     x="0"
+     y="0" />
   <path
      clip-path="url(#clip930)"
      d="M0 3740 L7204 3740 L7204 0 L0 0  Z"
