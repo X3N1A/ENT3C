@@ -29,14 +29,16 @@ https://doi.org/10.1093/nargab/lqae076
          alt="explaination of ENT3C">
 </figure>
 
-Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two contact matrices $\mathbf{M}\_1$ and $\mathbf{M}\_2$. ENT3C's was run with  submatrix dimension $n=300$, window shift $\varphi=10$, and maximum number of data points in $\boldsymbol{S}$, $\Phi\_{\max}=\infty$, resulting in $\Phi=147$ submatrices. For subsequent scaled Pearson-transformed submatrices, $\boldsymbol{\rho}\_i$, along the diagonal of $\log{\boldsymbol{M}}$, ENT3C computes the von Neumann entropies $S(\boldsymbol{\rho}\_1), S(\boldsymbol{\rho}\_2), \ldots, S(\boldsymbol{\rho}\_{PHI})$. The resulting signal $\mathbf{S} = \langle S(\boldsymbol{\rho}\_{1}), S(\boldsymbol{\rho}\_{2}), \ldots, S(\boldsymbol{\rho}\_{\Phi}) \rangle$ is shown in blue under the matrix. The first two ($\boldsymbol{\rho}\_{1-2}$), middle ($\boldsymbol{\rho}\_{73}$), and last two submatrices ($\boldsymbol{\rho}\_{146-147}$) are shown.
+Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two contact matrices $\mathbf{M}\_1$ and $\mathbf{M}\_2$. ENT3C's was run with  submatrix dimension $n=300$, window shift $\varphi=10$, and maximum number of data points in $\boldsymbol{S}$, $\Phi\_{\max}=\infty$, resulting in $\Phi=147$ submatrices. For subsequent scaled Pearson-transformed submatrices, $\boldsymbol{\rho}\_i$, along the diagonal of $\log{\boldsymbol{M}}$, ENT3C computes the von Neumann entropies $S(\boldsymbol{\rho}\_1), S(\boldsymbol{\rho}\_2), \ldots, S(\boldsymbol{\rho}\_{\Phi})$. The resulting signal $\mathbf{S} = \langle S(\boldsymbol{\rho}\_{1}), S(\boldsymbol{\rho}\_{2}), \ldots, S(\boldsymbol{\rho}\_{\Phi}) \rangle$ is shown in blue under the matrix. The first two ($\boldsymbol{\rho}\_{1-2}$), middle ($\boldsymbol{\rho}\_{73}$), and last two submatrices ($\boldsymbol{\rho}\_{146-147}$) are shown.
 
 
 # Requirements
 Julia or MATLAB
 
-# Data
+* dependencies, packages and version information for julia implementation are defined in ```Project.toml``` and ```Manifest.toml``` 
+	* set ```--install-deps=yes``` if you wish to automatically install the packages and resolve environment
 
+# Data
 Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were tested on Hi-C and micro-C contact matrices binned at 40 kb in ```cool``` format. 
 
 **micro-C** 
@@ -70,23 +72,24 @@ Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were te
  
 	```cooler cload pairs -c1 2 -p1 3 -c2 4 -p2 5 --assembly hg38 <CHRSIZE_FILE:40000> <IN.pairs.gz> <OUT.cool>```
 
-# Configuration File
-Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) call a configuration file in JSON format. 
+# Parameters and Configuration File
+* The main ENT3C parameter affecting the final entropy signal $S$ is the dimension of the submatrices ```SUB_M_SIZE_FIX```. 
 
-:bulb: The main ENT3C parameter affecting the final entropy signal $S$ is the dimension of the submatrices ```SUB_M_SIZE_FIX```. 
+	* ```SUB_M_SIZE_FIX``` can be either be fixed by or alternatively, one can specify ```CHRSPLIT```; in this case ```SUB_M_SIZE_FIX``` will be computed internally to fit the number of desired times the contact matrix is to be paritioned into. 
 
-```SUB_M_SIZE_FIX``` can be either be fixed by or alternatively, one can specify ```CHRSPLIT```; in this case ```SUB_M_SIZE_FIX``` will be computed internally to fit the number of desired times the contact matrix is to be paritioned into. 
+	  ```PHI=1+floor((N-SUB_M_SIZE)./phi)```
 
-```PHI=1+floor((N-SUB_M_SIZE)./phi)```
+	  where ```N``` is the size of the input contact matrix, ```phi``` is the window shift, ```PHI``` is the number of evaluated submatrices (consequently the number of data points in $S$).
 
-where ```N``` is the size of the input contact matrix, ```phi``` is the window shift, ```PHI``` is the number of evaluated submatrices (consequently the number of data points in $S$).
+* Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) use a configuration file in JSON format. 
+	* for Julia, ```--config-file=config.json```
+	* for MATLAB, please set configuration filename directly in ```ENT3C.m``` script
 
 <br>
 
-**ENT3C parameters set in ```config/config.json```**
+**ENT3C parameters are defined in ```config/config.json```**
 
 ```"DATA_PATH": "DATA"``` $\dots$ input data path. 
-
 ```
 "FILES": [
 	"ENCSR079VIJ.BioRep1.40kb.cool",
@@ -96,9 +99,7 @@ where ```N``` is the size of the input contact matrix, ```phi``` is the window s
 	"ENCSR079VIJ.BioRep2.40kb.cool",
  
 	"G401_BR2"]
-```
- 
-$\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]```
+``` $\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]```
 
 :bulb: ENT3C also takes ```mcool``` files as input. Please refer to biological replicates as "_BR%d" in the <SHORT_NAME>.
 
@@ -122,8 +123,8 @@ $\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]```
 If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
 
 # Running main scripts 
-
-Upon modifying ```config/config.json``` as desired, ```ENT3C.jl``` and ```ENT3C.m``` will run with using specified parameters.
+* ```julia ENT3C.jl --config-file=config/config.test.json --install-deps=no```
+* ```nohup matlab -nodisplay -nosplash -nodesktop -nojvm -r "ENT3C; exit" > /dev/null 2>&1 &```
 
 Associated functions are contained in directories ```JULIA_functions/``` and ```MATLAB_functions/```.
 
