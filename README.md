@@ -99,7 +99,8 @@ Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were te
 	"ENCSR079VIJ.BioRep2.40kb.cool",
  
 	"G401_BR2"]
-``` $\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]```
+``` 
+$\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]```
 
 :bulb: ENT3C also takes ```mcool``` files as input. Please refer to biological replicates as "_BR%d" in the <SHORT_NAME>.
 
