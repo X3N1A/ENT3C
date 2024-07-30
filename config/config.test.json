@@ -1,0 +1,21 @@
+{
+  "PHI_MAX": 1e3,
+  "CHRSPLIT": 7,
+  "SUB_M_SIZE_FIX": null,
+  "ChrNr": "22",
+  "Resolution": "40000",
+  "phi": 1,
+  "NormM": 0,
+  "DATA_PATH": "DATA",
+  "FILES": [
+	"ENCSR444WCZ.BioRep1.40kb.cool",
+	"A549_BR1",
+	"ENCSR444WCZ.BioRep2.40kb.cool",
+	"A549_BR2",
+	"ENCSR346DCU.BioRep1.40kb.cool",
+	"LNCap_BR1"
+	],
+  "OUT_DIR": "OUTPUT/test/",
+  "OUT_PREFIX": "40kb"
+}
+

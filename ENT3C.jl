@@ -1,8 +1,43 @@
+using Pkg
+
+Pkg.activate(".")
+Pkg.instantiate()
+
 using DataFrames, BenchmarkTools, JSON, Printf, Plots, ColorSchemes
 
 include("JULIA_functions/ent3c_functions.jl")
+######################################################
+# user input config file
+######################################################
+#config = JSON.parsefile("config/config.test.json")
+function parse_args(args)
+     config_file = nothing
+    for arg in args
+        if startswith(arg, "--config-file=")
+            config_file = split(arg, "=")[2]
+        end
+    end
+    return config_file
+end
+config_file = parse_args(ARGS)
 
-config = JSON.parsefile("config/config.multiResolution.pooledBRs.json")
+function get_config(config_file)
+    config=nothing
+    if config_file === nothing
+        println("Please specify a configuration file.")
+    else
+    println("Using config file: $config_file")
+    try
+        config = JSON.parsefile(config_file)
+        println("Config data: ", config)
+    catch e
+        println("Error reading config file: ", e)
+    end
+    end
+    return config
+end
+config = get_config(config_file)
+#########################################################
 
 SUB_M_SIZE_FIX = config["SUB_M_SIZE_FIX"]
 PHI_MAX = config["PHI_MAX"]
