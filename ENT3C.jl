@@ -1,7 +1,26 @@
-using Pkg
+function parse_args(args)
+    installs = nothing
+    config_file = nothing
+    for arg in args
+        if startswith(arg, "--config-file=")
+            config_file = split(arg, "=")[2]
+        end
+        if startswith(arg, "--install-deps=")
+            installs = split(arg, "=")[2]
+        end
+    end
+    return installs, config_file
+end
 
-Pkg.activate(".")
-Pkg.instantiate()
+installs, config_file = parse_args(ARGS)
+
+if cmp(installs,"yes") == 0
+        println("Installing missing dependencies and resolving enviornment.")
+        using Pkg
+
+        Pkg.activate(".")
+        Pkg.instantiate()
+end
 
 using DataFrames, BenchmarkTools, JSON, Printf, Plots, ColorSchemes
 
@@ -10,7 +29,7 @@ include("JULIA_functions/ent3c_functions.jl")
 # user input config file
 ######################################################
 #config = JSON.parsefile("config/config.test.json")
-function parse_args(args)
+function parse_config_args(args)
      config_file = nothing
     for arg in args
         if startswith(arg, "--config-file=")
@@ -19,7 +38,7 @@ function parse_args(args)
     end
     return config_file
 end
-config_file = parse_args(ARGS)
+config_file = parse_config_args(ARGS)
 
 function get_config(config_file)
     config=nothing
