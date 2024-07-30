@@ -3,7 +3,7 @@ addpath('MATLAB_functions/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % load json file
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-config = fileread('config/config.multiResolution.pooledBRs.json');
+config = fileread('config/config.test.json');
 config = jsondecode(config);
 PHI_MAX=config.PHI_MAX;
 CHRSPLIT=config.CHRSPLIT;
