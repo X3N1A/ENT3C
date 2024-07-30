@@ -125,7 +125,7 @@ If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
 
 # Running main scripts 
 * ```julia ENT3C.jl --config-file=config/config.test.json --install-deps=no```
-* ```nohup matlab -nodisplay -nosplash -nodesktop -nojvm -r "ENT3C; exit" > /dev/null 2>&1 &```
+* ```matlab -nodesktop -nojvm -nodisplay -r "ENT3C; exit"```
 
 Associated functions are contained in directories ```JULIA_functions/``` and ```MATLAB_functions/```.
 
