@@ -33,10 +33,11 @@ Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two
 
 
 # Requirements
-Julia or MATLAB
+Julia or MATLAB. 
 
 * dependencies, packages and version information for julia implementation are defined in ```Project.toml``` and ```Manifest.toml``` 
 	* set ```--install-deps=yes``` if you wish to automatically install the packages and resolve environment
+* For the Julia implementation, ubuntu's hdf5-tools is also required. 
 
 # Data
 Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were tested on Hi-C and micro-C contact matrices binned at 40 kb in ```cool``` format. 
@@ -110,9 +111,9 @@ $\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]```
 
 ```"Resolution": "40e3,100e3"``` $\dots$ resolutions to be evaluated. 
 
-```"ChrNr": "15:22"``` $\dots$ chromosome numbers to be evaluated. Set individual chromosomes as ```ChrNr: "15,17,22"```. 
+```"ChrNr": "15,16,17,18,19,20,21,22,X"``` $\dots$ chromosome numbers to be evaluated.
 
-```"NormM": 0``` $\dots$ input contact matrices can be balanced. If ```NormM: 1```, balancing weights in cooler are applied.
+```"NormM": 0``` $\dots$ input contact matrices can be balanced. If ```NormM: 1```, balancing weights in cooler are applied. If set to 1, ENT3C expects weights to be in dataset ```/resolutions/<resolution>/bins/weight```.
 
 ```"SUB_M_SIZE_FIX": null``` $\dots$ fixed submatrix dimension.
 
