@@ -7,7 +7,6 @@ function [microC,BIN_TABLE]=load_cooler(FN,ChrNr,Resolution,Norm)
 
 % h5disp(FN);
 
-
 if contains(FN,'mcool')
     preStr=sprintf('/resolutions/%d',Resolution);
 else
@@ -29,14 +28,13 @@ else
     weights = nan(size(BINS,1),1);
 end
 chrs = string([h5read(FN,sprintf('%s/bins/chrom',preStr))]);
+
 BIN_TABLE = table(chrs,BINS(:,1),BINS(:,2),BINS(:,3),weights,...
     'VariableNames',{'chrs','BINS_ALL','START','END','weights'});
-BT=table();binNr=[];
-for c=1:length(ChrNr)
-    BT = [BT;BIN_TABLE(BIN_TABLE.chrs==string(['chr',num2str(ChrNr(c))]),:)];
-    binNr=[binNr;transpose(1:sum(BIN_TABLE.chrs==string(['chr',num2str(ChrNr(c))])))];
-end
-BIN_TABLE=BT;clear BT
+binNr=[];
+
+BIN_TABLE=BIN_TABLE((strcmp(BIN_TABLE.chrs,ChrNr{1}) | strcmp(BIN_TABLE.chrs,['chr',ChrNr{1}])),:);
+binNr=[binNr;transpose(1:sum((strcmp(BIN_TABLE.chrs,ChrNr{1}) | strcmp(BIN_TABLE.chrs,['chr',ChrNr{1}]))))];
 
 BIN_TABLE = addvars(BIN_TABLE,binNr,'After','BINS_ALL');
 
