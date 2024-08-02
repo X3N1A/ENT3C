@@ -37,7 +37,7 @@ function main(FILES, Resolutions, ChrNrs, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi
             #produce ENT3C_OUT data frame
             ##############################################################################
             for f in FNs
-
+                print(f)
                 FN = f.FN
                 M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution, NormM)
 
@@ -85,12 +85,26 @@ function load_cooler(FN, ChrNr, Resolution, NormM)
         weights = fill(NaN, size(BINS, 1))
     end
 
-    chrs = h5read(FN, "$preStr/bins/chrom") .|> x -> x + 1 .|> x -> "chr" .* string.(x)
-    chrs[chrs.=="chr23"] .= "chrX"
-    chrs[chrs.=="chr24"] .= "chrY"
+  
+    command = `h5dump -d $preStr/bins/chrom -H $FN`
+    output = read(pipeline(command, `grep "^\s\+\""`, `sed -E 's/^\s*"([^"]+)"\s+([0-9]+);/\2 => "\1",/'`), String)
+    output = """
+    Dict(
+    $(join(
+        filter(line -> !isempty(line), split(output, '\n')),
+        "\n"
+    ))
+    )
+    """
+    open("JULIA_functions/chrdict.jl", "w") do io
+        write(io, output)
+    end
+    chrs = h5read(FN, "$preStr/bins/chrom") 
+    chromosome_map = include("JULIA_functions/chrdict.jl")
+    chrs = [chromosome_map[chr] for chr in chrs]
 
     BIN_TABLE = DataFrame(chrs=chrs, BINS_ALL=BINS[:, 1], START=BINS[:, 2], END=BINS[:, 3], weights=weights)
-    BIN_TABLE = filter(row -> any(x -> "chr$x" == row.chrs, ChrNr), BIN_TABLE)
+    BIN_TABLE = filter(row -> row.chrs == ChrNr || row.chrs == "chr$ChrNr" , BIN_TABLE)
 
     f = findall(
         (BINIDs[:, 1] .>= minimum(BIN_TABLE.BINS_ALL)) .&
@@ -260,14 +274,14 @@ function get_similarity_table(ENT3C_OUT, ChrNrs, Resolutions, Biological_replica
                 BR = mean(BR.Q)
                 nonBR = filter(row -> cell_line(row.Sample1) != cell_line(row.Sample2) && row.ChrNr == ChrNr && row.Resolution == Resolution, Similarity)
                 nonBR = mean(nonBR.Q)
-                title!(plt, @sprintf("Chr%d \$\\overline{Q}_{BR}=%4.2f\$ \$\\overline{Q}_{nonBR}=%4.2f\$", ChrNr, BR, nonBR), fontsize=12, interpreter=:latex)
+                title!(plt, @sprintf("Chr%s \$\\overline{Q}_{BR}=%4.2f\$ \$\\overline{Q}_{nonBR}=%4.2f\$", ChrNr, BR, nonBR), fontsize=12, interpreter=:latex)
             else
-                title!(plt, @sprintf("Chr%d", ChrNr))
+                title!(plt, @sprintf("Chr%s", ChrNr))
             end
             push!(PLT, plt)
         end
         PLT = plot(PLT..., size=(1801, 935))
-        savefig(PLT, @sprintf("%s/%s_ENT3C_OUT.svg", OUT_DIR, OUT_PREFIX))
+        savefig(PLT, @sprintf("%s/%s_%d_ENT3C_OUT.svg", OUT_DIR, OUT_PREFIX, Resolution))
     end
     return (Similarity)
 end

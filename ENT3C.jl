@@ -13,6 +13,7 @@ function parse_args(args)
 end
 
 installs, config_file = parse_args(ARGS)
+#installs, config_file = parse_args(args)
 
 if cmp(installs,"yes") == 0
         println("Installing missing dependencies and resolving enviornment.")
@@ -29,16 +30,6 @@ include("JULIA_functions/ent3c_functions.jl")
 # user input config file
 ######################################################
 #config = JSON.parsefile("config/config.test.json")
-function parse_config_args(args)
-     config_file = nothing
-    for arg in args
-        if startswith(arg, "--config-file=")
-            config_file = split(arg, "=")[2]
-        end
-    end
-    return config_file
-end
-config_file = parse_config_args(ARGS)
 
 function get_config(config_file)
     config=nothing
@@ -84,16 +75,7 @@ end
 ChrNrs = config["ChrNr"]
 if contains(ChrNrs, ",")
     ChrNrs = split(ChrNrs, ",")
-    ChrNrs = [parse(Float64, c) |> Int for c in ChrNrs]
-elseif contains(ChrNrs, ":")
-    ChrNrs = split(ChrNrs, ":")
-    ChrNrs = [parse(Float64, c) |> Int for c in ChrNrs]
-    ChrNrs = collect(ChrNrs[1]:ChrNrs[end])
-elseif isinteger(parse(Int8, ChrNrs))
-    ChrNrs = parse(Int8, ChrNrs)
 end
-
-
 #############################################################################
 # ENT3C table
 ##############################################################################

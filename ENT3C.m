@@ -29,7 +29,9 @@ end
 if ~exist(OUT_DIR, 'dir')
     mkdir(OUT_DIR);
 end
-ChrNrs=str2num(config.ChrNr);
+
+ChrNrs=config.ChrNr;
+ChrNrs=strsplit(ChrNrs, ',');
 
 ENT3C_OUT=[];
 for Resolution=Resolutions
@@ -73,7 +75,7 @@ for Resolution=Resolutions
             M = M(INCLUDE,INCLUDE);
             BIN_TABLE = BIN_TABLE(INCLUDE,:);
 
-            writetable(BIN_TABLE,sprintf('%s_chr%d_BINMATRIXMATLAB.csv',FN,ChrNr),'Delimiter','tab')
+           % writetable(BIN_TABLE,sprintf('%s_chr%d_BINMATRIXMATLAB.csv',FN,ChrNr),'Delimiter','tab')
 
             [S, SUB_M_SIZE1, PHI_1, phi_1, BIN_TABLE_NEW] = vN_entropy(M,SUB_M_SIZE_FIX,CHRSPLIT,PHI_MAX,phi,BIN_TABLE);
             N = length(S);
@@ -114,8 +116,8 @@ if numel(SAMPLES)>1
             c=1;
             for f=1:size(comparisons,1)
 
-                S1 = ENT3C_OUT(strcmp(ENT3C_OUT.Name,comparisons{f,1})&ENT3C_OUT.ChrNr==ChrNr&ENT3C_OUT.Resolution==Resolution,:);
-                S2 = ENT3C_OUT(strcmp(ENT3C_OUT.Name,comparisons{f,2})&ENT3C_OUT.ChrNr==ChrNr&ENT3C_OUT.Resolution==Resolution,:);
+                S1 = ENT3C_OUT(strcmp(ENT3C_OUT.Name,comparisons{f,1})&strcmp(ENT3C_OUT.ChrNr,ChrNr)&ENT3C_OUT.Resolution==Resolution,:);
+                S2 = ENT3C_OUT(strcmp(ENT3C_OUT.Name,comparisons{f,2})&strcmp(ENT3C_OUT.ChrNr,ChrNr)&ENT3C_OUT.Resolution==Resolution,:);
                 Q = corrcoef(S1.S,S2.S);Q=Q(1,2);
 
                 Similarity=[Similarity;...
@@ -132,18 +134,19 @@ if numel(SAMPLES)>1
                 end
             end
             if Biologicap_replicates
-                title(sprintf('Chr%d %dkb\n$\\overline{Q}_{BR}=%4.2f$ $\\overline{Q}_{nonBR}=%4.2f$',...
-                    ChrNr,Resolution/1e3,...
+                title(sprintf('Chr%s %dkb\n$\\overline{Q}_{BR}=%4.2f$ $\\overline{Q}_{nonBR}=%4.2f$',...
+                    ChrNr{1},Resolution/1e3,...
                     mean(Similarity.Q(Similarity.ChrNr==ChrNr&Similarity.Resolution==Resolution&...
                     strcmp(extractBefore(Similarity.Sample1,'_'),extractBefore(Similarity.Sample2,'_')))),...
                     mean(Similarity.Q(Similarity.ChrNr==ChrNr&Similarity.Resolution==Resolution&...
                     ~strcmp(extractBefore(Similarity.Sample1,'_'),extractBefore(Similarity.Sample2,'_'))))),...
                     'interpreter','latex','fontsize',10)
             else
-                title(sprintf('Chr%d %dkb',ChrNr,Resolution/1e3),'interpreter','latex','fontsize',9)
+                title(sprintf('Chr%s %dkb',ChrNr{1},Resolution/1e3),'interpreter','latex','fontsize',9)
             end
 
-            if ChrNr==ChrNrs(end)
+            last=ChrNrs(end);
+            if strcmp(ChrNr{1},last{1})
                 plotted(1)=[];plotted=strrep(plotted,'_',' ');
                 legend(plotted,'location','northeastoutside')
             end
@@ -152,7 +155,7 @@ if numel(SAMPLES)>1
 
         figure(Resolution);
         set(gcf,'Position',[52 215 1717 813])
-        saveas(gcf,sprintf('%s/%s_ENT3C_signals.svg',OUT_DIR,OUT_PREFIX))
+        saveas(gcf,sprintf('%s/%s_%d_ENT3C_signals.svg',OUT_DIR,OUT_PREFIX,Resolution))
 
     end
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
