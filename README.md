@@ -113,7 +113,9 @@ $\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]```
 
 ```"ChrNr": "15,16,17,18,19,20,21,22,X"``` $\dots$ chromosome numbers to be evaluated.
 
-```"NormM": 0``` $\dots$ input contact matrices can be balanced. If ```NormM: 1```, balancing weights in cooler are applied. If set to 1, ENT3C expects weights to be in dataset ```/resolutions/<resolution>/bins/weight```.
+```"NormM": 0``` $\dots$ input contact matrices can be balanced. If ```NormM: 1```, balancing weights in cooler are applied. If set to 1, ENT3C expects weights to be in dataset ```/resolutions/<resolution>/bins/<WEIGHTS_NAME>```.
+
+```"WEIGHTS_NAME": "weight"``` $\dots$ name of dataset in cooler containing normalization weights.
 
 ```"SUB_M_SIZE_FIX": null``` $\dots$ fixed submatrix dimension.
 
@@ -126,7 +128,7 @@ If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
 
 # Running main scripts 
 * ```julia ENT3C.jl --config-file=config/config.test.json --install-deps=no```
-* ```matlab -nodesktop -nosplash -nodisplay -r "ENT3C; exit"```
+* ```matlab -nodesktop -nosplash -nodisplay -r "ENT3C('config/config.test.json'); exit"```
 
 Associated functions are contained in directories ```JULIA_functions/``` and ```MATLAB_functions/```.
 
