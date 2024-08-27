@@ -6,7 +6,7 @@
   "Resolution": "40000",
   "phi": 1,
   "NormM": 0,
-  "WEIGHTS_NAME": "",
+  "WEIGHTS_NAME": "weight",
   "DATA_PATH": "DATA",
   "FILES": [
 	"ENCSR079VIJ.BioRep1.40kb.cool",

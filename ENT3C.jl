@@ -13,6 +13,7 @@ function parse_args(args)
 end
 
 installs, config_file = parse_args(ARGS)
+#args = ["--config-file=config/config.test.json", "--install-deps=no"]
 #installs, config_file = parse_args(args)
 
 if cmp(installs,"yes") == 0
@@ -62,6 +63,7 @@ Biological_replicates = any(x -> contains(x, '_'), FILES[2, :])
 FILES = hcat(joinpath.(DATA_PATH, FILES[1:2:end-1]), FILES[2:2:end])
 OUT_PREFIX = config["OUT_PREFIX"]
 CHRSPLIT = config["CHRSPLIT"]
+weights_name = config["WEIGHTS_NAME"]
 
 if OUT_PREFIX === nothing
     OUT_PREFIX = @sprintf("%dkb",Resolution/1e3)
@@ -79,8 +81,9 @@ end
 #############################################################################
 # ENT3C table
 ##############################################################################
-ENT3C_OUT = main(FILES,Resolutions,ChrNrs,SUB_M_SIZE_FIX,CHRSPLIT,PHI_MAX,phi,NormM)
-
+ENT3C_OUT = main(FILES,Resolutions,ChrNrs,SUB_M_SIZE_FIX,CHRSPLIT,PHI_MAX,phi,NormM,weights_name)
+#f = [filter(row -> isnan(row.S)  , ENT3C_OUT).binNrStart[1], filter(row -> isnan(row.S)  , ENT3C_OUT).binNrEnd[1]]
+#filter(row -> row.binNrStart==f[1] && row.binNrEnd==f[2], ENT3C_OUT)
 #############################################################################
 # similarity table
 #############################################################################

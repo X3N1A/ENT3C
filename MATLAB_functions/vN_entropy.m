@@ -22,20 +22,26 @@ R=[R1',R2'];
 M=log(M);
 for rr=1:WN
     m=M(R(rr,1):R(rr,2),R(rr,1):R(rr,2));
-    %E=[E;sum(isnan(m(:)))/numel(m)];
-    m(isnan(m))=nanmin(m(:));
+    if all(isnan(m(:)))
+        ENT=nan;
+    else
+        %E=[E;sum(isnan(m(:)))/numel(m)];
+        m(isnan(m))=nanmin(m(:));
 
-    P = corrcoef(m,'rows','complete');
-    
-    P(isnan(P))=0;
+        P = corrcoef(m,'rows','complete');
+        P(isnan(P))=0;
+        % to match julia: cor() --> diagonal elements in P are always one. 
+        % for EV computation, elements where entire row and column == nan/zero --> P set to 0
+        P(logical(eye(size(P))))=1; 
+        P(all(m==0,1) & all(m==0,2))=0;
 
-    rho=P./size(P,1);
+        rho=P./size(P,1);
 
-    lam = eig(full(rho));
-    lam = lam(lam>0); 
+        lam = eig(full(rho));
+        lam = lam(lam>0);
 
-    ENT = -sum(real(lam.*log(lam)));
-
+        ENT = -sum(real(lam.*log(lam)));
+    end
     S=[S;ENT];
 
     BIN_TABLE_NEW = [BIN_TABLE_NEW;...
