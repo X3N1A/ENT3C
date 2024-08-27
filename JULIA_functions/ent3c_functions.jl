@@ -5,7 +5,7 @@ struct INFO
     META::String # sample short name: e.g. G401_BR1
 end
 
-function main(FILES, Resolutions, ChrNrs, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, NormM)
+function main(FILES, Resolutions, ChrNrs, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, NormM,weights_name)
 
     ENT3C_OUT = DataFrame(Name=Vector{String}[], ChrNr=Vector{Int}[], Resolution=Vector{Int}[],
         n=Vector{Int}[], PHI=Vector{Int}[], phi=Vector{Int}[], binNrStart=Vector{Int}[],
@@ -23,9 +23,8 @@ function main(FILES, Resolutions, ChrNrs, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi
             ##############################################################################
             EXCLUDE = 0
             for f in FNs
-
                 FN = f.FN
-                M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution, NormM)
+                M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution, NormM, weights_name)
 			if NormM==0
                 EXCLUDE = vcat(EXCLUDE, BIN_TABLE.binNr[isnan.(BIN_TABLE.CONTACT)])
 			elseif NormM==1
@@ -39,7 +38,7 @@ function main(FILES, Resolutions, ChrNrs, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi
             for f in FNs
                 print(f)
                 FN = f.FN
-                M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution, NormM)
+                M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution, NormM, weights_name)
 
                 INCLUDE = collect(1:size(M, 1))
                 INCLUDE = setdiff(INCLUDE, EXCLUDE)
@@ -49,9 +48,8 @@ function main(FILES, Resolutions, ChrNrs, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi
 
                 S, SUB_M_SIZE1, PHI_1, phi_1, BIN_TABLE_NEW = vN_entropy(M, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, BIN_TABLE, FN)
                 print(Resolution, " ", ChrNr, " ", FN, "\n")
-
                 N = length(S)
-
+                
                 OUT1 = DataFrame(Name=fill(f.META, N), ChrNr=fill(ChrNr, N),
                     Resolution=fill(Resolution, N), n=fill(SUB_M_SIZE1, N),
                     PHI=fill(PHI_1, N), phi=fill(phi_1, N), binNrStart=BIN_TABLE_NEW[:, 1],
@@ -65,14 +63,13 @@ function main(FILES, Resolutions, ChrNrs, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi
 end
 
 
-function load_cooler(FN, ChrNr, Resolution, NormM)
+function load_cooler(FN, ChrNr, Resolution, NormM, weights_name)
     # INPUT VARS
     # OUTPUT VARS
     preStr = ""
     if occursin("mcool", FN)
         preStr = "/resolutions/$Resolution"
     end
-
     # Load non-zero upper diagonal elements
     BINIDs = hcat(h5read(FN, "$preStr/pixels/bin1_id"), h5read(FN, "$preStr/pixels/bin2_id"))
     counts = h5read(FN, "$preStr/pixels/count")
@@ -80,7 +77,7 @@ function load_cooler(FN, ChrNr, Resolution, NormM)
     BINS = hcat(h5read(FN, "$preStr/bins/start"), h5read(FN, "$preStr/bins/end"))
     BINS = hcat(1:size(BINS, 1), BINS)
     if NormM == 1
-        weights = h5read(FN, "$preStr/bins/weight")
+        weights = h5read(FN, "$preStr/bins/$weights_name")
     else
         weights = fill(NaN, size(BINS, 1))
     end
@@ -104,7 +101,7 @@ function load_cooler(FN, ChrNr, Resolution, NormM)
     chrs = [chromosome_map[chr] for chr in chrs]
 
     BIN_TABLE = DataFrame(chrs=chrs, BINS_ALL=BINS[:, 1], START=BINS[:, 2], END=BINS[:, 3], weights=weights)
-    BIN_TABLE = filter(row -> row.chrs == ChrNr || row.chrs == "chr$ChrNr" , BIN_TABLE)
+    BIN_TABLE = filter(row -> row.chrs == "$ChrNr" || row.chrs == "chr$ChrNr" , BIN_TABLE)
 
     f = findall(
         (BINIDs[:, 1] .>= minimum(BIN_TABLE.BINS_ALL)) .&
@@ -134,12 +131,12 @@ function load_cooler(FN, ChrNr, Resolution, NormM)
 
     return CONTACT_MAP, BIN_TABLE
 
-    #BIN_TABLE[!,:binNr] .= 1:size(BIN_TABLE,1)
-    #B = BIN_TABLE[.!isnan.(BIN_TABLE.CONTACT), :]
-    #CONTACT_MAP = CONTACT_MAP[B.binNr,B.binNr]
-    #CONTACT_MAP = CONTACT_MAP[600:800,600:800]
-    #gr()# pyplot(), gr(), or plotly()
-    #heatmap(log.(CONTACT_MAP), aspect_ratio = 1, legend = false, color=:jet, axis = :square)
+#  BIN_TABLE[!,:binNr] .= 1:size(BIN_TABLE,1)
+#  B = BIN_TABLE[.!isnan.(BIN_TABLE.CONTACT), :]
+#  CONTACT_MAP = CONTACT_MAP[B.binNr,B.binNr]
+#  CONTACT_MAP = replace!(CONTACT_MAP, NaN =>  minimum(vec(CONTACT_MAP[])))
+#  gr()# pyplot(), gr(), or plotly()
+#  heatmap(log.(CONTACT_MAP .+ 1e-10), aspect_ratio = 1, legend = false, color=:jet)
 
 end
 
@@ -195,7 +192,6 @@ function vN_entropy(M::Matrix{Float64}, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, 
             ENT = -sum(real(lam .* log.(lam)))
         else
             ENT = NaN
-			print(rr,"\n")
         end
         S = vcat(S, ENT)
 
@@ -243,7 +239,8 @@ function get_similarity_table(ENT3C_OUT, ChrNrs, Resolutions, Biological_replica
             for f in 1:size(comparisons, 1)
                 S1 = filter(row -> row.Name == comparisons[f][1] && row.ChrNr == ChrNr && row.Resolution == Resolution, ENT3C_OUT)
                 S2 = filter(row -> row.Name == comparisons[f][2] && row.ChrNr == ChrNr && row.Resolution == Resolution, ENT3C_OUT)
-                Q = cor(S1.S, S2.S)
+                non_nan_idx = .!isnan.(S1.S).&.!isnan.(S2.S)
+                Q = cor(S1.S[non_nan_idx], S2.S[non_nan_idx])
 
                 Similarity = vcat(Similarity,
                     DataFrame(Resolution=Resolution, ChrNr=ChrNr, Sample1=comparisons[f][1],

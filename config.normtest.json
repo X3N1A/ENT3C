@@ -2,7 +2,7 @@
   "PHI_MAX": 1e3,
   "CHRSPLIT": 7,
   "SUB_M_SIZE_FIX": null,
-  "ChrNr": "15,16,17,18,19,20,12,22",
+  "ChrNr": "20,21,22",
   "Resolution": "40000",
   "phi": 1,
   "NormM": 0,
@@ -32,7 +32,7 @@
 	"4DNFI9GMP2J8.BioRep2.40kb.cool",
 	"H1-hESC_BR2"
 	],
-  "OUT_DIR": "OUTPUT/",
-  "OUT_PREFIX": "40kb"
+  "OUT_DIR": "OUTPUT_NormTest/",
+  "OUT_PREFIX": "NOTnormalized"
 }
 

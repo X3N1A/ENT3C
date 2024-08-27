@@ -1,9 +1,10 @@
-clear all;close all
+function [] = ENT3C(config_file)
 addpath('MATLAB_functions/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % load json file
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-config = fileread('config/config.test.json');
+%config_file='config/config.test.json';
+config = fileread(config_file);
 config = jsondecode(config);
 PHI_MAX=config.PHI_MAX;
 CHRSPLIT=config.CHRSPLIT;
@@ -11,6 +12,7 @@ SUB_M_SIZE_FIX=config.SUB_M_SIZE_FIX;
 Resolutions=str2num(config.Resolution);
 phi=config.phi;
 NormM=config.NormM;
+weights_name=config.WEIGHTS_NAME;
 DATA_PATH=config.DATA_PATH;
 FILES = config.FILES;
 FILES = reshape(FILES,2,size(FILES,1)/2);
@@ -33,6 +35,7 @@ end
 ChrNrs=config.ChrNr;
 ChrNrs=strsplit(ChrNrs, ',');
 
+
 ENT3C_OUT=[];
 for Resolution=Resolutions
     for ChrNr=ChrNrs
@@ -54,10 +57,10 @@ for Resolution=Resolutions
         EXCLUDE=[];
         for f = 1:numel(FNs)
             FN=FNs(f).FN;
-            [M,BIN_TABLE]=load_cooler(FN,ChrNr,Resolution,NormM);
+            [M,BIN_TABLE]=load_cooler(FN,ChrNr,Resolution,NormM,weights_name);
             if NormM==0
                 EXCLUDE=[EXCLUDE;BIN_TABLE.binNr(isnan(BIN_TABLE.CONTACT))];
-                    elseif NormM==1
+            elseif NormM==1
                 EXCLUDE=[EXCLUDE;BIN_TABLE.binNr(isnan(BIN_TABLE.CONTACT));BIN_TABLE.binNr(isnan(BIN_TABLE.weights))];
             end
         end
@@ -68,14 +71,14 @@ for Resolution=Resolutions
         for f = 1:numel(FNs)
             FN=FNs(f).FN;
 
-            [M,BIN_TABLE]=load_cooler(FN,ChrNr,Resolution,NormM);
+            [M,BIN_TABLE]=load_cooler(FN,ChrNr,Resolution,NormM,weights_name);
             INCLUDE = 1:size(M,1);
             INCLUDE = setdiff(INCLUDE,EXCLUDE);
 
             M = M(INCLUDE,INCLUDE);
             BIN_TABLE = BIN_TABLE(INCLUDE,:);
 
-           % writetable(BIN_TABLE,sprintf('%s_chr%d_BINMATRIXMATLAB.csv',FN,ChrNr),'Delimiter','tab')
+            % writetable(BIN_TABLE,sprintf('%s_chr%d_BINMATRIXMATLAB.csv',FN,ChrNr),'Delimiter','tab')
 
             [S, SUB_M_SIZE1, PHI_1, phi_1, BIN_TABLE_NEW] = vN_entropy(M,SUB_M_SIZE_FIX,CHRSPLIT,PHI_MAX,phi,BIN_TABLE);
             N = length(S);
@@ -118,7 +121,8 @@ if numel(SAMPLES)>1
 
                 S1 = ENT3C_OUT(strcmp(ENT3C_OUT.Name,comparisons{f,1})&strcmp(ENT3C_OUT.ChrNr,ChrNr)&ENT3C_OUT.Resolution==Resolution,:);
                 S2 = ENT3C_OUT(strcmp(ENT3C_OUT.Name,comparisons{f,2})&strcmp(ENT3C_OUT.ChrNr,ChrNr)&ENT3C_OUT.Resolution==Resolution,:);
-                Q = corrcoef(S1.S,S2.S);Q=Q(1,2);
+                non_nan_idx = ~isnan(S1.S)&~isnan(S2.S);
+                Q = corrcoef(S1.S(non_nan_idx),S2.S(non_nan_idx));Q=Q(1,2);
 
                 Similarity=[Similarity;...
                     table(Resolution,ChrNr,comparisons{f,1},comparisons{f,2},Q,...
@@ -163,3 +167,4 @@ if numel(SAMPLES)>1
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     writetable(Similarity,sprintf('%s/%s_ENT3C_similarity.csv',OUT_DIR,OUT_PREFIX),'Delimiter','tab')
 end
+

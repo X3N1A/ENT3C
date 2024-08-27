@@ -1,9 +1,10 @@
-function [microC,BIN_TABLE]=load_cooler(FN,ChrNr,Resolution,Norm)
+function [microC,BIN_TABLE]=load_cooler(FN,ChrNr,Resolution,Norm,weights_name)
 % microC ... balanced matrix at desired Resolution
 % BINIDs ... start and end binNr of non-zero upper diagonal elements  
 % BINS ... BinNr, start and end of all elements
 % EXCLUDE ... index of empty bins
 % INCLUDE ... index of non-empty bins
+% weights_name ... name of weights vector in cooler 
 
 % h5disp(FN);
 
@@ -23,7 +24,7 @@ counts = h5read(FN,sprintf('%s/pixels/count',preStr));
 BINS = [h5read(FN,sprintf('%s/bins/start',preStr)) h5read(FN,sprintf('%s/bins/end',preStr))];
 BINS = [(1:size(BINS,1))',BINS];
 if Norm==1
-    weights = h5read(FN,sprintf('%s/bins/weight',preStr));
+    weights = h5read(FN,sprintf('%s/bins/%s',preStr,weights_name));
 else
     weights = nan(size(BINS,1),1);
 end
