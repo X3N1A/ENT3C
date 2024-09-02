@@ -98,6 +98,7 @@ for Resolution=Resolutions
 end
 
 writetable(ENT3C_OUT,sprintf('%s/%s_ENT3C_OUT.csv',OUT_DIR,OUT_PREFIX),'Delimiter','tab')
+ENT3C_OUT=readtable(sprintf('%s/%s_ENT3C_OUT.csv',OUT_DIR,OUT_PREFIX));
 
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -119,8 +120,8 @@ if numel(SAMPLES)>1
             c=1;
             for f=1:size(comparisons,1)
 
-                S1 = ENT3C_OUT(strcmp(ENT3C_OUT.Name,comparisons{f,1})&strcmp(ENT3C_OUT.ChrNr,ChrNr)&ENT3C_OUT.Resolution==Resolution,:);
-                S2 = ENT3C_OUT(strcmp(ENT3C_OUT.Name,comparisons{f,2})&strcmp(ENT3C_OUT.ChrNr,ChrNr)&ENT3C_OUT.Resolution==Resolution,:);
+                S1 = ENT3C_OUT(strcmp(ENT3C_OUT.Name,comparisons{f,1})&strcmp(num2str(ENT3C_OUT.ChrNr),ChrNr)&ENT3C_OUT.Resolution==Resolution,:);
+                S2 = ENT3C_OUT(strcmp(ENT3C_OUT.Name,comparisons{f,2})&strcmp(num2str(ENT3C_OUT.ChrNr),ChrNr)&ENT3C_OUT.Resolution==Resolution,:);
                 non_nan_idx = ~isnan(S1.S)&~isnan(S2.S);
                 Q = corrcoef(S1.S(non_nan_idx),S2.S(non_nan_idx));Q=Q(1,2);
 
@@ -140,9 +141,9 @@ if numel(SAMPLES)>1
             if Biologicap_replicates
                 title(sprintf('Chr%s %dkb\n$\\overline{Q}_{BR}=%4.2f$ $\\overline{Q}_{nonBR}=%4.2f$',...
                     ChrNr{1},Resolution/1e3,...
-                    mean(Similarity.Q(Similarity.ChrNr==ChrNr&Similarity.Resolution==Resolution&...
+                    mean(Similarity.Q(strcmp(Similarity.ChrNr,ChrNr{1})&Similarity.Resolution==Resolution&...
                     strcmp(extractBefore(Similarity.Sample1,'_'),extractBefore(Similarity.Sample2,'_')))),...
-                    mean(Similarity.Q(Similarity.ChrNr==ChrNr&Similarity.Resolution==Resolution&...
+                    mean(Similarity.Q(strcmp(Similarity.ChrNr,ChrNr{1})&Similarity.Resolution==Resolution&...
                     ~strcmp(extractBefore(Similarity.Sample1,'_'),extractBefore(Similarity.Sample2,'_'))))),...
                     'interpreter','latex','fontsize',10)
             else
