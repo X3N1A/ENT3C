@@ -12,7 +12,6 @@ function main(FILES, Resolutions, ChrNrs, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi
         binNrEnd=Vector{Int}[], START=Vector{Int}[], END=Vector{Int}[], S=Vector{Float64}[])
     for Resolution in Resolutions
         for ChrNr in ChrNrs
-
             FNs = []
             for f in 1:Int(size(FILES, 1))
                 FNs = vcat(FNs, INFO(FILES[f, 1], FILES[f, 2]))
@@ -101,7 +100,7 @@ function load_cooler(FN, ChrNr, Resolution, NormM, weights_name)
     chrs = [chromosome_map[chr] for chr in chrs]
 
     BIN_TABLE = DataFrame(chrs=chrs, BINS_ALL=BINS[:, 1], START=BINS[:, 2], END=BINS[:, 3], weights=weights)
-    BIN_TABLE = filter(row -> row.chrs == "$ChrNr" || row.chrs == "chr$ChrNr" , BIN_TABLE)
+    BIN_TABLE = filter(row -> row.chrs == ChrNr || row.chrs == "chr$ChrNr" , BIN_TABLE)
 
     f = findall(
         (BINIDs[:, 1] .>= minimum(BIN_TABLE.BINS_ALL)) .&

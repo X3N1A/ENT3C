@@ -13,7 +13,7 @@ function parse_args(args)
 end
 
 installs, config_file = parse_args(ARGS)
-#args = ["--config-file=config/config.test.json", "--install-deps=no"]
+#args = ["--config-file=config/config.json", "--install-deps=no"]
 #installs, config_file = parse_args(args)
 
 if cmp(installs,"yes") == 0
@@ -74,9 +74,11 @@ if !isdir(OUT_DIR)
     mkpath(OUT_DIR)
 end
 
-ChrNrs = config["ChrNr"]
+ChrNrs = string(config["ChrNr"])
 if contains(ChrNrs, ",")
     ChrNrs = split(ChrNrs, ",")
+else
+    ChrNrs = [ChrNrs]
 end
 #############################################################################
 # ENT3C table
