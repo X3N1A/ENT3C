@@ -1,6 +1,8 @@
 function parse_args(args)
     installs = nothing
+    resolve_env = nothing
     config_file = nothing
+    julia_version = nothing
     for arg in args
         if startswith(arg, "--config-file=")
             config_file = split(arg, "=")[2]
@@ -8,23 +10,74 @@ function parse_args(args)
         if startswith(arg, "--install-deps=")
             installs = split(arg, "=")[2]
         end
+        if startswith(arg, "--resolve-env=")
+            resolve_env = split(arg, "=")[2]
+        end
+        if startswith(arg, "--julia-version=")
+            julia_version = split(arg, "=")[2]
+        end
     end
-    return installs, config_file
+
+    if isnothing(config_file) || config_file == ""
+        throw(ArgumentError("--config-file is missing or empty"))
+    end
+
+    return installs, resolve_env, config_file, julia_version
 end
 
-installs, config_file = parse_args(ARGS)
+function check_missing_packages(required_packages)
+        installed_packages = [info.name for info in values(Pkg.dependencies())]
+        missing_packages = [pkg for pkg in required_packages if !(pkg in installed_packages)]
+        return missing_packages
+end
+
+
+function install_packages(packages)
+        for pkg in packages
+                try
+                        Pkg.add(pkg)
+                catch e
+                        println("Failed to install package $pkg: $e")
+                        exit(1)
+                end
+        end
+end
+
+using Pkg
+installs, resolve_env, config_file, julia_version = parse_args(ARGS)
 #args = ["--config-file=config/config.json", "--install-deps=no"]
 #installs, config_file = parse_args(args)
 
-if cmp(installs,"yes") == 0
-        println("Installing missing dependencies and resolving enviornment.")
-        using Pkg
+required_packages = ["DataFrames", "BenchmarkTools", "JSON", "Printf", "Plots", "ColorSchemes", "SuiteSparse", "HDF5", "NaNStatistics", "Statistics", "Combinatorics", "CSV"]
+missing_packages = check_missing_packages(required_packages)
 
-        Pkg.activate(".")
+if isnothing(installs) && isnothing(resolve_env) && !isempty(missing_packages)
+    println("Error! Missing julia packages. Please specify one of the following:")
+    println("1. Use --install-deps=yes to install the packages globally.")
+    println("   Or")
+    println("2. Specify --resolve-env=yes with --julia-version=1.10.4 or 1.11.2 to install and resolve environment.")
+    exit(1)
+end
+
+if installs == "yes" && length(missing_packages)!=1 && resolve_env != "yes"
+    println("Installing missing dependencies globally.")
+    println(resolve_env)
+    install_packages(missing_packages)
+end
+
+
+if resolve_env == "yes"
+        if isnothing(julia_version) || julia_version == ""
+           throw(ArgumentError("--resolve-env requires julia version specification --julia-version=1.11.2 or --julia-version=1.10.4"))
+        end
+        println("Resolving ENT3C julia enviornment.")
+        Pkg.activate("project_files/$(julia_version)")
+        Pkg.add(["DataFrames", "BenchmarkTools", "JSON", "Printf", "Plots", "ColorSchemes", "SuiteSparse", "HDF5", "NaNStatistics", "Statistics", "Combinatorics", "CSV"])
         Pkg.instantiate()
 end
 
-using DataFrames, BenchmarkTools, JSON, Printf, Plots, ColorSchemes
+
+using DataFrames, BenchmarkTools, JSON, Printf, Plots, ColorSchemes, SuiteSparse
 
 include("JULIA_functions/ent3c_functions.jl")
 ######################################################
