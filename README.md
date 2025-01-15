@@ -35,9 +35,14 @@ Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two
 # Requirements
 Julia or MATLAB. 
 
-* dependencies, packages and version information for julia implementation are defined in ```Project.toml``` and ```Manifest.toml``` 
-	* set ```--install-deps=yes``` if you wish to automatically install the packages and resolve environment
-* For the Julia implementation, ubuntu's hdf5-tools is also required. 
+* julia packages: DataFrames, BenchmarkTools, JSON, Printf, Plots, ColorSchemes, SuiteSparse, HDF5, NaNStatistics, Statistics, Combinatorics, CSV
+	* further requirement: ubuntu's hdf5-tools
+
+## initial julia set-up
+* option for automatic global installation ```--install-deps=yes```. (Works with any julia version)
+* predefined julia enviornments for julia versions 1.10.4 or 1.11.2 are defined in ```project_files/<v.v.v>/Manifest.toml``` and ```project_files/<v.v.v>/Project.toml```
+	* these are loaded and resolved with options ```--resolve-env=yes``` and ```--julia-version=<v.v.v>```
+* For the Julia implementation, ubuntu's hdf5-tools is also required 
 
 # Data
 Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were tested on Hi-C and micro-C contact matrices binned at 40 kb in ```cool``` format. 
@@ -127,7 +132,12 @@ $\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]```
 If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
 
 # Running main scripts 
-* ```julia ENT3C.jl --config-file=config/config.test.json --install-deps=no```
+* julia 
+	* initial call for global package installation (see "initial julia set-up"): ```julia ENT3C.jl --config-file=config/config.test.json --install-deps=yes```
+		* after that: ```julia ENT3C.jl --config-file=config/config.test.json```
+	* alternative loading of predefined enviornments for julia 1.10.4 or 1.11.2  
+		* ```julia ENT3C.jl --config-file=config/config.json --resolve-env=yes --julia-version=<v.v.v>```
+
 * ```matlab -nodesktop -nosplash -nodisplay -r "ENT3C('config/config.test.json'); exit"```
 
 Associated functions are contained in directories ```JULIA_functions/``` and ```MATLAB_functions/```.
