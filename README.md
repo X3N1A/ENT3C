@@ -36,49 +36,16 @@ Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two
 Julia or MATLAB. 
 
 * julia packages: DataFrames, BenchmarkTools, JSON, Printf, Plots, ColorSchemes, SuiteSparse, HDF5, NaNStatistics, Statistics, Combinatorics, CSV
-	* further requirement: ubuntu's hdf5-tools
 
-## initial julia set-up
+## Initial julia set-up
 * option for automatic global installation ```--install-deps=yes```. (Works with any julia version)
+
 * predefined julia enviornments for julia versions 1.10.4 or 1.11.2 are defined in ```project_files/<v.v.v>/Manifest.toml``` and ```project_files/<v.v.v>/Project.toml```
-	* these are loaded and resolved with options ```--resolve-env=yes``` and ```--julia-version=<v.v.v>```
+	* option to load enviornments with ```--resolve-env=yes``` and ```--julia-version=<v.v.v>```
+
 * For the Julia implementation, ubuntu's hdf5-tools is also required 
 
-# Data
-Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were tested on Hi-C and micro-C contact matrices binned at 40 kb in ```cool``` format. 
-
-**micro-C** 
-| Cell line | Biological Replicate (BR) | Accession (Experiemnt set) | Accession (```pairs```) |
-| --- | --- | --- | --- |
-| H1-hESC | 1 | 4DNES21D8SP8 | 4DNFING6ZFD, 4DNFIBMG8YA3, 4DNFIMT4PHZ1, 4DNFI8GM4EL9 |
-| H1-hESC | 2 | 4DNES21D8SP8 | 4DNFIIYUGYBU, 4DNFI89L17XY, 4DNFIXP9MVBU, 4DNFI2YHYAJO, 4DNFIULY29IQ |
-| HFFc6   | 1 | 4DNESphiT3UBH | 4DNFIN7IIIY6, 4DNFIJZDEIZ3, 4DNFIYBTHGNA, 4DNFIK8UIB5B |
-| HFFc6   | 2 | 4DNESphiT3UBH | 4DNFIF5F4HRG, 4DNFIK82YRNM, 4DNFIATCW955, 4DNFIZU6ADT1, 4DNFIKWV6BY2  |
-| HFFc6   | 3 | 4DNESphiT3UBH | 4DNFIFJL4JIH, 4DNFIONHB78N, 4DNFIG1ZOVIM, 4DNFIPKVL9YI, 4DNFIJM966UR, 4DNFIV8JNJB8 |
-
-**Hi-C** 
-| Cell line | Biological Replicate (BR) | Accession (Experiemnt set)  | Accession (```BAM```) |
-| --- | --- | --- | --- |
-| G401  | 1 | ENCSR079VIJ | ENCFF649MAY |
-| G401  | 2 | ENCSR079VIJ | ENCFF758WUD |
-| LNCaP | 1 | ENCSR346DCU | ENCFF977XHB |
-| LNCaP | 2 | ENCSR346DCU | ENCFF204XII |
-| A549  | 1 | ENCSR444WCZ | ENCFF867DCM |
-| A549  | 2 | ENCSR444WCZ | ENCFF532XBC |
-
- 1. for the Hi-C data, ```bam``` files were downloaded from the ENCODE data portal and converted into ```pairs``` files using the ```pairtools parse``` function<sup>3</sup>
-
-	```pairtools parse --chroms-path hg38.fa.sizes -o <OUT.pairs.gz> --assembly hg38 --no-flip  --add-columns mapq  --drop-sam --drop-seq  --nproc-in 15 --nproc-out 15 <IN.bam>```
-
-2. for the micro-C data, ```pairs``` of technical replicates (TRs) were merged with ```pairtools merge```. E.g. for H1-hESC, BR1 (4DNES21D8SP8):
-
-	```pairtools merge -o <hESC.BR1.pairs.gz> --nproc 10 4DNFING6ZFDF.pairs.gz 4DNFIBMG8YA3.pairs.gz 4DNFIMT4PHZ1.pairs.gz 4DNFI8GM4EL9.pairs.gz```
-
-3. 40 kb coolers were generated from the Hi-C/micro-C pairs files with ```cload pairs``` function<sup>4</sup>
- 
-	```cooler cload pairs -c1 2 -p1 3 -c2 4 -p2 5 --assembly hg38 <CHRSIZE_FILE:40000> <IN.pairs.gz> <OUT.cool>```
-
-# Parameters and Configuration File
+# Parameters and configuration files of ENT3C
 * The main ENT3C parameter affecting the final entropy signal $S$ is the dimension of the submatrices ```SUB_M_SIZE_FIX```. 
 
 	* ```SUB_M_SIZE_FIX``` can be either be fixed by or alternatively, one can specify ```CHRSPLIT```; in this case ```SUB_M_SIZE_FIX``` will be computed internally to fit the number of desired times the contact matrix is to be paritioned into. 
@@ -91,13 +58,10 @@ Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were te
 	* for Julia, ```--config-file=config.json```
 	* for MATLAB, please set configuration filename directly in ```ENT3C.m``` script
 
-<br>
-
-**ENT3C parameters are defined in ```config/config.json```**
-
-```"DATA_PATH": "DATA"``` $\dots$ input data path. 
+**ENT3C parameters defined in ```config/config.json```**
+1) ```"DATA_PATH": "DATA"``` $\dots$ input data path. 
 ```
-"FILES": [
+2) "FILES": [
 	"ENCSR079VIJ.BioRep1.40kb.cool",
  
 	"G401_BR1",
@@ -108,33 +72,34 @@ Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were te
 ``` 
 $\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]```
 
-:bulb: ENT3C also takes ```mcool``` files as input. Please refer to biological replicates as "_BR%d" in the <SHORT_NAME>.
+- ENT3C also takes ```mcool``` files as input. Please refer to biological replicates as "_BR%d" in the <SHORT_NAME>.
 
-```"`OUT_DIR": "OUTPUT/"``` $\dots$ output directory. ```OUT_DIR``` will be concatenated with ```OUTPUT/JULIA/``` or ```OUTPUT/MATLAB/```.
+4) ```"`OUT_DIR": "OUTPUT/"``` $\dots$ output directory. ```OUT_DIR``` will be concatenated with ```OUTPUT/JULIA/``` or ```OUTPUT/MATLAB/```.
 
-```"OUT_PREFIX": "40kb"``` $\dots$ prefix for output files.
+5) ```"OUT_PREFIX": "40kb"``` $\dots$ prefix for output files.
 
-```"Resolution": "40e3,100e3"``` $\dots$ resolutions to be evaluated. 
+6) ```"Resolution": "40e3,100e3"``` $\dots$ resolutions to be evaluated. 
 
-```"ChrNr": "15,16,17,18,19,20,21,22,X"``` $\dots$ chromosome numbers to be evaluated.
+7) ```"ChrNr": "15,16,17,18,19,20,21,22,X"``` $\dots$ chromosome numbers to be evaluated.
 
-```"NormM": 0``` $\dots$ input contact matrices can be balanced. If ```NormM: 1```, balancing weights in cooler are applied. If set to 1, ENT3C expects weights to be in dataset ```/resolutions/<resolution>/bins/<WEIGHTS_NAME>```.
+8) ```"NormM": 0``` $\dots$ input contact matrices can be balanced. If ```NormM: 1```, balancing weights in cooler are applied. If set to 1, ENT3C expects weights to be in dataset ```/resolutions/<resolution>/bins/<WEIGHTS_NAME>```.
 
-```"WEIGHTS_NAME": "weight"``` $\dots$ name of dataset in cooler containing normalization weights.
+9) ```"WEIGHTS_NAME": "weight"``` $\dots$ name of dataset in cooler containing normalization weights.
 
-```"SUB_M_SIZE_FIX": null``` $\dots$ fixed submatrix dimension.
+10) ```"SUB_M_SIZE_FIX": null``` $\dots$ fixed submatrix dimension.
 
-```"CHRSPLIT": 10``` $\dots$ number of submatrices into which the contact matrix is partitioned into.
+11) ```"CHRSPLIT": 10``` $\dots$ number of submatrices into which the contact matrix is partitioned into.
 
-```"phi": 1``` $\dots$ number of bins to the next matrix.
+12) ```"phi": 1``` $\dots$ number of bins to the next matrix.
 
-```"PHI_MAX": 1000``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. 
+13) ```"PHI_MAX": 1000``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. 
 If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
 
 # Running main scripts 
 * julia 
 	* initial call for global package installation (see "initial julia set-up"): ```julia ENT3C.jl --config-file=config/config.test.json --install-deps=yes```
 		* after that: ```julia ENT3C.jl --config-file=config/config.test.json```
+
 	* alternative loading of predefined enviornments for julia 1.10.4 or 1.11.2  
 		* ```julia ENT3C.jl --config-file=config/config.json --resolve-env=yes --julia-version=<v.v.v>```
 
@@ -183,6 +148,39 @@ Entropy signals $S$ generated by the MATLAB script ```ENT3C.m``` for contact mat
          alt="ENT3C MATLAB Output">
 </figure>
 
+# Data used in publication 
+Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were tested on Hi-C and micro-C contact matrices binned at 40 kb in ```cool``` format. 
+
+**micro-C** 
+| Cell line | Biological Replicate (BR) | Accession (Experiemnt set) | Accession (```pairs```) |
+| --- | --- | --- | --- |
+| H1-hESC | 1 | 4DNES21D8SP8 | 4DNFING6ZFD, 4DNFIBMG8YA3, 4DNFIMT4PHZ1, 4DNFI8GM4EL9 |
+| H1-hESC | 2 | 4DNES21D8SP8 | 4DNFIIYUGYBU, 4DNFI89L17XY, 4DNFIXP9MVBU, 4DNFI2YHYAJO, 4DNFIULY29IQ |
+| HFFc6   | 1 | 4DNESphiT3UBH | 4DNFIN7IIIY6, 4DNFIJZDEIZ3, 4DNFIYBTHGNA, 4DNFIK8UIB5B |
+| HFFc6   | 2 | 4DNESphiT3UBH | 4DNFIF5F4HRG, 4DNFIK82YRNM, 4DNFIATCW955, 4DNFIZU6ADT1, 4DNFIKWV6BY2  |
+| HFFc6   | 3 | 4DNESphiT3UBH | 4DNFIFJL4JIH, 4DNFIONHB78N, 4DNFIG1ZOVIM, 4DNFIPKVL9YI, 4DNFIJM966UR, 4DNFIV8JNJB8 |
+
+**Hi-C** 
+| Cell line | Biological Replicate (BR) | Accession (Experiemnt set)  | Accession (```BAM```) |
+| --- | --- | --- | --- |
+| G401  | 1 | ENCSR079VIJ | ENCFF649MAY |
+| G401  | 2 | ENCSR079VIJ | ENCFF758WUD |
+| LNCaP | 1 | ENCSR346DCU | ENCFF977XHB |
+| LNCaP | 2 | ENCSR346DCU | ENCFF204XII |
+| A549  | 1 | ENCSR444WCZ | ENCFF867DCM |
+| A549  | 2 | ENCSR444WCZ | ENCFF532XBC |
+
+ 1. for the Hi-C data, ```bam``` files were downloaded from the ENCODE data portal and converted into ```pairs``` files using the ```pairtools parse``` function<sup>3</sup>
+
+	```pairtools parse --chroms-path hg38.fa.sizes -o <OUT.pairs.gz> --assembly hg38 --no-flip  --add-columns mapq  --drop-sam --drop-seq  --nproc-in 15 --nproc-out 15 <IN.bam>```
+
+2. for the micro-C data, ```pairs``` of technical replicates (TRs) were merged with ```pairtools merge```. E.g. for H1-hESC, BR1 (4DNES21D8SP8):
+
+	```pairtools merge -o <hESC.BR1.pairs.gz> --nproc 10 4DNFING6ZFDF.pairs.gz 4DNFIBMG8YA3.pairs.gz 4DNFIMT4PHZ1.pairs.gz 4DNFI8GM4EL9.pairs.gz```
+
+3. 40 kb coolers were generated from the Hi-C/micro-C pairs files with ```cload pairs``` function<sup>4</sup>
+ 
+	```cooler cload pairs -c1 2 -p1 3 -c2 4 -p2 5 --assembly hg38 <CHRSIZE_FILE:40000> <IN.pairs.gz> <OUT.cool>```
 
 # References
 1. Neumann, J. von., Thermodynamik quantenmechanischer Gesamtheiten. Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen. Mathematisch-Physikalische Klasse 1927. 1927. 273-291.
