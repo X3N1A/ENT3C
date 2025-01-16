@@ -60,8 +60,10 @@ Julia or MATLAB.
 
 **ENT3C parameters defined in ```config/config.json```**
 1) ```"DATA_PATH": "DATA"``` $\dots$ input data path. 
-```
-2) "FILES": [
+
+2) input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]```
+``` 
+"FILES": [
 	"ENCSR079VIJ.BioRep1.40kb.cool",
  
 	"G401_BR1",
@@ -70,8 +72,6 @@ Julia or MATLAB.
  
 	"G401_BR2"]
 ``` 
-$\dots$ input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]```
-
 - ENT3C also takes ```mcool``` files as input. Please refer to biological replicates as "_BR%d" in the <SHORT_NAME>.
 
 4) ```"`OUT_DIR": "OUTPUT/"``` $\dots$ output directory. ```OUT_DIR``` will be concatenated with ```OUTPUT/JULIA/``` or ```OUTPUT/MATLAB/```.
