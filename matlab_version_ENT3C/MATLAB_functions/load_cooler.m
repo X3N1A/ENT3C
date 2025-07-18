@@ -19,6 +19,7 @@ end
 
 % non-zero uppder diagonal elements
 BINIDs = [h5read(FN,sprintf('%s/pixels/bin1_id',preStr)) h5read(FN,sprintf('%s/pixels/bin2_id',preStr))];
+BINIDs=BINIDs+1;% MATLAB python indexing!!
 counts = h5read(FN,sprintf('%s/pixels/count',preStr));
 
 BINS = [h5read(FN,sprintf('%s/bins/start',preStr)) h5read(FN,sprintf('%s/bins/end',preStr))];
@@ -45,16 +46,18 @@ f=find(BINIDs(:,1)>=min(BIN_TABLE.BINS_ALL(:))&BINIDs(:,2)>=min(BIN_TABLE.BINS_A
 
 BINIDs=BINIDs(f,:);
 counts=counts(f,:);
-BINIDs=BINIDs-BINIDs(1,1)+1;
+BINIDs=BINIDs-double(BIN_TABLE.BINS_ALL(1))+1;
 %%%
 microC=nan(size(BIN_TABLE,1),size(BIN_TABLE,1));
 index = sub2ind(size(microC),BINIDs(:,1),BINIDs(:,2));
 microC(index)=counts;
-if Norm==1
-    microC=microC.*BIN_TABLE.weights;
-end
-
 microC=triu(microC)+triu(microC,1)';
+
+if Norm==1
+    a=BIN_TABLE.weights;
+    b=BIN_TABLE.weights';
+    microC=microC.*(a*b);%BIN_TABLE.weights;
+end
 
 INCLUDE = unique([find(sum(isnan(microC),2)<size(microC,2))]);
 

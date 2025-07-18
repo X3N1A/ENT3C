@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"git.autoRepositoryDetection": false,
+    	"git.enabled": false,
+		"python.terminal.activateEnvironment": true,
+		"python.defaultInterpreterPath": ".venv/bin/python"
+	},
+	"launch": {
+		"configurations": [
+		  {
+			"name": "Run Python",
+			"type": "debugpy",
+			"request": "launch",
+			"program": "${workspaceFolder}/ENT3C.py",
+			"console": "integratedTerminal",
+			"args": [
+				"--config=config/config.json",
+			  ]
+		  }
+		]
+	}
+}

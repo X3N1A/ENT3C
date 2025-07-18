@@ -1,12 +1,12 @@
 {
-  "PHI_MAX": 5e3,
+  "WN_MAX": 5e3,
   "CHRSPLIT": 10,
   "SUB_M_SIZE_FIX": null,
-  "ChrNr": "20,21,22",
+  "ChrNr": "21,22",
   "Resolution": "40e3,100e3",
-  "phi": 1,
-  "NormM": 1,
-  "WEIGHTS_NAME": "weight",
+  "WS": 1,
+  "NormM": 0,
+  "WEIGHTS_NAME": "",
   "DATA_PATH": "/HDD3/DocumentsHDD3/07_2022-/Mapping",
   "FILES": [
 	"ENCSR079VIJ_G401/PreProcessed/ENCSR079VIJ_G401combined.mcool",
@@ -20,7 +20,7 @@
 	"4DNFI9GMP2J8_H1-hESC/PreProcessed/4DNFI9GMP2J8_H1-hESCcombined.mcool",
 	"H1-hESC"
 	],
-  "OUT_DIR": "OUTPUT/",
-  "OUT_PREFIX": "multi_resolutions_normalized"
+  "OUT_DIR": "OUTPUT_TEMP/",
+  "OUT_PREFIX": "multi_resolutions"
 }
 

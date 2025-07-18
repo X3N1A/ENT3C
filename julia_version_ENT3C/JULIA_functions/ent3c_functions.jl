@@ -1,64 +1,84 @@
-using HDF5, DataFrames, LinearAlgebra, Plots, NaNStatistics, Statistics, Combinatorics, Plots, CSV, Printf
+using CSV
+using Combinatorics
+using DataFrames
+using HDF5
+using LinearAlgebra
+using NaNStatistics
+using Plots
+using Printf
+using Statistics
 
 struct INFO
     FN::String
     META::String # sample short name: e.g. G401_BR1
 end
-
-function main(FILES, Resolutions, ChrNrs, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, NormM,weights_name)
-
-    ENT3C_OUT = DataFrame(Name=Vector{String}[], ChrNr=Vector{Int}[], Resolution=Vector{Int}[],
-        n=Vector{Int}[], PHI=Vector{Int}[], phi=Vector{Int}[], binNrStart=Vector{Int}[],
-        binNrEnd=Vector{Int}[], START=Vector{Int}[], END=Vector{Int}[], S=Vector{Float64}[])
-    for Resolution in Resolutions
-        for ChrNr in ChrNrs
-            FNs = []
-            for f in 1:Int(size(FILES, 1))
-                FNs = vcat(FNs, INFO(FILES[f, 1], FILES[f, 2]))
-            end
-
-            ##############################################################################
-            # extract common empty bins of input matrices
-            ##############################################################################
-            EXCLUDE = 0
-            for f in FNs
-                FN = f.FN
-                M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution, NormM, weights_name)
-			if NormM==0
-                EXCLUDE = vcat(EXCLUDE, BIN_TABLE.binNr[isnan.(BIN_TABLE.CONTACT)])
-			elseif NormM==1
-				EXCLUDE = vcat(EXCLUDE, BIN_TABLE.binNr[isnan.(BIN_TABLE.CONTACT)], BIN_TABLE.binNr[isnan.(BIN_TABLE.weights)])
-			end
-            end
-            EXCLUDE = unique(EXCLUDE)
-            ##############################################################################
-            #produce ENT3C_OUT data frame
-            ##############################################################################
-            for f in FNs
-                print(f)
-                FN = f.FN
-                M, BIN_TABLE = load_cooler(FN, ChrNr, Resolution, NormM, weights_name)
-
-                INCLUDE = collect(1:size(M, 1))
-                INCLUDE = setdiff(INCLUDE, EXCLUDE)
-                M = M[INCLUDE, INCLUDE]
-
-                BIN_TABLE = BIN_TABLE[INCLUDE, :]
-
-                S, SUB_M_SIZE1, PHI_1, phi_1, BIN_TABLE_NEW = vN_entropy(M, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, BIN_TABLE, FN)
-                print(Resolution, " ", ChrNr, " ", FN, "\n")
-                N = length(S)
-                
-                OUT1 = DataFrame(Name=fill(f.META, N), ChrNr=fill(ChrNr, N),
-                    Resolution=fill(Resolution, N), n=fill(SUB_M_SIZE1, N),
-                    PHI=fill(PHI_1, N), phi=fill(phi_1, N), binNrStart=BIN_TABLE_NEW[:, 1],
-                    binNrEnd=BIN_TABLE_NEW[:, 2], START=BIN_TABLE_NEW[:, 3], END=BIN_TABLE_NEW[:, 4], S=S)
-                ENT3C_OUT = vcat(ENT3C_OUT, OUT1)
-
-            end
+function parse_args(args)
+    installs = nothing
+    resolve_env = nothing
+    config_file = nothing
+    julia_version = nothing
+    for arg in args
+        if startswith(arg, "--config-file=")
+            config_file = split(arg, "=")[2]
+        end
+        if startswith(arg, "--install-deps=")
+            installs = split(arg, "=")[2]
+        end
+        if startswith(arg, "--resolve-env=")
+            resolve_env = split(arg, "=")[2]
+        end
+        if startswith(arg, "--julia-version=")
+            julia_version = split(arg, "=")[2]
         end
     end
-    return ENT3C_OUT
+
+    if isnothing(config_file) || config_file == ""
+        throw(ArgumentError("--config-file is missing or empty"))
+    end
+
+    return installs, resolve_env, config_file, julia_version
+end
+
+function check_missing_packages(required_packages)
+        installed_packages = [info.name for info in values(Pkg.dependencies())]
+        missing_packages = [pkg for pkg in required_packages if !(pkg in installed_packages)]
+        return missing_packages
+end
+
+
+function install_packages(packages)
+        for pkg in packages
+                try
+                        Pkg.add(pkg)
+                catch e
+                        println("Failed to install package $pkg: $e")
+                        exit(1)
+                end
+        end
+end
+
+
+function get_config(config_file)
+    config=nothing
+    if config_file === nothing
+        println("Please specify a configuration file.")
+    else
+    println("Using config file: $config_file")
+    try
+        config = JSON.parsefile(config_file)
+        println("Config data: ", config)
+    catch e
+        println("Error reading config file: ", e)
+    end
+    end
+    return config
+end
+
+function check_input_option(varname, value, allowed_options)
+    if !(isnothing(value) || value == "" || lowercase(value) in allowed_options)
+        println(ArgumentError("ERROR: Illegal value for --$varname: '$value'. Allowed values are: $(collect(allowed_options))"))
+        exit(1)
+    end
 end
 
 
@@ -71,8 +91,8 @@ function load_cooler(FN, ChrNr, Resolution, NormM, weights_name)
     end
     # Load non-zero upper diagonal elements
     BINIDs = hcat(h5read(FN, "$preStr/pixels/bin1_id"), h5read(FN, "$preStr/pixels/bin2_id"))
+    BINIDs = BINIDs .+ 1
     counts = h5read(FN, "$preStr/pixels/count")
-
     BINS = hcat(h5read(FN, "$preStr/bins/start"), h5read(FN, "$preStr/bins/end"))
     BINS = hcat(1:size(BINS, 1), BINS)
     if NormM == 1
@@ -80,7 +100,6 @@ function load_cooler(FN, ChrNr, Resolution, NormM, weights_name)
     else
         weights = fill(NaN, size(BINS, 1))
     end
-
   
     command = `h5dump -d $preStr/bins/chrom -H $FN`
     output = read(pipeline(command, `grep "^\s\+\""`, `sed -E 's/^\s*"([^"]+)"\s+([0-9]+);/\2 => "\1",/'`), String)
@@ -110,7 +129,7 @@ function load_cooler(FN, ChrNr, Resolution, NormM, weights_name)
 
     BINIDs = BINIDs[f, :]
     counts = counts[f, :]
-    BINIDs .= BINIDs .- BINIDs[1, 1] .+ 1
+    BINIDs .= BINIDs .- BIN_TABLE.BINS_ALL[1] .+ 1
 
     CONTACT_MAP = fill(NaN, size(BIN_TABLE, 1), size(BIN_TABLE, 1))
 
@@ -118,7 +137,9 @@ function load_cooler(FN, ChrNr, Resolution, NormM, weights_name)
     CONTACT_MAP[index] = counts
 
     if NormM == 1
-        CONTACT_MAP .= CONTACT_MAP .* BIN_TABLE.weights
+        a = BIN_TABLE.weights
+        b = BIN_TABLE.weights'
+        CONTACT_MAP .= CONTACT_MAP .* (a*b)
     end
     CONTACT_MAP .= triu(CONTACT_MAP) .+ triu(CONTACT_MAP, 1)'
     INCLUDE = unique(findall(sum(isnan.(CONTACT_MAP), dims=2) .< size(CONTACT_MAP, 2)))
@@ -152,13 +173,12 @@ function vN_entropy(M::Matrix{Float64}, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, 
     end
 
     PHI = Int(1 + floor((N - SUB_M_SIZE) ./ phi))
-    if PHI_MAX != nothing
+    if !isnothing(PHI_MAX)
         while PHI > PHI_MAX
             phi = phi + 1
             PHI = Int(1 + floor((N - SUB_M_SIZE) ./ phi))
         end
     end
-
 
     R1 = collect(1:phi:N)
     R1 = R1[1:PHI]
@@ -167,38 +187,43 @@ function vN_entropy(M::Matrix{Float64}, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, 
     R = hcat(R1, R2)
     R = convert(Matrix{Int64}, R)
 
+    replace!(M, 0.0 => NaN)
     M = log.(M)
     BIN_TABLE_NEW = Array{Int64}(undef, 0, 4)
     m = []
     for rr in 1:PHI
         m = M[R[rr, 1]:R[rr, 2], R[rr, 1]:R[rr, 2]]
-        if !all(isnan, m)
+
+        mask = isnan.(m) .| (m .== 0)
+        mask =  sum(mask, dims=1)
+ 
+
+        if any(vec(mask .>= (SUB_M_SIZE-1)))
+            ENT = NaN 
+        else
             replace!(m, NaN => minimum(filter(!isnan, m)))
             P = cor(m)
 
-            zero_variance_indices = all(m .== 0, dims=2) .& all(m .== 0, dims=1)
-            P[zero_variance_indices] .= 0
+            SDs = std(m, dims=1) .< eps()
+            P[SDs[1, :], :] .= 0
+            P[:,SDs[1,:]] .= 0
             replace!(P, NaN => 0)
-
             rho = P ./ size(P, 1)
 
             #lam = eigen(rho);lam = lam.values
             lam = eigvals(rho)
-            lam = lam[lam.>0]
+            lam = lam[lam.>eps()]
 
             #gr()
             #heatmap(rho, aspect_ratio = 1, legend = false, color=:jet, axis = :square)
             ENT = -sum(real(lam .* log.(lam)))
-        else
-            ENT = NaN
+        
         end
         S = vcat(S, ENT)
 
         BIN_TABLE_NEW = vcat(BIN_TABLE_NEW,
             [BIN_TABLE.binNr[R[rr, 1]], BIN_TABLE.binNr[R[rr, 2]],
                 BIN_TABLE.START[R[rr, 1]], BIN_TABLE.END[R[rr, 2]]]')
-
-
 
     end
 
@@ -222,7 +247,7 @@ function get_pairwise_combs(SAMPLES)
 
 end
 
-function get_similarity_table(ENT3C_OUT, ChrNrs, Resolutions, Biological_replicates)
+function get_similarity_table(ENT3C_OUT, ChrNrs, Resolutions, Biological_replicates, OUT_DIR,OUT_PREFIX)
 
     Similarity = DataFrame(Resolution=Vector{Int}[], ChrNr=Vector{Int}[], Sample1=Vector{String}[], Sample2=Vector{String}[], Q=Vector{Int}[])
 
@@ -235,7 +260,7 @@ function get_similarity_table(ENT3C_OUT, ChrNrs, Resolutions, Biological_replica
             plt = plot()
             plotted = []
             c = 1
-            for f in 1:size(comparisons, 1)
+            for f in eachindex(comparisons)
                 S1 = filter(row -> row.Name == comparisons[f][1] && row.ChrNr == ChrNr && row.Resolution == Resolution, ENT3C_OUT)
                 S2 = filter(row -> row.Name == comparisons[f][2] && row.ChrNr == ChrNr && row.Resolution == Resolution, ENT3C_OUT)
                 non_nan_idx = .!isnan.(S1.S).&.!isnan.(S2.S)
@@ -267,9 +292,10 @@ function get_similarity_table(ENT3C_OUT, ChrNrs, Resolutions, Biological_replica
             if Biological_replicates == true
                 cell_line(x) = match(r"^(.*?)_", x).captures[1] # r==regex, ^(.*?) = any chars, then underscore
                 BR = filter(row -> cell_line(row.Sample1) == cell_line(row.Sample2) && row.ChrNr == ChrNr && row.Resolution == Resolution, Similarity)
-                BR = mean(BR.Q)
+                BR = mean(Float64.(BR.Q))
+                print(BR)
                 nonBR = filter(row -> cell_line(row.Sample1) != cell_line(row.Sample2) && row.ChrNr == ChrNr && row.Resolution == Resolution, Similarity)
-                nonBR = mean(nonBR.Q)
+                nonBR = mean(Float64.(nonBR.Q))
                 title!(plt, @sprintf("Chr%s \$\\overline{Q}_{BR}=%4.2f\$ \$\\overline{Q}_{nonBR}=%4.2f\$", ChrNr, BR, nonBR), fontsize=12, interpreter=:latex)
             else
                 title!(plt, @sprintf("Chr%s", ChrNr))

@@ -7,7 +7,7 @@
   "phi": 1,
   "NormM": 0,
   "WEIGHTS_NAME": "",
-  "DATA_PATH": "DATA",
+  "DATA_PATH": "./DATA",
   "FILES": [
 	"ENCSR079VIJ.BioRep1.40kb.cool",
 	"G401_BR1",
@@ -32,7 +32,7 @@
 	"4DNFI9GMP2J8.BioRep2.40kb.cool",
 	"H1-hESC_BR2"
 	],
-  "OUT_DIR": "OUTPUT/",
+  "OUT_DIR": "./OUTPUT/",
   "OUT_PREFIX": "40kb"
 }
 

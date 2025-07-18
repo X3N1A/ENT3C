@@ -1,3 +1,12 @@
 DATA/
 OUTPUT_TEMP/
 CONDA_ENT3C/
+ENT3C_local_git.julia.code-workspace
+ENT3C_local_git.python.code-workspace
+.venv/
+build/
+dist/
+*.egg-info/
+.vscode/
+.idea/
+
