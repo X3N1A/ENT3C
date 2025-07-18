@@ -1,12 +1,13 @@
 import numpy as np
 import pandas as pd
 
-from ENT3c.core import utils
-from ENT3c.core import vN_entropy
+from ENT3C.core import utils
+from ENT3C.core.vN_entropy import vN_entropy
 
 
-def get_entropy(config):
+def get_entropy(config_file):
     (
+        config_df,
         SUB_M_SIZE_FIX,
         PHI_MAX,
         CHRSPLIT,
@@ -14,17 +15,19 @@ def get_entropy(config):
         NormM,
         CHROMOSOMES,
         RESOLUTIONS,
-        _,
+        BR,
         FNs,
+        OUT_DIR,
+        OUT_PREFIX,
         entropy_out_FN,
-        _,
-    ) = utils.check_config(config)
+        similarity_out_FN,
+    ) = utils.check_config(config_file)
 
-    print(f"Inputs: {', '.join(config['NAME'])}")
+    print(f"Inputs: {', '.join(config_df['NAME'])}")
     print(
         "Apply cooler weights? no."
-        if config["NormM"][0] == 0
-        else f"Apply cooler weights? yes. Name in cooler:{', '.join(config['WEIGHTS_NAME'][0])}"
+        if config_df["NormM"][0] == 0
+        else f"Apply cooler weights? yes. Name in cooler:{', '.join(config_df['WEIGHTS_NAME'][0])}"
     )
     print(f"CHRSPLIT: {CHRSPLIT}")
     print(f"Sub matrix size PHI: {SUB_M_SIZE_FIX}")
@@ -32,8 +35,8 @@ def get_entropy(config):
     print(f"Chromosomes: {CHROMOSOMES}")
     print(f"Resolutions: {RESOLUTIONS}")
 
-    print(f"Output Directory: {config['OUT_DIR'][0]}")
-    print(f"Output Prefix: {config['OUT_PREFIX'][0]}")
+    print(f"Output Directory: {config_df['OUT_DIR'][0]}")
+    print(f"Output Prefix: {config_df['OUT_PREFIX'][0]}")
 
     ENT3C_OUT = []
     print(f"Generating new file: {entropy_out_FN}")
@@ -48,8 +51,8 @@ def get_entropy(config):
                     FN,
                     ChrNr,
                     Resolution,
-                    config["NormM"][0],
-                    config["WEIGHTS_NAME"][0],
+                    config_df["NormM"][0],
+                    config_df["WEIGHTS_NAME"][0],
                 )
 
                 if NormM == 0:
@@ -82,8 +85,8 @@ def get_entropy(config):
                     FNs[f],
                     ChrNr,
                     Resolution,
-                    config["NormM"][0],
-                    config["WEIGHTS_NAME"][0],
+                    config_df["NormM"][0],
+                    config_df["WEIGHTS_NAME"][0],
                 )
 
                 INCLUDE = set(range(0, M.shape[0]))
@@ -98,7 +101,7 @@ def get_entropy(config):
 
                 N = len(S)
                 DICT = {
-                    "Name": [config["NAME"].iloc[f]] * N,
+                    "Name": [config_df["NAME"].iloc[f]] * N,
                     "ChrNr": [ChrNr] * N,
                     "Resolution": [Resolution] * N,
                     "n": [SUB_M_SIZE] * N,

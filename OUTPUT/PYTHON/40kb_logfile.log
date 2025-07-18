@@ -1,0 +1,183 @@
+2025-07-18 16:29:08,174 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:29:08,174 - INFO - Apply cooler weights? no.
+2025-07-18 16:29:08,174 - INFO - CHRSPLIT: 7
+2025-07-18 16:29:08,174 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:29:08,174 - INFO - Window shift phi: 1
+2025-07-18 16:29:08,174 - INFO - Chromosomes: ['15', '16', '17', '18', '19', '20', '12', '22']
+2025-07-18 16:29:08,174 - INFO - Resolutions: [40000]
+2025-07-18 16:30:49,691 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:30:49,691 - INFO - Apply cooler weights? no.
+2025-07-18 16:30:49,691 - INFO - CHRSPLIT: 7
+2025-07-18 16:30:49,691 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:30:49,691 - INFO - Window shift phi: 1
+2025-07-18 16:30:49,691 - INFO - Chromosomes: ['15', '16', '17', '18', '19', '20', '12', '22']
+2025-07-18 16:30:49,691 - INFO - Resolutions: [40000]
+2025-07-18 16:33:07,125 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:33:07,125 - INFO - Apply cooler weights? no.
+2025-07-18 16:33:07,125 - INFO - CHRSPLIT: 7
+2025-07-18 16:33:07,125 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:33:07,125 - INFO - Window shift phi: 1
+2025-07-18 16:33:07,125 - INFO - Chromosomes: ['15', '16', '17', '18', '19', '20', '12', '22']
+2025-07-18 16:33:07,125 - INFO - Resolutions: [40000]
+2025-07-18 16:33:30,385 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:33:30,385 - INFO - Apply cooler weights? no.
+2025-07-18 16:33:30,385 - INFO - CHRSPLIT: 7
+2025-07-18 16:33:30,385 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:33:30,385 - INFO - Window shift phi: 1
+2025-07-18 16:33:30,385 - INFO - Chromosomes: ['22']
+2025-07-18 16:33:30,385 - INFO - Resolutions: [40000]
+2025-07-18 16:34:40,043 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:34:40,043 - INFO - Apply cooler weights? no.
+2025-07-18 16:34:40,043 - INFO - CHRSPLIT: 7
+2025-07-18 16:34:40,043 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:34:40,043 - INFO - Window shift phi: 1
+2025-07-18 16:34:40,043 - INFO - Chromosomes: ['15', '16', '17', '18', '19', '20', '21', '22']
+2025-07-18 16:34:40,043 - INFO - Resolutions: [40000]
+2025-07-18 16:40:36,832 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:40:36,833 - INFO - Apply cooler weights? no.
+2025-07-18 16:40:36,833 - INFO - CHRSPLIT: 7
+2025-07-18 16:40:36,833 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:40:36,833 - INFO - Window shift phi: 1
+2025-07-18 16:40:36,833 - INFO - Chromosomes: ['22']
+2025-07-18 16:40:36,833 - INFO - Resolutions: [40000]
+2025-07-18 16:43:52,010 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:43:52,010 - INFO - Apply cooler weights? no.
+2025-07-18 16:43:52,010 - INFO - CHRSPLIT: 7
+2025-07-18 16:43:52,010 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:43:52,010 - INFO - Window shift phi: 1
+2025-07-18 16:43:52,010 - INFO - Chromosomes: ['22']
+2025-07-18 16:43:52,010 - INFO - Resolutions: [40000]
+2025-07-18 16:44:36,763 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:44:36,763 - INFO - Apply cooler weights? no.
+2025-07-18 16:44:36,763 - INFO - CHRSPLIT: 7
+2025-07-18 16:44:36,763 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:44:36,763 - INFO - Window shift phi: 1
+2025-07-18 16:44:36,763 - INFO - Chromosomes: ['22']
+2025-07-18 16:44:36,763 - INFO - Resolutions: [40000]
+2025-07-18 16:44:38,517 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:44:38,517 - INFO - Apply cooler weights? no.
+2025-07-18 16:44:38,518 - INFO - CHRSPLIT: 7
+2025-07-18 16:44:38,518 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:44:38,518 - INFO - Window shift phi: 1
+2025-07-18 16:44:38,518 - INFO - Chromosomes: ['22']
+2025-07-18 16:44:38,518 - INFO - Resolutions: [40000]
+2025-07-18 16:44:40,855 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:44:40,855 - INFO - Apply cooler weights? no.
+2025-07-18 16:44:40,855 - INFO - CHRSPLIT: 7
+2025-07-18 16:44:40,855 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:44:40,855 - INFO - Window shift phi: 1
+2025-07-18 16:44:40,855 - INFO - Chromosomes: ['22']
+2025-07-18 16:44:40,855 - INFO - Resolutions: [40000]
+2025-07-18 16:45:18,552 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:45:18,552 - INFO - Apply cooler weights? no.
+2025-07-18 16:45:18,552 - INFO - CHRSPLIT: 7
+2025-07-18 16:45:18,552 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:45:18,552 - INFO - Window shift phi: 1
+2025-07-18 16:45:18,552 - INFO - Chromosomes: ['22']
+2025-07-18 16:45:18,552 - INFO - Resolutions: [40000]
+2025-07-18 16:47:11,001 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:47:11,001 - INFO - Apply cooler weights? no.
+2025-07-18 16:47:11,001 - INFO - CHRSPLIT: 7
+2025-07-18 16:47:11,002 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:47:11,002 - INFO - Window shift phi: 1
+2025-07-18 16:47:11,002 - INFO - Chromosomes: ['22']
+2025-07-18 16:47:11,002 - INFO - Resolutions: [40000]
+2025-07-18 16:48:21,993 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:48:21,993 - INFO - Apply cooler weights? no.
+2025-07-18 16:48:21,993 - INFO - CHRSPLIT: 7
+2025-07-18 16:48:21,993 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:48:21,993 - INFO - Window shift phi: 1
+2025-07-18 16:48:21,993 - INFO - Chromosomes: ['22']
+2025-07-18 16:48:21,993 - INFO - Resolutions: [40000]
+2025-07-18 16:48:26,985 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:48:26,985 - INFO - Apply cooler weights? no.
+2025-07-18 16:48:26,985 - INFO - CHRSPLIT: 7
+2025-07-18 16:48:26,985 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:48:26,985 - INFO - Window shift phi: 1
+2025-07-18 16:48:26,985 - INFO - Chromosomes: ['22']
+2025-07-18 16:48:26,985 - INFO - Resolutions: [40000]
+2025-07-18 16:48:26,985 - INFO - Namespace(command='get_entropy', config='config/config.json')
+2025-07-18 16:48:26,985 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:48:26,985 - INFO - Apply cooler weights? no.
+2025-07-18 16:48:26,985 - INFO - CHRSPLIT: 7
+2025-07-18 16:48:26,985 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:48:26,985 - INFO - Window shift phi: 1
+2025-07-18 16:48:26,985 - INFO - Chromosomes: ['22']
+2025-07-18 16:48:26,985 - INFO - Resolutions: [40000]
+2025-07-18 16:48:26,989 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:48:26,989 - INFO - Apply cooler weights? no.
+2025-07-18 16:48:26,989 - INFO - CHRSPLIT: 7
+2025-07-18 16:48:26,989 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:48:26,989 - INFO - Window shift phi: 1
+2025-07-18 16:48:26,989 - INFO - Chromosomes: ['22']
+2025-07-18 16:48:26,989 - INFO - Resolutions: [40000]
+2025-07-18 16:48:34,620 - INFO - Namespace(command='get_entropy', config='config/config.json')
+2025-07-18 16:51:18,905 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:51:18,905 - INFO - Apply cooler weights? no.
+2025-07-18 16:51:18,905 - INFO - CHRSPLIT: 7
+2025-07-18 16:51:18,905 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:51:18,905 - INFO - Window shift phi: 1
+2025-07-18 16:51:18,906 - INFO - Chromosomes: ['22']
+2025-07-18 16:51:18,906 - INFO - Resolutions: [40000]
+2025-07-18 16:51:18,906 - INFO - Namespace(command='get_similarity', config='config/config.json')
+2025-07-18 16:51:18,906 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:51:18,906 - INFO - Apply cooler weights? no.
+2025-07-18 16:51:18,906 - INFO - CHRSPLIT: 7
+2025-07-18 16:51:18,906 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:51:18,906 - INFO - Window shift phi: 1
+2025-07-18 16:51:18,906 - INFO - Chromosomes: ['22']
+2025-07-18 16:51:18,906 - INFO - Resolutions: [40000]
+2025-07-18 16:51:18,909 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:51:18,909 - INFO - Apply cooler weights? no.
+2025-07-18 16:51:18,909 - INFO - CHRSPLIT: 7
+2025-07-18 16:51:18,909 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:51:18,909 - INFO - Window shift phi: 1
+2025-07-18 16:51:18,909 - INFO - Chromosomes: ['22']
+2025-07-18 16:51:18,909 - INFO - Resolutions: [40000]
+2025-07-18 16:51:19,317 - INFO - Namespace(command='get_similarity', config='config/config.json')
+2025-07-18 16:54:57,825 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:54:57,825 - INFO - Apply cooler weights? no.
+2025-07-18 16:54:57,825 - INFO - CHRSPLIT: 7
+2025-07-18 16:54:57,825 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:54:57,825 - INFO - Window shift phi: 1
+2025-07-18 16:54:57,825 - INFO - Chromosomes: ['20', '21', '22']
+2025-07-18 16:54:57,825 - INFO - Resolutions: [40000]
+2025-07-18 16:54:57,825 - INFO - Namespace(command='get_entropy', config='config/config.json')
+2025-07-18 16:54:57,825 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:54:57,825 - INFO - Apply cooler weights? no.
+2025-07-18 16:54:57,825 - INFO - CHRSPLIT: 7
+2025-07-18 16:54:57,825 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:54:57,825 - INFO - Window shift phi: 1
+2025-07-18 16:54:57,825 - INFO - Chromosomes: ['20', '21', '22']
+2025-07-18 16:54:57,825 - INFO - Resolutions: [40000]
+2025-07-18 16:54:57,829 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 16:54:57,829 - INFO - Apply cooler weights? no.
+2025-07-18 16:54:57,829 - INFO - CHRSPLIT: 7
+2025-07-18 16:54:57,829 - INFO - Sub matrix size PHI: nan
+2025-07-18 16:54:57,829 - INFO - Window shift phi: 1
+2025-07-18 16:54:57,829 - INFO - Chromosomes: ['20', '21', '22']
+2025-07-18 16:54:57,829 - INFO - Resolutions: [40000]
+2025-07-18 16:55:35,925 - INFO - Namespace(command='get_entropy', config='config/config.json')
+2025-07-18 17:01:05,303 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 17:01:05,303 - INFO - Apply cooler weights? no.
+2025-07-18 17:01:05,303 - INFO - CHRSPLIT: 7
+2025-07-18 17:01:05,303 - INFO - Sub matrix size PHI: nan
+2025-07-18 17:01:05,303 - INFO - Window shift phi: 1
+2025-07-18 17:01:05,303 - INFO - Chromosomes: ['15', '16', '17', '18', '19', '20', '21', '22']
+2025-07-18 17:01:05,303 - INFO - Resolutions: [40000]
+2025-07-18 17:01:05,303 - INFO - Namespace(command='get_entropy', config='config/config.json')
+2025-07-18 17:01:05,303 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 17:01:05,303 - INFO - Apply cooler weights? no.
+2025-07-18 17:01:05,303 - INFO - CHRSPLIT: 7
+2025-07-18 17:01:05,303 - INFO - Sub matrix size PHI: nan
+2025-07-18 17:01:05,303 - INFO - Window shift phi: 1
+2025-07-18 17:01:05,303 - INFO - Chromosomes: ['15', '16', '17', '18', '19', '20', '21', '22']
+2025-07-18 17:01:05,303 - INFO - Resolutions: [40000]
+2025-07-18 17:01:05,307 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-18 17:01:05,307 - INFO - Apply cooler weights? no.
+2025-07-18 17:01:05,307 - INFO - CHRSPLIT: 7
+2025-07-18 17:01:05,307 - INFO - Sub matrix size PHI: nan
+2025-07-18 17:01:05,307 - INFO - Window shift phi: 1
+2025-07-18 17:01:05,307 - INFO - Chromosomes: ['15', '16', '17', '18', '19', '20', '21', '22']
+2025-07-18 17:01:05,307 - INFO - Resolutions: [40000]
+2025-07-18 17:05:12,770 - INFO - Namespace(command='get_entropy', config='config/config.json')

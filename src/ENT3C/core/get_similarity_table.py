@@ -2,11 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import itertools
 import pandas as pd
-from ENT3c.core import utils
+from ENT3C.core import utils
 
 
-def get_similarity(config):
+def get_similarity(config_file):
     (
+        config_df,
         SUB_M_SIZE_FIX,
         PHI_MAX,
         CHRSPLIT,
@@ -15,9 +16,12 @@ def get_similarity(config):
         CHROMOSOMES,
         RESOLUTIONS,
         BR,
+        FNs,
+        OUT_DIR,
+        OUT_PREFIX,
         entropy_out_FN,
         similarity_out_FN,
-    ) = utils.check_config(config)
+    ) = utils.check_config(config_file)
 
     ENT3C_OUT = pd.read_csv(f"{entropy_out_FN}", sep="\t")
     ENT3C_OUT["ChrNr"] = ENT3C_OUT["ChrNr"].astype(str)
@@ -141,7 +145,7 @@ def get_similarity(config):
 
             plt.tight_layout()
             plt.savefig(
-                f"{config['OUT_DIR'].iloc[0]}/{config['OUT_PREFIX'].iloc[0]}_{Resolution}_ENT3C_signals.svg",
+                f"{OUT_DIR}/{OUT_PREFIX}_{Resolution}_ENT3C_signals.svg",
                 bbox_inches="tight",
             )  # bbox_inches trims whitespace
     print("Output similarity table:")

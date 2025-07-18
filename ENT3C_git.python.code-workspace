@@ -16,9 +16,10 @@
 			"name": "Run Python",
 			"type": "debugpy",
 			"request": "launch",
-			"program": "${workspaceFolder}/ENT3C.py",
+			"program": "${workspaceFolder}/cli/main.py",
 			"console": "integratedTerminal",
 			"args": [
+				"run_all",
 				"--config=config/config.json",
 			  ]
 		  }

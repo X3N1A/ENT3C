@@ -1,22 +1,21 @@
 import os
-import pandas as pd
 import argparse
 import logging
-from ENT3c.core import get_similarity, get_entropy
-from ENT3c.core.utils import check_config
+from ENT3C.core import get_similarity, get_entropy
+from ENT3C.core.utils import check_config
 
 
-def run_get_entropy(config):
-    get_entropy(config)
+def run_get_entropy(config_file):
+    get_entropy(config_file)
 
 
-def run_get_similarity(config):
-    get_similarity(config)
+def run_get_similarity(config_file):
+    get_similarity(config_file)
 
 
-def run_all(config):
-    get_entropy(config)
-    get_similarity(config)
+def run_all(config_file):
+    get_entropy(config_file)
+    get_similarity(config_file)
 
 
 def main():
@@ -28,7 +27,7 @@ def main():
         epilog="For more info, visit https://github.com/X3N1A/ENT3C",
     )
 
-    subparsers = parser.add_argument(
+    subparsers = parser.add_subparsers(
         dest="command", required=True
     )  # subcommand stored in args.command
 
@@ -61,12 +60,13 @@ def main():
     if not args.command:
         parser.print_help()
 
-    config_path = os.path.abspath(args.config)
+    config_file = os.path.abspath(args.config)
 
-    with open(config_path, "r") as file:
-        config = pd.read_json(file)
+    print(config_file)
+    print(args)
 
     (
+        config_df,
         SUB_M_SIZE_FIX,
         PHI_MAX,
         CHRSPLIT,
@@ -75,11 +75,14 @@ def main():
         CHROMOSOMES,
         RESOLUTIONS,
         BR,
+        FNs,
+        OUT_DIR,
+        OUT_PREFIX,
         entropy_out_FN,
         similarity_out_FN,
-    ) = check_config(config)
+    ) = check_config(config_file)
 
-    LOG_FN = f"{config['OUT_DIR'].iloc[0]}/{config['OUT_PREFIX'].iloc[0]}_logfile.log"
+    LOG_FN = f"{OUT_DIR}/{OUT_PREFIX}_logfile.log"
 
     logging.basicConfig(
         filename=LOG_FN,
@@ -88,11 +91,11 @@ def main():
     )
 
     logging.info(f"{args}")
-    logging.info(f"Inputs: {', '.join(config['NAME'])}")
+    logging.info(f"Inputs: {', '.join(config_df['NAME'])}")
     logging.info(
         "Apply cooler weights? no."
-        if config["NormM"][0] == 0
-        else f"Apply cooler weights? yes. Name in cooler:{', '.join(config['WEIGHTS_NAME'][0])}"
+        if config_df["NormM"][0] == 0
+        else f"Apply cooler weights? yes. Name in cooler:{', '.join(config_df['WEIGHTS_NAME'][0])}"
     )
     logging.info(f"CHRSPLIT: {CHRSPLIT}")
     logging.info(f"Sub matrix size PHI: {SUB_M_SIZE_FIX}")
@@ -101,23 +104,29 @@ def main():
     logging.info(f"Resolutions: {RESOLUTIONS}")
 
     if args.command == "get_entropy":
-        print("Using config file:", args.config)
-        get_entropy(config)
+        config_file = os.path.abspath(args.config)
+        print("Using config file:", config_file)
+        get_entropy(config_file)
         print(f"entropy table in: {entropy_out_FN}")
 
     if args.command == "get_similarity":
-        print("Using config file:", args.config)
+        config_file = os.path.abspath(args.config)
+        print("Using config file:", config_file)
         print("Similarity accordinf to entropy file:", {entropy_out_FN})
-        get_similarity(config)
+        get_similarity(config_file)
         print(f"similarity table in: {similarity_out_FN}")
 
     if args.command == "run_all":
-        print("Using config file:", args.config)
-        get_entropy(config)
-        get_similarity(config)
+        config_file = os.path.abspath(args.config)
+
+        print("Using config file:", config_file)
+        get_entropy(config_file)
+        get_similarity(config_file)
         print(f"entropy table in: {entropy_out_FN}")
         print(f"similarity table in: {similarity_out_FN}")
 
+    LOG_FN = f"{OUT_DIR}/{OUT_PREFIX}_logfile.log"
+    logging.info(args)
     print(f"log file in: {LOG_FN}")
 
 

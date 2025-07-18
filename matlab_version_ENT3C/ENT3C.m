@@ -1,9 +1,9 @@
-%function [] = ENT3C(config_file)
+function [] = ENT3C(config_file)
 addpath('MATLAB_functions/')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % load json file
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-config_file='config/config.test.json';
+%config_file='config/config.json';
 config = fileread(config_file);
 config = jsondecode(config);
 PHI_MAX=config.PHI_MAX;
@@ -104,9 +104,7 @@ if ~exist(ENT3C_OUT_FN,'file')
                     'binNrStart','binNrEND','START','END','S'});
 
                 ENT3C_OUT=[ENT3C_OUT;OUT1];
-                pause
-                ENT3C_OUT
-                
+              
             end
         end
     end
