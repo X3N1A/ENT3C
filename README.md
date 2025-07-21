@@ -32,7 +32,7 @@ https://doi.org/10.1093/nargab/lqae076
 Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two contact matrices $\mathbf{M}\_1$ and $\mathbf{M}\_2$. ENT3C's was run with  submatrix dimension $n=300$, window shift $\varphi=10$, and maximum number of data points in $\boldsymbol{S}$, $\Phi\_{\max}=\infty$, resulting in $\Phi=147$ submatrices. For subsequent scaled Pearson-transformed submatrices, $\boldsymbol{\rho}\_i$, along the diagonal of $\log{\boldsymbol{M}}$, ENT3C computes the von Neumann entropies $S(\boldsymbol{\rho}\_1), S(\boldsymbol{\rho}\_2), \ldots, S(\boldsymbol{\rho}\_{\Phi})$. The resulting signal $\mathbf{S} = \langle S(\boldsymbol{\rho}\_{1}), S(\boldsymbol{\rho}\_{2}), \ldots, S(\boldsymbol{\rho}\_{\Phi}) \rangle$ is shown in blue under the matrix. The first two ($\boldsymbol{\rho}\_{1-2}$), middle ($\boldsymbol{\rho}\_{73}$), and last two submatrices ($\boldsymbol{\rho}\_{146-147}$) are shown.
 
 
-# Requirements
+# Requirements and Installation
 
 ### Python (>=3.12), Julia or MATLAB. 
 
@@ -67,6 +67,8 @@ Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two
 
 # Parameters and configuration files of ENT3C
 
+* all ENT3C parameters are defined in .json files ```config/config.json```
+
 * The main ENT3C parameter affecting the final entropy signal $S$ is the dimension of the submatrices ```SUB_M_SIZE_FIX```. 
 
 	* ```SUB_M_SIZE_FIX``` can be either be fixed by or alternatively, one can specify ```CHRSPLIT```; in this case ```SUB_M_SIZE_FIX``` will be computed internally to fit the number of desired times the contact matrix is to be paritioned into. 
@@ -78,7 +80,7 @@ Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two
 * All implementations (```ENT3C.py```, ```ENT3C.jl``` and ```ENT3C.m```) use a configuration file in JSON format. 
 	* example can be found in <config/config.json>
 
-**ENT3C parameters defined in ```config/config.json```**
+
 1) ```"DATA_PATH": "DATA"``` $\dots$ input data path. 
 
 2) input files in format: ```[<COOL_FILENAME>, <SHORT_NAME>]```
