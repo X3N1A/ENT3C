@@ -46,7 +46,7 @@ def vN_entropy(M, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, BIN_TABLE):
             ENT = np.nan
 
         else:
-            # if any column is nearly all nan/0, ignore this column (0 comes from log(1)!)
+            # if any row/column is nan/0, ignore this column (0 comes from log(1)!)
             mask = np.sum((np.isnan(m) | (m == 0)), axis=1) < (SUB_M_SIZE)
             m = m[mask, :]
             m = m[:, mask]
