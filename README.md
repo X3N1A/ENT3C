@@ -37,7 +37,10 @@ Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two
 ### Python (>=3.12), Julia or MATLAB. 
 
 ### Python:
-* generate and activate python environment 
+
+*  https://pypi.org/project/ENT3C/
+
+1) generate and activate python environment 
 	
 	```
 	python3.12 -m venv .ent3c\_venv
@@ -45,7 +48,7 @@ Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two
 	source .ent3c\_venv/bin/activate
 	```
 
-* install ENT3C and requirements via ```pyproject.toml```: 
+2) install ENT3C and requirements via ```pyproject.toml```: 
 
 	```
 	pip install .
@@ -125,8 +128,6 @@ If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
 
 ### Python:
 
-*  https://pypi.org/project/ENT3C/
-
 * Command-Line Usage 
 	* run ENT3C directly from terminal with: 
 
@@ -166,7 +167,7 @@ julia ENT3C.jl --config-file=config/config.json --resolve-env=yes --julia-versio
 
 &#128161; note the matlab and julia implementations will always generate the entropy and similarity dataframes
 
-### MATLAB
+### MATLAB:
 
 ```matlab -nodesktop -nosplash -nodisplay -r "ENT3C('config/config.json'); exit"```
 
