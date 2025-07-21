@@ -27,7 +27,7 @@ def get_entropy(config_file):
     print(
         "Apply cooler weights? no."
         if config_df["NormM"][0] == 0
-        else f"Apply cooler weights? yes. Name in cooler:{', '.join(config_df['WEIGHTS_NAME'][0])}"
+        else f"Apply cooler weights? yes. Name in cooler:{config_df['WEIGHTS_NAME'][0]}"
     )
     print(f"CHRSPLIT: {CHRSPLIT}")
     print(f"Sub matrix size PHI: {SUB_M_SIZE_FIX}")

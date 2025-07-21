@@ -50,7 +50,7 @@ def get_similarity(config_file):
             fig, axs = plt.subplots(
                 nrows=rows, ncols=cols, figsize=(cols * 8, rows * 4)
             )  # Width, height in inches
-            fig.suptitle(f"{Resolution}kb")
+            fig.suptitle(f"{Resolution / 1e3}kb")
 
             if isinstance(axs, np.ndarray):
                 axs = axs.flatten()
@@ -121,14 +121,22 @@ def get_similarity(config_file):
                     ]["Q"].mean()
 
                     title_str = (
-                        rf"Chr{ChrNr} {Resolution / 1e3}kb"
+                        rf"Chr{ChrNr}"
                         + "\n"
                         + rf"$\overline{{Q}}_{{BR}} = {Q_BR:.2f}$ "
                         + rf"$\overline{{Q}}_{{NR}} = {Q_NR:.2f}$"
                     )
                     ax.set_title(title_str, fontsize=25)
                 else:
-                    title_str = rf"Chr{ChrNr} {Resolution / 1e3}kb"
+                    Q_NR = Similarity[
+                        (Similarity["ChrNr"] == ChrNr)
+                        & (Similarity["Resolution"] == Resolution)
+                        & (
+                            Similarity["Sample1"].str.split("_").str[0]
+                            != Similarity["Sample2"].str.split("_").str[0]
+                        )
+                    ]["Q"].mean()
+                    title_str = rf"Chr{ChrNr}" + rf"$\overline{{Q}} = {Q_NR:.2f}$"
                     ax.set_title(title_str, fontsize=25)
 
             if ChrNr == CHROMOSOMES[-1]:

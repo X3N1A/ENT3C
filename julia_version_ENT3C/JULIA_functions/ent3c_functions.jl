@@ -195,12 +195,14 @@ function vN_entropy(M::Matrix{Float64}, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, 
         m = M[R[rr, 1]:R[rr, 2], R[rr, 1]:R[rr, 2]]
 
         mask = isnan.(m) .| (m .== 0)
-        mask =  sum(mask, dims=1)
- 
-
-        if any(vec(mask .>= (SUB_M_SIZE-1)))
+        
+        if all(mask)
             ENT = NaN 
         else
+            counts = sum(mask, dims=2)
+            mask=vec(counts) .< SUB_M_SIZE
+            m=m[mask,:]
+            m=m[:,mask]
             replace!(m, NaN => minimum(filter(!isnan, m)))
             P = cor(m)
 

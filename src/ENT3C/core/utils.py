@@ -48,7 +48,7 @@ def check_config(config_path):
     config_df["Resolution"] = config_df["Resolution"].astype(str)
 
     if "," in str(config_df["Resolution"][0]):
-        RESOLUTIONS = [int(r) for r in config_df["Resolution"][0].split(",")]
+        RESOLUTIONS = [int(float(r)) for r in config_df["Resolution"][0].split(",")]
     else:
         RESOLUTIONS = [int(config_df["Resolution"][0])]
 

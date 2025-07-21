@@ -4,6 +4,7 @@
   "SUB_M_SIZE_FIX": null,
   "ChrNr": "20,21,22",
   "Resolution": "40e3,100e3",
+  "WEIGHTS_NAME": "weight",
   "phi": 1,
   "NormM": 1,
   "DATA_PATH": "/HDD3/DocumentsHDD3/07_2022-/Mapping",

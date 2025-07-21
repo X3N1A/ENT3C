@@ -27,9 +27,16 @@ for rr=1:WN
 
     m=M(R(rr,1):R(rr,2),R(rr,1):R(rr,2));
 
-    if any(sum(isnan(m)|m==0)>=(SUB_M_SIZE-1))% if any column is all nan/0, ignore this submatrix (0 comes from log(1)!)
+    mask=isnan(m) | m == 0;
+
+    if all(mask(:))
         ENT=nan;
     else
+        counts=sum(mask,1);
+        m=m(counts<SUB_M_SIZE,:);
+        m=m(:,counts<SUB_M_SIZE);
+
+
         %E=[E;sum(isnan(m(:)))/numel(m)];
         m(isnan(m))=nanmin(m(:));
 

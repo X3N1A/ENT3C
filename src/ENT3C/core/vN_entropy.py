@@ -42,12 +42,15 @@ def vN_entropy(M, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, BIN_TABLE):
         # see GIT: NormM=0 and ChrY
         # print(np.any(np.sum((np.isnan(m) | (m == 0)), axis=1) >= (m.shape[0] - 1)))
 
-        if np.any(
-            np.sum((np.isnan(m) | (m == 0)), axis=1) >= (SUB_M_SIZE - 1)
-        ):  # if any column is nearly all nan/0, ignore this submatrix (0 comes from log(1)!)
+        if np.all(np.isnan(m) | (m == 0)):
             ENT = np.nan
 
         else:
+            # if any column is nearly all nan/0, ignore this column (0 comes from log(1)!)
+            mask = np.sum((np.isnan(m) | (m == 0)), axis=1) < (SUB_M_SIZE)
+            m = m[mask, :]
+            m = m[:, mask]
+
             m[np.isnan(m)] = np.nanmin(m.flatten())
             P = np.corrcoef(m, rowvar=False)
             # problems with corrcoef and const. columns.
