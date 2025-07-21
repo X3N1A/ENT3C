@@ -122,6 +122,9 @@ If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
 # Running ENT3C
 
 ### Python:
+
+*  https://pypi.org/project/ENT3C/
+
 * Command-Line Usage 
 	* run ENT3C directly from terminal with: 
 
