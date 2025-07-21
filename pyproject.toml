@@ -4,11 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ENT3C"
-version = "2.0.0"
+version = "2.0.3"
 description = "Compute similarity between genomic contact matrices with \"Entropy 3C\" "
-requires-python = ">=3.8"
+requires-python = ">=3.12"
 license = "GPL-3.0-or-later"
 license-files = ["LICENSE"]
+readme = "README_PyPi.md"
 keywords = ["Hi-C","micro-C","similarity","entropy"]
 authors = [
   { name = "Xenia Lainscsek", email = "108679125+X3N1A@users.noreply.github.com"}
@@ -32,3 +33,4 @@ package-dir = { "" = "src" }
 
 [tool.setuptools.packages.find]
 where = ["src"]
+

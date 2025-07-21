@@ -25,7 +25,7 @@ https://doi.org/10.1093/nargab/lqae076
 9. Similarity $Q$ is defined as the Pearson correlation $r$ between the entropy signals of two matrices: $Q(\mathbf{M}\_1,\mathbf{M}\_2) = r(\mathbf{S}\_{\mathbf{M}\_1},\mathbf{S}\_{\mathbf{M}\_2})$.
 
 <figure>
-    <img src="Figures/ENT3C_explain_2cells.png" width="600" 
+    <img src="Figures/ENT3C_explain_2cells.png" width="400" 
          alt="explaination of ENT3C">
 </figure>
 
@@ -33,19 +33,40 @@ Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two
 
 
 # Requirements
-Julia or MATLAB. 
 
-* julia packages: DataFrames, BenchmarkTools, JSON, Printf, Plots, ColorSchemes, SuiteSparse, HDF5, NaNStatistics, Statistics, Combinatorics, CSV
+### Python (>=3.12), Julia or MATLAB. 
 
-## Initial julia set-up
-* option for automatic global installation ```--install-deps=yes```. (Works with any julia version)
+### Python:
+* generate and activate python environment 
+	
+	```
+	python3.12 -m venv .ent3c\_venv
 
-* predefined julia enviornments for julia versions 1.10.4 or 1.11.2 are defined in ```project_files/<v.v.v>/Manifest.toml``` and ```project_files/<v.v.v>/Project.toml```
+	source .ent3c\_venv/bin/activate
+	```
+
+* install ENT3C and requirements via ```pyproject.toml```: 
+
+	```
+	pip install .
+	```
+
+* requirements are listed in ```requirements.txt```
+  
+### Julia:
+
+* packages: DataFrames, BenchmarkTools, JSON, Printf, Plots, ColorSchemes, SuiteSparse, HDF5, NaNStatistics, Statistics, Combinatorics, CSV
+* For the Julia implementation, ubuntu's hdf5-tools is also required 
+* Initial julia set-up
+	
+	* option for automatic global installation ```--install-deps=yes```. (Works with any julia version)
+	* predefined julia enviornments for julia versions 1.10.4 or 1.11.2 are defined in ```project_files/<v.v.v>/Manifest.toml``` and ```project_files/<v.v.v>/Project.toml```
 	* option to load enviornments with ```--resolve-env=yes``` and ```--julia-version=<v.v.v>```
 
-* For the Julia implementation, ubuntu's hdf5-tools is also required 
+
 
 # Parameters and configuration files of ENT3C
+
 * The main ENT3C parameter affecting the final entropy signal $S$ is the dimension of the submatrices ```SUB_M_SIZE_FIX```. 
 
 	* ```SUB_M_SIZE_FIX``` can be either be fixed by or alternatively, one can specify ```CHRSPLIT```; in this case ```SUB_M_SIZE_FIX``` will be computed internally to fit the number of desired times the contact matrix is to be paritioned into. 
@@ -54,9 +75,8 @@ Julia or MATLAB.
 
 	  where ```N``` is the size of the input contact matrix, ```phi``` is the window shift, ```PHI``` is the number of evaluated submatrices (consequently the number of data points in $S$).
 
-* Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) use a configuration file in JSON format. 
-	* for Julia, ```--config-file=config.json```
-	* for MATLAB, please set configuration filename directly in ```ENT3C.m``` script
+* All implementations (```ENT3C.py```, ```ENT3C.jl``` and ```ENT3C.m```) use a configuration file in JSON format. 
+	* example can be found in <config/config.json>
 
 **ENT3C parameters defined in ```config/config.json```**
 1) ```"DATA_PATH": "DATA"``` $\dots$ input data path. 
@@ -73,6 +93,8 @@ Julia or MATLAB.
 	"G401_BR2"]
 ``` 
 - ENT3C also takes ```mcool``` files as input. Please refer to biological replicates as "_BR%d" in the <SHORT_NAME>.
+
+&#9888; if comparing biological replicate samples, please ensure they are indicated as <_BR\#> in the config file &#9888;
 
 4) ```"`OUT_DIR": "OUTPUT/"``` $\dots$ output directory. ```OUT_DIR``` will be concatenated with ```OUTPUT/JULIA/``` or ```OUTPUT/MATLAB/```.
 
@@ -95,58 +117,91 @@ Julia or MATLAB.
 13) ```"PHI_MAX": 1000``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. 
 If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
 
-# Running main scripts 
-* julia 
-	* initial call for global package installation (see "initial julia set-up"): ```julia ENT3C.jl --config-file=config/config.test.json --install-deps=yes```
-		* after that: ```julia ENT3C.jl --config-file=config/config.test.json```
 
-	* alternative loading of predefined enviornments for julia 1.10.4 or 1.11.2  
-		* ```julia ENT3C.jl --config-file=config/config.json --resolve-env=yes --julia-version=<v.v.v>```
 
-* ```matlab -nodesktop -nosplash -nodisplay -r "ENT3C('config/config.test.json'); exit"```
+# Running ENT3C
+
+### Python:
+* Command-Line Usage 
+	* run ENT3C directly from terminal with: 
+
+	```
+	ENT3C <get_entropy|get_similarity|run_all> --config-file=/path/to/config_file/<config.json>
+	```
+	
+	* ```<get_entropy>``` subcommand generate a dataframe with entropy values according to <config.json>. Output: ```OUTPUT/PYTHON/<OUT_PREFIX>_<_ENT3C_OUT.csv>```
+	
+	* ```<get_similarity>``` subcommand will generate a data frame with similarities according to <config.json> and ```OUTPUT/PYTHON/<OUT_PREFIX>_<_ENT3C_OUT.csv>```. Output: ```OUTPUT/PYTHON/<OUT_PREFIX>_<_ENT3C_similarity.csv```
+	
+	* ```<run_all>``` will generate both ```OUTPUT/PYTHON/<OUT_PREFIX>_<_ENT3C_OUT.csv>``` and ```OUTPUT/PYTHON/<OUT_PREFIX>_<_ENT3C_similarity.csv``` data frames. 
+
+* or as python API 
+		```
+		import ENT3C
+		ENT3C.run_get_entropy("config/config.json")
+		ENT3C.run_get_similarity("config/config.json")
+		ENT3C.run_all("config/config.json")
+		```
+
+### Julia:
+
+* initial call for global package installation (see "initial julia set-up"): 
+```
+julia ENT3C.jl --config-file=config/config.test.json --install-deps=yes
+```
+* after that: 
+```
+julia ENT3C.jl --config-file=config/config.json
+```
+
+* alternativly load the predefined enviornments for julia 1.10.4 or 1.11.2  
+```
+julia ENT3C.jl --config-file=config/config.json --resolve-env=yes --julia-version=<v.v.v>
+```
+
+&#128161; note the matlab and julia implementations will always generate the entropy and similarity dataframes
+
+### MATLAB
+
+```matlab -nodesktop -nosplash -nodisplay -r "ENT3C('config/config.json'); exit"```
 
 Associated functions are contained in directories ```JULIA_functions/``` and ```MATLAB_functions/```.
 
-**Output files:**
-```40kb_ENT3C_similarity.csv``` $\dots$ will contain all combinations of comparisons. The second two columns contain the short names specified in ```FILES``` and the third column ```Q``` the corresponding similarity score.  
-```
-Resolution	ChrNr	Sample1	Sample2	Q
-40000	15	A549_BR1	A549_BR2	0.995462832813044
-40000	15	A549_BR1	G401_BR1	0.565465091507697
-40000	15	A549_BR1	G401_BR2	0.587395560010108
-40000	15	A549_BR1	H1-hESC_BR1	0.511892949109715
-40000	15	A549_BR1	H1-hESC_BR2	0.46675009291503
-.		.	.		.	.	.		.		.		.		.
-.		.	.		.	.	.		.		.		.		.
-.		.	.		.	.	.		.		.		.		.
-```
+&#128161; note the matlab and julia implementations will always generate the entropy and similarity dataframes
 
-```40kb_ENT3C_OUT.csv``` $\dots$ ENT3C output table. 
-```
-Name	ChrNr	Resolution	n	PHI	phi	binNrStart	binNrEND	START	END	S
-G401_BR1	15	40000	292	877	2	1	369	0	14760000	3.70691992953067
-G401_BR1	15	40000	292	877	2	3	371	80000	14840000	3.68605952020314
-G401_BR1	15	40000	292	877	2	12	373	440000	14920000	3.67630110653009
-.		.	.		.	.	.		.		.		.		.
-.		.	.		.	.	.		.		.		.		.
-.		.	.		.	.	.		.		.		.		.
-```
+# Output files:
+* ```<OUT_DIR>/<OUTPUT_PREFIX>_ENT3C_similarity.csv``` $\dots$ will contain all combinations of comparisons. The second two columns contain the short names specified in ```FILES``` and the third column ```Q``` the corresponding similarity score.  
+	```
+	Resolution	ChrNr	Sample1	Sample2	Q
+	40000	2	HFFc6_BR2	A549_BR2	0.5584659814117208
+	40000	2	HFFc6_BR2	G401_BR2	0.6594518933893059
+	40000	2	HFFc6_BR2	HFFc6_BR1	0.8473530463515314
+	.		.	.		.	.	.		.		.		.		.
+	.		.	.		.	.	.		.		.		.		.
+	.		.	.		.	.	.		.		.		.		.
+	```
+
+* ```<OUT_DIR>/<OUTPUT_PREFIX>_ENT3C_OUT.csv``` $\dots$ ENT3C output table. 
+	```
+	Name	ChrNr	Resolution	n	PHI	phi	binNrStart	binNrEND	START	END	S
+	G401_BR1	2	40000	600	901	6	0	599	0	24000000	4.067424893091131
+	G401_BR1	2	40000	600	901	6	6	605	240000	24240000	4.06198007393338
+	G401_BR1	2	40000	600	901	6	12	611	480000	24480000	4.055473536905049
+	.		.	.		.	.	.		.		.		.		.
+	.		.	.		.	.	.		.		.		.		.
+	.		.	.		.	.	.		.		.		.		.
+	```
 Each row corresponds to an evaluated submatrix with fields ```Name``` (the short name specified in ```FILES```), ```ChrNr```, ```Resolution```, the sub-matrix dimension ```sub_m_dim```, ```PHI=1+floor((N-SUB_M_SIZE)./phi)```, ```binNrStart``` and ```binNrEnd``` correspond to the start and end bin of the submatrix, ```START``` and ```END``` are the corresponding genomic coordinates and ```S``` is the computed von Neumann entropy.
 
-```40kb_ENT3C_signals.png``` $\dots$ simple visualization of entropy signals $S$:
+```<OUT_DIR>/<OUTPUT_PREFIX>_ENT3C_signals.png``` $\dots$ simple visualization of entropy signals $S$:
 
+Example entropy signals $S$ for ```ENT3C run_all --config=config/config.json``` (unbalanced 40kb contact matrices for even chromosomes across 5 cell lines):
 
-Entropy signals $S$ generated by the Julia script ```ENT3C.jl``` for contact matrices of chromosome 15-22 binned at 40 kb in various cell lines:
 <figure>
-    <img src="OUTPUT/JULIA/40kb_ENT3C_OUT.png" style="max-width:100%;"
-         alt="ENT3C Julia Output">
+    <img src="OUTPUT/PYTHON/EvenChromosomes_NoWeights_40000_ENT3C_signals.png" style="max-width:80%;"
+         alt="ENT3C python Output">
 </figure>
 
-Entropy signals $S$ generated by the MATLAB script ```ENT3C.m``` for contact matrices of chromosomes 15-22 binned at 40 kb in various cell lines.
-<figure>
-    <img src="OUTPUT/MATLAB/40kb_ENT3C_signals.png" style="max-width:100%;"
-         alt="ENT3C MATLAB Output">
-</figure>
 
 # Data used in publication 
 Both Julia and MATLAB implementations (```ENT3C.jl``` and ```ENT3C.m```) were tested on Hi-C and micro-C contact matrices binned at 40 kb in ```cool``` format. 

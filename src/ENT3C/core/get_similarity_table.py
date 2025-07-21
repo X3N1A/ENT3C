@@ -139,15 +139,20 @@ def get_similarity(config_file):
                     title_str = rf"Chr{ChrNr}" + rf"$\overline{{Q}} = {Q_NR:.2f}$"
                     ax.set_title(title_str, fontsize=25)
 
-            if ChrNr == CHROMOSOMES[-1]:
-                plotted = [p.replace("_", " ") for p in plotted]
-                ax.legend(plotted, loc="upper right")
                 ax.tick_params(labelsize=15)
                 ax.title.set_fontsize(15)
                 ax.xaxis.label.set_fontsize(15)
                 ax.yaxis.label.set_fontsize(15)
                 ax.autoscale(enable=True, axis="both", tight=True)
 
+            if ChrNr == CHROMOSOMES[-1]:
+                plotted = [p.replace("_", " ") for p in plotted]
+                ax.legend(
+                    plotted,
+                    loc="upper right",
+                    bbox_to_anchor=(1.2, 1),
+                    borderaxespad=0.0,
+                )
             for i in range(len(CHROMOSOMES), len(axs)):
                 axs[i].axis("off")
 

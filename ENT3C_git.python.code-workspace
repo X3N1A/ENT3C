@@ -8,7 +8,8 @@
 		"git.autoRepositoryDetection": false,
     	"git.enabled": false,
 		"python.terminal.activateEnvironment": true,
-		"python.defaultInterpreterPath": ".venv/bin/python"
+		"python.useEnvironmentsExtension": true,
+		"python.defaultInterpreterPath": ".ent3c_venv/bin/python"
 	},
 	"launch": {
 		"configurations": [
@@ -16,7 +17,7 @@
 			"name": "Run Python",
 			"type": "debugpy",
 			"request": "launch",
-			"program": "${workspaceFolder}/cli/main.py",
+			"program": "${workspaceFolder}/test.py",
 			"console": "integratedTerminal",
 			"args": [
 				"run_all",

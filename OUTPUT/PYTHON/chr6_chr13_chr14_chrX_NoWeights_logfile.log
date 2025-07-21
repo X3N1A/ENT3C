@@ -1,0 +1,30 @@
+2025-07-21 15:29:29,171 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-21 15:29:29,171 - INFO - Apply cooler weights? no.
+2025-07-21 15:29:29,171 - INFO - CHRSPLIT: 10
+2025-07-21 15:29:29,171 - INFO - Sub matrix size PHI: nan
+2025-07-21 15:29:29,171 - INFO - Window shift phi: 1
+2025-07-21 15:29:29,171 - INFO - Chromosomes: ['6', '13', '14', 'X']
+2025-07-21 15:29:29,171 - INFO - Resolutions: [40000]
+2025-07-21 15:29:29,171 - INFO - Namespace(command='run_all', config='config/config.json')
+2025-07-21 15:29:29,171 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-21 15:29:29,171 - INFO - Apply cooler weights? no.
+2025-07-21 15:29:29,171 - INFO - CHRSPLIT: 10
+2025-07-21 15:29:29,171 - INFO - Sub matrix size PHI: nan
+2025-07-21 15:29:29,171 - INFO - Window shift phi: 1
+2025-07-21 15:29:29,171 - INFO - Chromosomes: ['6', '13', '14', 'X']
+2025-07-21 15:29:29,171 - INFO - Resolutions: [40000]
+2025-07-21 15:29:29,175 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-21 15:29:29,175 - INFO - Apply cooler weights? no.
+2025-07-21 15:29:29,175 - INFO - CHRSPLIT: 10
+2025-07-21 15:29:29,175 - INFO - Sub matrix size PHI: nan
+2025-07-21 15:29:29,175 - INFO - Window shift phi: 1
+2025-07-21 15:29:29,175 - INFO - Chromosomes: ['6', '13', '14', 'X']
+2025-07-21 15:29:29,175 - INFO - Resolutions: [40000]
+2025-07-21 15:34:28,156 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-07-21 15:34:28,156 - INFO - Apply cooler weights? no.
+2025-07-21 15:34:28,156 - INFO - CHRSPLIT: 10
+2025-07-21 15:34:28,156 - INFO - Sub matrix size PHI: nan
+2025-07-21 15:34:28,156 - INFO - Window shift phi: 1
+2025-07-21 15:34:28,156 - INFO - Chromosomes: ['6', '13', '14', 'X']
+2025-07-21 15:34:28,156 - INFO - Resolutions: [40000]
+2025-07-21 15:34:30,066 - INFO - Namespace(command='run_all', config='config/config.json')

@@ -152,7 +152,7 @@ function main()
 	#############################################################################
 	# similarity table
 	#############################################################################
-	Biological_replicates = any(x -> contains(x, '_'), FILES[2, :])
+	Biological_replicates = any(x -> contains(x, "BR"), FILES[:, 2])
 	
 	SAMPLES::Array=unique(ENT3C_OUT.Name)
 	if length(SAMPLES)>1 
