@@ -48,10 +48,10 @@ Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two
 	source .ent3c\_venv/bin/activate
 	```
 
-2) install ENT3C and requirements via ```pyproject.toml```: 
+2) install ENT3C:
 
 	```
-	pip install .
+	pip install ENT3C
 	```
 
   
