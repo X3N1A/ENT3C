@@ -34,7 +34,7 @@ Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two
 
 # Requirements and Installation
 
-### Python (>=3.12), Julia or MATLAB. 
+### Python (>=3.11), Julia or MATLAB. 
 
 ### Python:
 
@@ -54,7 +54,6 @@ Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two
 	pip install .
 	```
 
-* requirements are listed in ```requirements.txt```
   
 ### Julia:
 

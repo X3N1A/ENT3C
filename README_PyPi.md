@@ -3,25 +3,8 @@ For a contact matrix, ENT3C records the change in local pattern *complexity* of 
 
 https://github.com/X3N1A/ENT3C
 
-## Summary of ENT3C approach
-1. Loads cooler files and looks for shared empty bins.
-2. ENT3C will first take the logarithm of an input matrix $\mathbf{M}$
-2. Next, smaller submatrices $\mathbf{a}$ of dimension $n\times n$ are extracted along the diagonal of an input contact matrix $\mathbf{M}$
-4. $nan$ values in $\mathbf{a}$ are set to the minimum value in $\mathbf{a}$.
-5. $\mathbf{a}$ is transformed into a Pearson correlation matrix $\mathbf{P}$.
-6. $\mathbf{P}$ is transformed into $\boldsymbol{\rho}=\mathbf{P}/n$ to fulfill the conditions for computing the von Neumann entropy.
-7. The von Neumann entropy of $\boldsymbol{\rho}$ is computed as
-
-   $S(\boldsymbol{\rho})=\sum_j \lambda_j \log \lambda_j$
-
-   where $\lambda_j$ is the $j$ th eigenvalue of $\boldsymbol{\rho}$
-8. This is repeated for subsequent submatrices along the diagonal of the input matrix and stored in the *entropy signal* $\mathbf{S}\_{M}$.
-9. Similarity $Q$ is defined as the Pearson correlation $r$ between the entropy signals of two matrices: $Q(\mathbf{M}\_1,\mathbf{M}\_2) = r(\mathbf{S}\_{\mathbf{M}\_1},\mathbf{S}\_{\mathbf{M}\_2})$.
-
 
 ## Requirements
-
-* Python (>=3.12)
 
 * generate and activate python environment 
 	
@@ -37,7 +20,6 @@ https://github.com/X3N1A/ENT3C
 	pip install .
 	```
 
-* requirements are listed in ```requirements.txt```
   
 
 ## Running ENT3C

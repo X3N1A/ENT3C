@@ -1,0 +1,24 @@
+{
+  "PHI_MAX": 3e3,
+  "CHRSPLIT": 10,
+  "SUB_M_SIZE_FIX": null,
+  "ChrNr": "14",
+  "Resolution": "40000",
+  "phi": 1,
+  "NormM": 0,
+  "WEIGHTS_NAME": "weight",
+  "DATA_PATH": "./DATA",
+  "FILES": [
+	"ENCSR079VIJ.BioRep1.40kb.cool",
+	"G401_BR1",
+	"ENCSR079VIJ.BioRep2.40kb.cool",
+	"G401_BR2",
+	"4DNFI9GMP2J8.BioRep1.40kb.cool",
+	"H1-hESC_BR1",
+	"4DNFI9GMP2J8.BioRep2.40kb.cool",
+	"H1-hESC_BR2"
+	],
+  "OUT_DIR": "./OUTPUT",
+  "OUT_PREFIX": "test"
+}
+

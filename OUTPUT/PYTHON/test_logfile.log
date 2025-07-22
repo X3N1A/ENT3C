@@ -1,0 +1,30 @@
+2025-07-22 17:26:03,220 - INFO - Inputs: G401_BR1, G401_BR2, H1-hESC_BR1, H1-hESC_BR2
+2025-07-22 17:26:03,220 - INFO - Apply cooler weights? no.
+2025-07-22 17:26:03,220 - INFO - CHRSPLIT: 10
+2025-07-22 17:26:03,220 - INFO - Sub matrix size PHI: nan
+2025-07-22 17:26:03,220 - INFO - Window shift phi: 1
+2025-07-22 17:26:03,220 - INFO - Chromosomes: ['14']
+2025-07-22 17:26:03,220 - INFO - Resolutions: [40000]
+2025-07-22 17:26:03,220 - INFO - Namespace(command='run_all', config='config/config.test.json')
+2025-07-22 17:26:03,220 - INFO - Inputs: G401_BR1, G401_BR2, H1-hESC_BR1, H1-hESC_BR2
+2025-07-22 17:26:03,220 - INFO - Apply cooler weights? no.
+2025-07-22 17:26:03,220 - INFO - CHRSPLIT: 10
+2025-07-22 17:26:03,220 - INFO - Sub matrix size PHI: nan
+2025-07-22 17:26:03,220 - INFO - Window shift phi: 1
+2025-07-22 17:26:03,220 - INFO - Chromosomes: ['14']
+2025-07-22 17:26:03,220 - INFO - Resolutions: [40000]
+2025-07-22 17:26:03,224 - INFO - Inputs: G401_BR1, G401_BR2, H1-hESC_BR1, H1-hESC_BR2
+2025-07-22 17:26:03,224 - INFO - Apply cooler weights? no.
+2025-07-22 17:26:03,224 - INFO - CHRSPLIT: 10
+2025-07-22 17:26:03,224 - INFO - Sub matrix size PHI: nan
+2025-07-22 17:26:03,224 - INFO - Window shift phi: 1
+2025-07-22 17:26:03,224 - INFO - Chromosomes: ['14']
+2025-07-22 17:26:03,224 - INFO - Resolutions: [40000]
+2025-07-22 17:26:29,713 - INFO - Inputs: G401_BR1, G401_BR2, H1-hESC_BR1, H1-hESC_BR2
+2025-07-22 17:26:29,713 - INFO - Apply cooler weights? no.
+2025-07-22 17:26:29,713 - INFO - CHRSPLIT: 10
+2025-07-22 17:26:29,713 - INFO - Sub matrix size PHI: nan
+2025-07-22 17:26:29,713 - INFO - Window shift phi: 1
+2025-07-22 17:26:29,713 - INFO - Chromosomes: ['14']
+2025-07-22 17:26:29,713 - INFO - Resolutions: [40000]
+2025-07-22 17:26:29,966 - INFO - Namespace(command='run_all', config='config/config.test.json')
