@@ -32,7 +32,23 @@ https://doi.org/10.1093/nargab/lqae076
 Exemplary epiction of ENT3C derivation of the entropy signal $\mathbf{S}$ of two contact matrices $\mathbf{M}\_1$ and $\mathbf{M}\_2$. ENT3C's was run with  submatrix dimension $n=300$, window shift $\varphi=10$, and maximum number of data points in $\boldsymbol{S}$, $\Phi\_{\max}=\infty$, resulting in $\Phi=147$ submatrices. For subsequent scaled Pearson-transformed submatrices, $\boldsymbol{\rho}\_i$, along the diagonal of $\log{\boldsymbol{M}}$, ENT3C computes the von Neumann entropies $S(\boldsymbol{\rho}\_1), S(\boldsymbol{\rho}\_2), \ldots, S(\boldsymbol{\rho}\_{\Phi})$. The resulting signal $\mathbf{S} = \langle S(\boldsymbol{\rho}\_{1}), S(\boldsymbol{\rho}\_{2}), \ldots, S(\boldsymbol{\rho}\_{\Phi}) \rangle$ is shown in blue under the matrix. The first two ($\boldsymbol{\rho}\_{1-2}$), middle ($\boldsymbol{\rho}\_{73}$), and last two submatrices ($\boldsymbol{\rho}\_{146-147}$) are shown.
 
 
-# Requirements and Installation
+# Installation
+
+### linux executable
+
+Pre-built Linux executable is available in the Releases section (v.2.1.0).
+
+- Download and make file executable if needed.
+```
+chmod +x ./path/to/exe/ENT3C
+```
+```
+./path/to/exe/ENT3C {get_entropy,get_similarity,run_all} --config=<path/to/config/config.json>
+```
+- For global use add path to ```./bashrc``` file:
+```
+export PATH="$PATH:/path/to/exe/"
+```
 
 ### Python (>=3.11), Julia or MATLAB. 
 
