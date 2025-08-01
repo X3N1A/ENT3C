@@ -3,6 +3,9 @@ import cooler as cl
 import pandas as pd
 import os
 import logging
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+import re
 
 
 def check_config(config_path):
@@ -161,3 +164,51 @@ def load_cooler(FN, ChrNr, Resolution, NormM, weights_name):
 def get_cell_line(sample):
     cell = sample.split("_BR")[0]
     return cell
+
+
+def get_color_schemes(meta):
+    COLORMAPS = [
+        "Purples",
+        "Reds",
+        "Grey",
+        "Blues",
+        "Greens",
+        "Oranges",
+        "YlOrBr",
+        "YlGnBu",
+        "PuRd",
+        "BuPu",
+    ]
+    color_schemes = {}
+    unique_cell_types = meta["cell_type"].unique()
+    for i, cell_type in enumerate(unique_cell_types):
+        # print(cell_type)
+        n_samples = meta[meta["cell_type"] == cell_type].shape[0]
+        # print(n_samples)
+        cmap_name = COLORMAPS[i % len(COLORMAPS)]
+        # print(cmap_name)
+        cmap = plt.cm.get_cmap(cmap_name, n_samples)
+        # print(cmap)
+        colors = [mcolors.rgb2hex(cmap(j)) for j in range(n_samples)]
+        color_schemes[cell_type] = colors
+
+    # for ct, colors in color_schemes.items():
+    #    print(f"{ct} ({len(colors)} samples): {colors}")
+    # print(color_schemes)
+    return color_schemes
+
+
+def get_color_by_replicate(cell_name, color_schemes, default_color="#000000"):
+    for key in color_schemes:
+        if key in cell_name:
+            match = re.search(r"BR(\d+)", cell_name)
+            if match:
+                replicate_num = int(match.group(1))
+                colors = color_schemes[key]
+                if 1 <= replicate_num <= len(colors):
+                    return colors[replicate_num - 1]
+                else:
+                    return default_color  # replicate number out of range
+            else:
+                return default_color  # replicate number not found
+    return default_color  # no matching key

@@ -6,16 +6,19 @@ from ENT3C.core.utils import check_config
 
 
 def run_get_entropy(config_file):
-    get_entropy(config_file)
+    ENT3C_OUT = get_entropy(config_file)
+    return ENT3C_OUT
 
 
 def run_get_similarity(config_file):
-    get_similarity(config_file)
+    Similarity = get_similarity(config_file)
+    return Similarity
 
 
 def run_all(config_file):
-    get_entropy(config_file)
-    get_similarity(config_file)
+    ENT3C_OUT = get_entropy(config_file)
+    Similarity = get_similarity(config_file)
+    return ENT3C_OUT, Similarity
 
 
 def main():

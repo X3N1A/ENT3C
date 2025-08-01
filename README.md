@@ -59,9 +59,9 @@ export PATH="$PATH:/path/to/exe/"
 1) generate and activate python environment 
 	
 	```
-	python3.12 -m venv .ent3c\_venv
+	python3.12 -m venv .ent3c_venv
 
-	source .ent3c\_venv/bin/activate
+	source .ent3c_venv/bin/activate
 	```
 
 2) install ENT3C:
@@ -138,7 +138,6 @@ export PATH="$PATH:/path/to/exe/"
 If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
 
 
-
 # Running ENT3C
 
 ### Python:
@@ -159,9 +158,12 @@ If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
 * or as python API 
 		```
 		import ENT3C
-		ENT3C.run_get_entropy("config/config.json")
-		ENT3C.run_get_similarity("config/config.json")
-		ENT3C.run_all("config/config.json")
+
+		ENT3C_OUT = ENT3C.run_get_entropy("config/config.json")
+
+		Similarity = ENT3C.run_get_similarity("config/config.json")
+
+		ENT3C_OUT, Similarity = ENT3C.run_all("config/config.json")
 		```
 
 ### Julia:

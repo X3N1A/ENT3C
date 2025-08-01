@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.0.7] - 2025-08-01
+### Added
+- color schemes for BRs of same cell type
+### Changed 
+- linux executable command now: ENT3C_exe to avoid confusion with python CLI
+- minor fixes: 
+ - for API: return ENT3C_OUT and Similarity when calling ENT3C.run_get_functions
+ - in case double underscore in config file: str.split("_BR").str[0] in get_similarity_table.py
+
 ## [2.0.6] - 2025-07-22
 ### Changed
 - could not get a conda build to work due to dependency clashes. 

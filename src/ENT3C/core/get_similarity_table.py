@@ -41,6 +41,14 @@ def get_similarity(config_file):
             "Q": pd.Series(dtype="float"),
         }
     )
+    all_samples = ENT3C_OUT["Name"].unique()
+    all_samples = pd.Series(all_samples)
+    cell_types = all_samples.str.extract(r"(.*?)_BR")[0]
+    meta = pd.DataFrame({"Sample": all_samples, "cell_type": cell_types})
+    print(meta)
+
+    color_schemes = utils.get_color_schemes(meta)
+    print(color_schemes)
 
     cols = int(np.ceil(np.sqrt(len(CHROMOSOMES))))
     rows = int(np.ceil(len(CHROMOSOMES) / cols))
@@ -62,8 +70,9 @@ def get_similarity(config_file):
                 ax.set_title(f"Chr{ChrNr}")
 
                 plotted = set()
-
+                # print(comparisons)
                 for comp in comparisons:
+                    # print(comp)
                     S1 = ENT3C_OUT[
                         (ENT3C_OUT["Name"] == comp[0])
                         & (ENT3C_OUT["ChrNr"] == ChrNr)
@@ -93,32 +102,38 @@ def get_similarity(config_file):
                     Similarity = pd.concat([Similarity, new_row], ignore_index=True)
 
                     if comp[0] not in plotted:
-                        ax.plot(S1, label=f"{comp[0]}")
+                        clr = utils.get_color_by_replicate(comp[0], color_schemes)
+                        print(clr)
+                        ax.plot(S1, label=f"{comp[0]}", color=clr)
                         plotted.add(comp[0])
                         i += 1
                     if comp[1] not in plotted:
-                        ax.plot(S2, label=f"{comp[1]}")
+                        clr = utils.get_color_by_replicate(comp[1], color_schemes)
+                        ax.plot(S2, label=f"{comp[1]}", color=clr)
                         plotted.add(comp[1])
                         i += 1
 
                 if Biological_replicates:
+                    # print(Similarity)
                     Q_BR = Similarity[
                         (Similarity["ChrNr"] == ChrNr)
                         & (Similarity["Resolution"] == Resolution)
                         & (
-                            Similarity["Sample1"].str.split("_").str[0]
-                            == Similarity["Sample2"].str.split("_").str[0]
+                            Similarity["Sample1"].str.split("_BR").str[0]
+                            == Similarity["Sample2"].str.split("_BR").str[0]
                         )
                     ]["Q"].mean()
+                    # print(Q_BR)
 
                     Q_NR = Similarity[
                         (Similarity["ChrNr"] == ChrNr)
                         & (Similarity["Resolution"] == Resolution)
                         & (
-                            Similarity["Sample1"].str.split("_").str[0]
-                            != Similarity["Sample2"].str.split("_").str[0]
+                            Similarity["Sample1"].str.split("_BR").str[0]
+                            != Similarity["Sample2"].str.split("_BR").str[0]
                         )
                     ]["Q"].mean()
+                    # print(Q_NR)
 
                     title_str = (
                         rf"Chr{ChrNr}"
