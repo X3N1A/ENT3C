@@ -1,0 +1,64 @@
+{
+  "PHI_MAX": 4e4,
+  "CHRSPLIT": 10,
+  "SUB_M_SIZE_FIX": null,
+  "ChrNr": "1,2,3",
+  "Resolution": "10000",
+  "phi": 1,
+  "NormM": 0,
+  "WEIGHTS_NAME": "weight",
+  "DATA_PATH": "/HDD3/DocumentsHDD3/07_2022-/scBRAIN/wenliang",
+  "FILES": [
+	"2021_merged.mcool",
+  	"ODC_AD_BR1",
+	"2026_merged.mcool",
+        "ODC_AD_BR2",
+	"2027_merged.mcool",
+        "ODC_AD_BR3",
+	"2037_merged.mcool",
+        "ODC_AD_BR4",
+	"2058_merged.mcool",
+        "ODC_AD_BR5",
+	"2112_merged.mcool",
+        "ODC_AD_BR6",
+	"2178_merged.mcool",
+        "ODC_AD_BR7",
+	"2215_merged.mcool",
+        "ODC_AD_BR8",
+	"2232_merged.mcool",
+        "ODC_AD_BR9",
+	"2210_merged.mcool",
+        "ODC_AD_BR10",
+	"2012_merged.mcool",
+        "ODC_CTL_BR1",
+	"2097_merged.mcool",
+        "ODC_CTL_BR2",
+	"2058_merged.mcool",
+        "ODC_CTL_BR3",
+	"2380_merged.mcool",
+        "ODC_CTL_BR4",
+	"2068_merged.mcool",
+        "ODC_CTL_BR5",
+	"2191_merged.mcool",
+        "ODC_CTL_BR7",
+	"2259_merged.mcool",
+        "ODC_CTL_BR8",
+	"2274_merged.mcool",
+        "ODC_CTL_BR9",
+	"2327_merged.mcool",
+        "ODC_CTL_BR10",
+	"2339_merged.mcool",
+        "ODC_CTL_BR11"
+  ],
+  "OUT_DIR": "/HDD3/DocumentsHDD3/07_2022-/scBRAIN/ENT3C_OUT",
+  "OUT_PREFIX": "AD_CTRL_10kb_chr1-3"
+}
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.1.2] - 2025-08-04
+### Added
+- sorted legend and colormap reverse
+- promt user for recomputing the entropy output table
+- append output table after each resolution/chr/file instead of saving at end
+- print version ```ENT3C --version```
+### Changed 
+- version to match git hub
+
+
 ## [2.0.7] - 2025-08-01
 ### Added
 - color schemes for BRs of same cell type

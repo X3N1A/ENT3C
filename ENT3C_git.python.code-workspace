@@ -9,21 +9,18 @@
     	"git.enabled": false,
 		"python.terminal.activateEnvironment": true,
 		"python.useEnvironmentsExtension": true,
-		"python.defaultInterpreterPath": ".ent3c_venv/bin/python"
+		"python.defaultInterpreterPath": ".ent3c_venv3.11/bin/python"
 	},
 	"launch": {
 		"configurations": [
-		  {
-			"name": "Run Python",
-			"type": "debugpy",
-			"request": "launch",
-			"program": "${workspaceFolder}/test.py",
-			"console": "integratedTerminal",
-			"args": [
-				"run_all",
-				"--config=config/config.json",
-			  ]
-		  }
+			{
+				"name": "Run API Debug",
+				"type": "debugpy",
+				"request": "launch",
+				"program": "${workspaceFolder}/test.py",
+				"console": "integratedTerminal",
+				"args": []
+			}
 		]
 	}
 }

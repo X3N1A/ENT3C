@@ -37,11 +37,12 @@ ChrNrs=strsplit(ChrNrs, ',');
 
 ENT3C_OUT_FN=sprintf('%s/%s_ENT3C_OUT.csv',OUT_DIR,OUT_PREFIX);
 
-if ~exist(ENT3C_OUT_FN,'file')
+if ~exist(ENT3C_OUT_FN,'file')||dir(ENT3C_OUT_FN).bytes == 0
     sprintf("Generating new file: %s",ENT3C_OUT_FN)
     ENT3C_OUT=table('Size',[0 11],...
     'VariableTypes', {'cell','cell','int64','int64','int64','int64','int64','int64','int64','int64','double'},...
     'VariableNames', {'Name','ChrNr','Resolution','n','PHI','phi','binNrStart','binNrEND','START','END','S'});
+    writetable(ENT3C_OUT, ENT3C_OUT_FN, 'Delimiter', '\t')
     for Resolution=Resolutions
         for ChrNr=ChrNrs
 
@@ -104,6 +105,7 @@ if ~exist(ENT3C_OUT_FN,'file')
                     'binNrStart','binNrEND','START','END','S'});
 
                 ENT3C_OUT=[ENT3C_OUT;OUT1];
+		        writetable(ENT3C_OUT,ENT3C_OUT_FN,'Delimiter','tab', 'WriteVariableNames', false)
               
             end
         end
@@ -112,7 +114,7 @@ if ~exist(ENT3C_OUT_FN,'file')
     writetable(ENT3C_OUT,ENT3C_OUT_FN,'Delimiter','tab')
 
 else
-
+    sprintf("%s alrady exists. loading...",ENT3C_OUT_FN)
     opts = detectImportOptions(ENT3C_OUT_FN, 'TextType', 'string');
     opts = setvartype(opts, 'ChrNr', 'string'); % or 'char'
     ENT3C_OUT=readtable(sprintf('%s',ENT3C_OUT_FN),opts);

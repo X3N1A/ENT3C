@@ -6,6 +6,7 @@ import logging
 import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import re
+import sys
 
 
 def check_config(config_path):
@@ -120,12 +121,48 @@ def check_config(config_path):
         OUT_PREFIX,
         entropy_out_FN,
         similarity_out_FN,
+        LOG_FN,
     )
 
 
+def overwrite(OUTPUT_FN, ask_user=None):
+    """
+    - ask_user (bool or None):
+        If True, always prompt the user.
+        If False, never prompt, just return False.
+        If None, prompt only if running interactively (tty).
+
+    Returns:
+        - bool: True if file should be overwritten, False otherwise.
+    """
+
+    if not os.path.exists(OUTPUT_FN):
+        return True
+    if ask_user is None:
+        if sys.stdin.isatty():
+            while True:
+                ans = (
+                    input(f"Output file {OUTPUT_FN} exists. Overwrite? [y/n]: ")
+                    .strip()
+                    .lower()
+                )
+                if ans in ("y", "yes"):
+                    return True
+                elif ans in ("n", "no", ""):
+                    return False
+                else:
+                    print("Please enter 'y' or 'n'.")
+        else:
+            return False
+            print(f"{OUTPUT_FN} already exists!")
+    return
+
+
 def load_cooler(FN, ChrNr, Resolution, NormM, weights_name):
+    # print(f"loading cooler {FN}")
     if "mcool" in FN:
         clr = cl.Cooler("%s::resolutions/%d" % (FN, Resolution))
+        # print(cl.fileops.list_coolers(FN))
     else:
         clr = cl.Cooler(FN)
 
@@ -169,11 +206,11 @@ def get_cell_line(sample):
 def get_color_schemes(meta):
     COLORMAPS = [
         "Purples",
-        "Reds",
-        "Grey",
-        "Blues",
         "Greens",
         "Oranges",
+        "Blues",
+        "Greys",
+        "Reds",
         "YlOrBr",
         "YlGnBu",
         "PuRd",
@@ -187,14 +224,13 @@ def get_color_schemes(meta):
         # print(n_samples)
         cmap_name = COLORMAPS[i % len(COLORMAPS)]
         # print(cmap_name)
-        cmap = plt.cm.get_cmap(cmap_name, n_samples)
+        cmap = plt.cm.get_cmap(cmap_name, n_samples).reversed()
         # print(cmap)
-        colors = [mcolors.rgb2hex(cmap(j)) for j in range(n_samples)]
+        colors = [mcolors.rgb2hex(cmap(j)) for j in np.linspace(0, 0.3, n_samples)]
         color_schemes[cell_type] = colors
 
     # for ct, colors in color_schemes.items():
     #    print(f"{ct} ({len(colors)} samples): {colors}")
-    # print(color_schemes)
     return color_schemes
 
 

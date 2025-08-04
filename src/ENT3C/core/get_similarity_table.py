@@ -21,6 +21,7 @@ def get_similarity(config_file):
         OUT_PREFIX,
         entropy_out_FN,
         similarity_out_FN,
+        LOG_FN,
     ) = utils.check_config(config_file)
 
     ENT3C_OUT = pd.read_csv(f"{entropy_out_FN}", sep="\t")
@@ -44,11 +45,14 @@ def get_similarity(config_file):
     all_samples = ENT3C_OUT["Name"].unique()
     all_samples = pd.Series(all_samples)
     cell_types = all_samples.str.extract(r"(.*?)_BR")[0]
+
+    # print(all_samples)
+    # print(cell_types)
     meta = pd.DataFrame({"Sample": all_samples, "cell_type": cell_types})
-    print(meta)
+    # print(meta)
 
     color_schemes = utils.get_color_schemes(meta)
-    print(color_schemes)
+    # print(color_schemes)
 
     cols = int(np.ceil(np.sqrt(len(CHROMOSOMES))))
     rows = int(np.ceil(len(CHROMOSOMES) / cols))
@@ -104,12 +108,12 @@ def get_similarity(config_file):
                     if comp[0] not in plotted:
                         clr = utils.get_color_by_replicate(comp[0], color_schemes)
                         print(clr)
-                        ax.plot(S1, label=f"{comp[0]}", color=clr)
+                        ax.plot(S1, label=f"{comp[0]}", color=clr, linewidth=0.7)
                         plotted.add(comp[0])
                         i += 1
                     if comp[1] not in plotted:
                         clr = utils.get_color_by_replicate(comp[1], color_schemes)
-                        ax.plot(S2, label=f"{comp[1]}", color=clr)
+                        ax.plot(S2, label=f"{comp[1]}", color=clr, linewidth=0.7)
                         plotted.add(comp[1])
                         i += 1
 
@@ -162,8 +166,15 @@ def get_similarity(config_file):
 
             if ChrNr == CHROMOSOMES[-1]:
                 plotted = [p.replace("_", " ") for p in plotted]
+                handles, labels = ax.get_legend_handles_labels()
+
+                labels, handles = zip(
+                    *sorted(zip(labels, handles), key=lambda t: t[0].lower())
+                )
+                print()
                 ax.legend(
-                    plotted,
+                    handles,
+                    labels,
                     loc="upper right",
                     bbox_to_anchor=(1.2, 1),
                     borderaxespad=0.0,

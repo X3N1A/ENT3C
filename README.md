@@ -59,7 +59,7 @@ export PATH="$PATH:/path/to/exe/"
 1) generate and activate python environment 
 	
 	```
-	python3.12 -m venv .ent3c_venv
+	python3.11 -m venv .ent3c_venv
 
 	source .ent3c_venv/bin/activate
 	```
@@ -146,14 +146,14 @@ If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
 	* run ENT3C directly from terminal with: 
 
 	```
-	ENT3C <get_entropy|get_similarity|run_all> --config-file=/path/to/config_file/<config.json>
+	usage: ENT3C [-h] [--version] {get_entropy,get_similarity,run_all} --config-file=/path/to/config_file/<config.json>
 	```
 	
-	* ```<get_entropy>``` subcommand generate a dataframe with entropy values according to <config.json>. Output: ```OUTPUT/PYTHON/<OUT_PREFIX>_<_ENT3C_OUT.csv>```
+	* ```get_entropy``` subcommand generate a dataframe with entropy values according to <config.json>. Output: ```OUTPUT/PYTHON/<OUT_PREFIX>_<_ENT3C_OUT.csv>```
 	
-	* ```<get_similarity>``` subcommand will generate a data frame with similarities according to <config.json> and ```OUTPUT/PYTHON/<OUT_PREFIX>_<_ENT3C_OUT.csv>```. Output: ```OUTPUT/PYTHON/<OUT_PREFIX>_<_ENT3C_similarity.csv```
+	* ```get_similarity``` subcommand will generate a data frame with similarities according to <config.json> and ```OUTPUT/PYTHON/<OUT_PREFIX>_<_ENT3C_OUT.csv>```. Output: ```OUTPUT/PYTHON/<OUT_PREFIX>_<_ENT3C_similarity.csv```
 	
-	* ```<run_all>``` will generate both ```OUTPUT/PYTHON/<OUT_PREFIX>_<_ENT3C_OUT.csv>``` and ```OUTPUT/PYTHON/<OUT_PREFIX>_<_ENT3C_similarity.csv``` data frames. 
+	* ```run_all``` will generate both ```OUTPUT/PYTHON/<OUT_PREFIX>_<_ENT3C_OUT.csv>``` and ```OUTPUT/PYTHON/<OUT_PREFIX>_<_ENT3C_similarity.csv``` data frames. 
 
 * or as python API 
 

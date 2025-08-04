@@ -3,6 +3,7 @@ import argparse
 import logging
 from ENT3C.core import get_similarity, get_entropy
 from ENT3C.core.utils import check_config
+from ENT3C.__version__ import __version__
 
 
 def run_get_entropy(config_file):
@@ -28,6 +29,10 @@ def main():
         prog="ENT3C",
         description="Compute the similarity between genomic contact matrices.",
         epilog="For more info, visit https://github.com/X3N1A/ENT3C",
+    )
+
+    parser.add_argument(
+        "--version", action="version", version=f"%(prog)s {__version__}"
     )
 
     subparsers = parser.add_subparsers(
@@ -83,9 +88,8 @@ def main():
         OUT_PREFIX,
         entropy_out_FN,
         similarity_out_FN,
+        LOG_FN,
     ) = check_config(config_file)
-
-    LOG_FN = f"{OUT_DIR}/{OUT_PREFIX}_logfile.log"
 
     logging.basicConfig(
         filename=LOG_FN,
@@ -124,6 +128,7 @@ def main():
 
         print("Using config file:", config_file)
         get_entropy(config_file)
+
         get_similarity(config_file)
         print(f"entropy table in: {entropy_out_FN}")
         print(f"similarity table in: {similarity_out_FN}")

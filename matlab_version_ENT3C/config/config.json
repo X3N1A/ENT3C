@@ -2,7 +2,7 @@
   "PHI_MAX": 1e3,
   "CHRSPLIT": 10,
   "SUB_M_SIZE_FIX": null,
-  "ChrNr": "X",
+  "ChrNr": "21,22",
   "Resolution": "40000",
   "phi": 1,
   "NormM": 0,
@@ -19,6 +19,6 @@
 	"A549_BR2"
 	],
   "OUT_DIR": "../OUTPUT/",
-  "OUT_PREFIX": "ChrX_NoNorm"
+  "OUT_PREFIX": "Chr21_22_NoNorm"
 }
 
