@@ -1,7 +1,7 @@
 import os
 import argparse
 import logging
-from ENT3C.core import get_similarity, get_entropy
+from ENT3C.core import get_similarity, get_entropy, locate_largest_euclidean_diff
 from ENT3C.core.utils import check_config
 from ENT3C.__version__ import __version__
 
@@ -20,6 +20,11 @@ def run_all(config_file):
     ENT3C_OUT = get_entropy(config_file)
     Similarity = get_similarity(config_file)
     return ENT3C_OUT, Similarity
+
+
+def run_locate_largest_euclidean_diff(config_file, group1, group2):
+    DIFFERENCE = locate_largest_euclidean_diff(config_file, group1, group2)
+    return DIFFERENCE
 
 
 def main():

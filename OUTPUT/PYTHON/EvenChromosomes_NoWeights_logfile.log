@@ -1,74 +1,161 @@
-2025-07-21 15:36:09,474 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
-2025-07-21 15:36:09,474 - INFO - Apply cooler weights? no.
-2025-07-21 15:36:09,474 - INFO - CHRSPLIT: 10
-2025-07-21 15:36:09,474 - INFO - Sub matrix size PHI: nan
-2025-07-21 15:36:09,474 - INFO - Window shift phi: 1
-2025-07-21 15:36:09,474 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
-2025-07-21 15:36:09,474 - INFO - Resolutions: [40000]
-2025-07-21 15:36:09,475 - INFO - Namespace(command='run_all', config='config/config.json')
-2025-07-21 15:36:09,475 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
-2025-07-21 15:36:09,475 - INFO - Apply cooler weights? no.
-2025-07-21 15:36:09,475 - INFO - CHRSPLIT: 10
-2025-07-21 15:36:09,475 - INFO - Sub matrix size PHI: nan
-2025-07-21 15:36:09,475 - INFO - Window shift phi: 1
-2025-07-21 15:36:09,475 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
-2025-07-21 15:36:09,475 - INFO - Resolutions: [40000]
-2025-07-21 15:36:09,478 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
-2025-07-21 15:36:09,478 - INFO - Apply cooler weights? no.
-2025-07-21 15:36:09,478 - INFO - CHRSPLIT: 10
-2025-07-21 15:36:09,478 - INFO - Sub matrix size PHI: nan
-2025-07-21 15:36:09,478 - INFO - Window shift phi: 1
-2025-07-21 15:36:09,478 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
-2025-07-21 15:36:09,478 - INFO - Resolutions: [40000]
-2025-07-21 15:51:50,473 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
-2025-07-21 15:51:50,473 - INFO - Apply cooler weights? no.
-2025-07-21 15:51:50,473 - INFO - CHRSPLIT: 10
-2025-07-21 15:51:50,473 - INFO - Sub matrix size PHI: nan
-2025-07-21 15:51:50,473 - INFO - Window shift phi: 1
-2025-07-21 15:51:50,473 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
-2025-07-21 15:51:50,473 - INFO - Resolutions: [40000]
-2025-07-21 15:51:59,132 - INFO - Namespace(command='run_all', config='config/config.json')
-2025-08-01 13:10:07,509 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
-2025-08-01 13:10:07,533 - INFO - Apply cooler weights? no.
-2025-08-01 13:10:07,533 - INFO - CHRSPLIT: 10
-2025-08-01 13:10:07,533 - INFO - Sub matrix size PHI: nan
-2025-08-01 13:10:07,533 - INFO - Window shift phi: 1
-2025-08-01 13:10:07,534 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
-2025-08-01 13:10:07,534 - INFO - Resolutions: [40000]
-2025-08-01 13:10:07,534 - INFO - Namespace(command='run_all', config='config/config.json')
-2025-08-01 13:10:07,534 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
-2025-08-01 13:10:07,534 - INFO - Apply cooler weights? no.
-2025-08-01 13:10:07,534 - INFO - CHRSPLIT: 10
-2025-08-01 13:10:07,534 - INFO - Sub matrix size PHI: nan
-2025-08-01 13:10:07,534 - INFO - Window shift phi: 1
-2025-08-01 13:10:07,534 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
-2025-08-01 13:10:07,534 - INFO - Resolutions: [40000]
-2025-08-01 13:10:07,545 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
-2025-08-01 13:10:07,545 - INFO - Apply cooler weights? no.
-2025-08-01 13:10:07,545 - INFO - CHRSPLIT: 10
-2025-08-01 13:10:07,545 - INFO - Sub matrix size PHI: nan
-2025-08-01 13:10:07,545 - INFO - Window shift phi: 1
-2025-08-01 13:10:07,545 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
-2025-08-01 13:10:07,545 - INFO - Resolutions: [40000]
-2025-08-01 13:51:35,535 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
-2025-08-01 13:51:35,535 - INFO - Apply cooler weights? no.
-2025-08-01 13:51:35,535 - INFO - CHRSPLIT: 10
-2025-08-01 13:51:35,535 - INFO - Sub matrix size PHI: nan
-2025-08-01 13:51:35,535 - INFO - Window shift phi: 1
-2025-08-01 13:51:35,535 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
-2025-08-01 13:51:35,535 - INFO - Resolutions: [40000]
-2025-08-01 13:51:35,535 - INFO - Namespace(command='run_all', config='config/config.json')
-2025-08-01 13:51:35,535 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
-2025-08-01 13:51:35,535 - INFO - Apply cooler weights? no.
-2025-08-01 13:51:35,535 - INFO - CHRSPLIT: 10
-2025-08-01 13:51:35,535 - INFO - Sub matrix size PHI: nan
-2025-08-01 13:51:35,535 - INFO - Window shift phi: 1
-2025-08-01 13:51:35,535 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
-2025-08-01 13:51:35,535 - INFO - Resolutions: [40000]
-2025-08-01 13:51:35,540 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
-2025-08-01 13:51:35,540 - INFO - Apply cooler weights? no.
-2025-08-01 13:51:35,540 - INFO - CHRSPLIT: 10
-2025-08-01 13:51:35,540 - INFO - Sub matrix size PHI: nan
-2025-08-01 13:51:35,540 - INFO - Window shift phi: 1
-2025-08-01 13:51:35,540 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
-2025-08-01 13:51:35,540 - INFO - Resolutions: [40000]
+2025-08-04 14:51:09,358 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 14:51:09,359 - INFO - Apply cooler weights? no.
+2025-08-04 14:51:09,359 - INFO - CHRSPLIT: 10
+2025-08-04 14:51:09,359 - INFO - Sub matrix size PHI: nan
+2025-08-04 14:51:09,359 - INFO - Window shift phi: 1
+2025-08-04 14:51:09,359 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 14:51:09,359 - INFO - Resolutions: [40000]
+2025-08-04 14:51:24,398 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 14:51:24,398 - INFO - Apply cooler weights? no.
+2025-08-04 14:51:24,399 - INFO - CHRSPLIT: 10
+2025-08-04 14:51:24,399 - INFO - Sub matrix size PHI: nan
+2025-08-04 14:51:24,399 - INFO - Window shift phi: 1
+2025-08-04 14:51:24,399 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 14:51:24,399 - INFO - Resolutions: [40000]
+2025-08-04 14:51:41,399 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 14:51:41,400 - INFO - Apply cooler weights? no.
+2025-08-04 14:51:41,400 - INFO - CHRSPLIT: 10
+2025-08-04 14:51:41,400 - INFO - Sub matrix size PHI: nan
+2025-08-04 14:51:41,400 - INFO - Window shift phi: 1
+2025-08-04 14:51:41,400 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 14:51:41,400 - INFO - Resolutions: [40000]
+2025-08-04 14:58:34,997 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 14:58:34,997 - INFO - Apply cooler weights? no.
+2025-08-04 14:58:34,997 - INFO - CHRSPLIT: 10
+2025-08-04 14:58:34,997 - INFO - Sub matrix size PHI: nan
+2025-08-04 14:58:34,997 - INFO - Window shift phi: 1
+2025-08-04 14:58:34,997 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 14:58:34,997 - INFO - Resolutions: [40000]
+2025-08-04 14:59:52,735 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 14:59:52,736 - INFO - Apply cooler weights? no.
+2025-08-04 14:59:52,736 - INFO - CHRSPLIT: 10
+2025-08-04 14:59:52,736 - INFO - Sub matrix size PHI: nan
+2025-08-04 14:59:52,736 - INFO - Window shift phi: 1
+2025-08-04 14:59:52,736 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 14:59:52,736 - INFO - Resolutions: [40000]
+2025-08-04 15:03:57,157 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:03:57,158 - INFO - Apply cooler weights? no.
+2025-08-04 15:03:57,158 - INFO - CHRSPLIT: 10
+2025-08-04 15:03:57,158 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:03:57,158 - INFO - Window shift phi: 1
+2025-08-04 15:03:57,158 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:03:57,158 - INFO - Resolutions: [40000]
+2025-08-04 15:04:29,537 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:04:29,538 - INFO - Apply cooler weights? no.
+2025-08-04 15:04:29,538 - INFO - CHRSPLIT: 10
+2025-08-04 15:04:29,538 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:04:29,538 - INFO - Window shift phi: 1
+2025-08-04 15:04:29,538 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:04:29,538 - INFO - Resolutions: [40000]
+2025-08-04 15:07:01,259 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:07:01,259 - INFO - Apply cooler weights? no.
+2025-08-04 15:07:01,259 - INFO - CHRSPLIT: 10
+2025-08-04 15:07:01,259 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:07:01,259 - INFO - Window shift phi: 1
+2025-08-04 15:07:01,259 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:07:01,259 - INFO - Resolutions: [40000]
+2025-08-04 15:09:05,822 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:09:05,823 - INFO - Apply cooler weights? no.
+2025-08-04 15:09:05,823 - INFO - CHRSPLIT: 10
+2025-08-04 15:09:05,823 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:09:05,823 - INFO - Window shift phi: 1
+2025-08-04 15:09:05,823 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:09:05,823 - INFO - Resolutions: [40000]
+2025-08-04 15:09:32,032 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:09:32,033 - INFO - Apply cooler weights? no.
+2025-08-04 15:09:32,033 - INFO - CHRSPLIT: 10
+2025-08-04 15:09:32,033 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:09:32,033 - INFO - Window shift phi: 1
+2025-08-04 15:09:32,033 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:09:32,033 - INFO - Resolutions: [40000]
+2025-08-04 15:10:40,135 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:10:40,136 - INFO - Apply cooler weights? no.
+2025-08-04 15:10:40,136 - INFO - CHRSPLIT: 10
+2025-08-04 15:10:40,136 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:10:40,136 - INFO - Window shift phi: 1
+2025-08-04 15:10:40,136 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:10:40,136 - INFO - Resolutions: [40000]
+2025-08-04 15:11:26,723 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:11:26,724 - INFO - Apply cooler weights? no.
+2025-08-04 15:11:26,724 - INFO - CHRSPLIT: 10
+2025-08-04 15:11:26,724 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:11:26,724 - INFO - Window shift phi: 1
+2025-08-04 15:11:26,724 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:11:26,724 - INFO - Resolutions: [40000]
+2025-08-04 15:15:00,682 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:15:00,683 - INFO - Apply cooler weights? no.
+2025-08-04 15:15:00,683 - INFO - CHRSPLIT: 10
+2025-08-04 15:15:00,683 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:15:00,683 - INFO - Window shift phi: 1
+2025-08-04 15:15:00,683 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:15:00,683 - INFO - Resolutions: [40000]
+2025-08-04 15:15:25,764 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:15:25,765 - INFO - Apply cooler weights? no.
+2025-08-04 15:15:25,765 - INFO - CHRSPLIT: 10
+2025-08-04 15:15:25,765 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:15:25,765 - INFO - Window shift phi: 1
+2025-08-04 15:15:25,765 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:15:25,765 - INFO - Resolutions: [40000]
+2025-08-04 15:15:56,091 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:15:56,092 - INFO - Apply cooler weights? no.
+2025-08-04 15:15:56,092 - INFO - CHRSPLIT: 10
+2025-08-04 15:15:56,092 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:15:56,092 - INFO - Window shift phi: 1
+2025-08-04 15:15:56,092 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:15:56,092 - INFO - Resolutions: [40000]
+2025-08-04 15:16:27,285 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:16:27,286 - INFO - Apply cooler weights? no.
+2025-08-04 15:16:27,286 - INFO - CHRSPLIT: 10
+2025-08-04 15:16:27,286 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:16:27,286 - INFO - Window shift phi: 1
+2025-08-04 15:16:27,286 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:16:27,286 - INFO - Resolutions: [40000]
+2025-08-04 15:19:40,695 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:19:40,695 - INFO - Apply cooler weights? no.
+2025-08-04 15:19:40,696 - INFO - CHRSPLIT: 10
+2025-08-04 15:19:40,696 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:19:40,696 - INFO - Window shift phi: 1
+2025-08-04 15:19:40,696 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:19:40,696 - INFO - Resolutions: [40000]
+2025-08-04 15:20:22,326 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:20:22,327 - INFO - Apply cooler weights? no.
+2025-08-04 15:20:22,327 - INFO - CHRSPLIT: 10
+2025-08-04 15:20:22,327 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:20:22,327 - INFO - Window shift phi: 1
+2025-08-04 15:20:22,327 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:20:22,327 - INFO - Resolutions: [40000]
+2025-08-04 15:33:14,991 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:33:14,991 - INFO - Apply cooler weights? no.
+2025-08-04 15:33:14,991 - INFO - CHRSPLIT: 10
+2025-08-04 15:33:14,991 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:33:14,991 - INFO - Window shift phi: 1
+2025-08-04 15:33:14,991 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:33:14,991 - INFO - Resolutions: [40000]
+2025-08-04 15:37:46,545 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:37:46,545 - INFO - Apply cooler weights? no.
+2025-08-04 15:37:46,545 - INFO - CHRSPLIT: 10
+2025-08-04 15:37:46,545 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:37:46,546 - INFO - Window shift phi: 1
+2025-08-04 15:37:46,546 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:37:46,546 - INFO - Resolutions: [40000]
+2025-08-04 15:46:51,818 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:46:51,818 - INFO - Apply cooler weights? no.
+2025-08-04 15:46:51,818 - INFO - CHRSPLIT: 10
+2025-08-04 15:46:51,819 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:46:51,819 - INFO - Window shift phi: 1
+2025-08-04 15:46:51,819 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:46:51,819 - INFO - Resolutions: [40000]
+2025-08-04 15:47:49,951 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:47:49,951 - INFO - Apply cooler weights? no.
+2025-08-04 15:47:49,951 - INFO - CHRSPLIT: 10
+2025-08-04 15:47:49,952 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:47:49,952 - INFO - Window shift phi: 1
+2025-08-04 15:47:49,952 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:47:49,952 - INFO - Resolutions: [40000]
+2025-08-04 15:48:15,264 - INFO - Inputs: G401_BR1, G401_BR2, A549_BR1, A549_BR2, LNCap_BR1, LNCap_BR2, HFFc6_BR1, HFFc6_BR2, HFFc6_BR3, H1-hESC_BR1, H1-hESC_BR2
+2025-08-04 15:48:15,264 - INFO - Apply cooler weights? no.
+2025-08-04 15:48:15,264 - INFO - CHRSPLIT: 10
+2025-08-04 15:48:15,264 - INFO - Sub matrix size PHI: nan
+2025-08-04 15:48:15,265 - INFO - Window shift phi: 1
+2025-08-04 15:48:15,265 - INFO - Chromosomes: ['2', '4', '6', '8', '10', '12', '14', '16', '18', '20', '22', 'X']
+2025-08-04 15:48:15,265 - INFO - Resolutions: [40000]

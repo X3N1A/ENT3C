@@ -59,6 +59,7 @@ def get_entropy(config_file):
                 EXCLUDE = set()  # use set() to keep unique values
 
                 for FN in FNs:
+                    print(f"loading files: {FN}")
                     BIN_TABLE, M = utils.load_cooler(
                         FN,
                         ChrNr,
@@ -93,6 +94,7 @@ def get_entropy(config_file):
                 EXCLUDE = set(sorted(EXCLUDE))
 
                 for f in range(0, len(FNs)):
+                    print(f"working on file: {FN}")
                     BIN_TABLE, M = utils.load_cooler(
                         FNs[f],
                         ChrNr,
@@ -110,6 +112,8 @@ def get_entropy(config_file):
                     S, SUB_M_SIZE, WN, phi, BIN_TABLE_NEW = vN_entropy(
                         M, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, BIN_TABLE
                     )
+                    if f == 0:
+                        logging.info(f"SUB_M_SIZE {SUB_M_SIZE} ,WN {WN}, phi {phi}")
 
                     N = len(S)
                     DICT = {

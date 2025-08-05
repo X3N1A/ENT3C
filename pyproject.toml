@@ -19,6 +19,7 @@ dependencies = [
   "matplotlib>=3.6.0",
   "numpy>=2.0.0",
   "pandas>=2.3.0"
+  "dtaidistance"
     ]
 
 # one entry, subcommands in argparse!

@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.1.3] - 2025-08-04
+### Added
+- improved log info. E.g. computed WN and SUB_M_SIZE for option CHRSPLIT. 
+
 ## [2.1.2] - 2025-08-04
 ### Added
 - sorted legend and colormap reverse
