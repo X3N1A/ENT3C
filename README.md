@@ -57,7 +57,7 @@ Pre-built Linux executable is available in the Releases section (v.2.2.0).
 
 - Download and make file executable.
 ```
-chmod +x ./path/to/exe/ENT3C
+chmod +x ./path/to/exe/ENT3C_exe
 ```
 
 - For global use add path to ```./bashrc``` file:
@@ -83,7 +83,7 @@ export PATH="$PATH:/path/to/exe/"
 
 # Usage 
 
-* CLI usage:
+* CLI (python) usage:
 
 	```
 	Usage:
@@ -108,6 +108,8 @@ export PATH="$PATH:/path/to/exe/"
             ENT3C get_similarity --config=configs/myconfig.json
             ENT3C compare_groups --config=configs/myconfig.json --group1=H1-hESC --group2=K562
 	```
+
+* Careful to use linux executable call: ```ENT3C_exe <command> --config=<path/to/config.json> [options]```
 
 * alternatively run ENT3C in python as:
 
@@ -166,9 +168,9 @@ export PATH="$PATH:/path/to/exe/"
 
 	9) ```"WEIGHTS_NAME": "<name_of_weights>"``` $\dots$ name of dataset in cooler containing normalization weights.
 
-	12) ```"phi": <integer>``` $\dots$ number of bins to the next matrix.
+	10) ```"phi": <integer>``` $\dots$ number of bins to the next matrix.
 
-	13) ```"PHI_MAX": <integer>``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
+	11) ```"PHI_MAX": <integer>``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
 
 
 

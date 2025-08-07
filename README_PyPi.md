@@ -22,8 +22,7 @@ https://github.com/X3N1A/ENT3C
 
 # Usage 
 
-
-* CLI usage:
+* CLI (python) usage:
 
 	```
 	Usage:
