@@ -1,7 +1,7 @@
 {
   "PHI_MAX": 1e3,
-  "CHRSPLIT": 10,
-  "SUB_M_SIZE_FIX": null,
+  "CHRSPLIT": null,
+  "SUB_M_SIZE_FIX": 500,
   "ChrNr": "2,4,6,8,10,12,14,16,18,20,22,X",
   "Resolution": "40000",
   "phi": 1,

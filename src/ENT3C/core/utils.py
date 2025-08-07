@@ -27,8 +27,7 @@ def check_config(config_path):
 
     config_df = config_df[::2].reset_index(drop=True)
     config_df = pd.concat([config_df, config_files], axis=1)
-
-    if "BR" in config_df["NAME"].astype(str):
+    if config_df["NAME"].astype(str).str.contains("_BR").any():
         BR = True
     else:
         BR = False
@@ -206,27 +205,31 @@ def get_cell_line(sample):
 def get_color_schemes(meta):
     COLORMAPS = [
         "Purples",
-        "Greens",
         "Oranges",
+        "Greens",
         "Blues",
-        "Greys",
         "Reds",
         "YlOrBr",
         "YlGnBu",
         "PuRd",
         "BuPu",
+        "PiYG",
     ]
     color_schemes = {}
     unique_cell_types = meta["cell_type"].unique()
     for i, cell_type in enumerate(unique_cell_types):
-        # print(cell_type)
         n_samples = meta[meta["cell_type"] == cell_type].shape[0]
-        # print(n_samples)
         cmap_name = COLORMAPS[i % len(COLORMAPS)]
-        # print(cmap_name)
-        cmap = plt.cm.get_cmap(cmap_name, n_samples).reversed()
-        # print(cmap)
-        colors = [mcolors.rgb2hex(cmap(j)) for j in np.linspace(0, 0.3, n_samples)]
+        cmap = plt.cm.get_cmap(cmap_name)
+
+        if n_samples == 1:
+            sample_points = [0.5]
+        elif n_samples == 2:
+            sample_points = [0.35, 0.65]
+        else:
+            sample_points = np.linspace(0.35, 1, n_samples)
+
+        colors = [mcolors.rgb2hex(cmap(j)) for j in sample_points]
         color_schemes[cell_type] = colors
 
     # for ct, colors in color_schemes.items():
@@ -234,17 +237,20 @@ def get_color_schemes(meta):
     return color_schemes
 
 
-def get_color_by_replicate(cell_name, color_schemes, default_color="#000000"):
+def get_color_by_replicate(cell_name, color_schemes, default_color="#0000FF"):
     for key in color_schemes:
         if key in cell_name:
+            colors = color_schemes[key]
             match = re.search(r"BR(\d+)", cell_name)
             if match:
                 replicate_num = int(match.group(1))
-                colors = color_schemes[key]
                 if 1 <= replicate_num <= len(colors):
                     return colors[replicate_num - 1]
-                else:
-                    return default_color  # replicate number out of range
             else:
-                return default_color  # replicate number not found
+                return colors[0]  # replicate number not found
     return default_color  # no matching key
+
+
+def natural_key(label):
+    # Split into numbers and text
+    return [int(s) if s.isdigit() else s.lower() for s in re.split("(\d+)", label)]

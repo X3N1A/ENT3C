@@ -1,8 +1,23 @@
 # Changelog
 
-## [2.1.3] - 2025-08-04
+## [2.2.0] - 2025-08-06
 ### Added
+- new functionality to identify regions of largest difference between two groups.
+  ```ENT3C compare_groups --group1 --group2```
+  - Identifies the regions of lowest similarity between two groups as the largest Euclidean distance between the z-score-transformed signals. 
 - improved log info. E.g. computed WN and SUB_M_SIZE for option CHRSPLIT. 
+- warning for bad parameter choice which result in skipped regions.
+
+### Changed 
+- fixed bug in vN_entropy
+  ```SDs = np.std(m, axis=0, ddof=1) < np.finfo(float).eps```
+  to
+  ```SDs = np.nanstd(m, axis=0, ddof=1) < np.finfo(float).eps```
+  and handling if values of correlaciton matrix are nan
+
+- figures saved in pdf instead of svg
+- improved color schemes
+- documentation update
 
 ## [2.1.2] - 2025-08-04
 ### Added

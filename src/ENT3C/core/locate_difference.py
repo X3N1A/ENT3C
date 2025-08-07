@@ -1,14 +1,10 @@
 import numpy as np
 import pandas as pd
-from scipy.stats import f_oneway
 from ENT3C.core import utils
-from itertools import combinations
-import matplotlib
 import matplotlib.colors as mcolors
 from matplotlib.backends.backend_pdf import PdfPages
-
-matplotlib.use("Qt5Agg")
 import matplotlib.pyplot as plt
+import sys
 
 
 def locate_largest_euclidean_diff(config_file, group1, group2):
@@ -32,14 +28,33 @@ def locate_largest_euclidean_diff(config_file, group1, group2):
 
     ENT3C_OUT = pd.read_csv(f"{entropy_out_FN}", sep="\t", dtype={"ChrNr": str})
     ENT3C_OUT["ChrNr"] = ENT3C_OUT["ChrNr"].astype(str)
-    ENT3C_OUT["GROUP"] = ENT3C_OUT["Name"].str.extract(r"(.*?)_BR")[0]
+    print(BR)
+    if BR:
+        ENT3C_OUT["GROUP"] = ENT3C_OUT["Name"].str.extract(r"(.*)_BR")[0]
+    else:
+        ENT3C_OUT["GROUP"] = ENT3C_OUT["Name"]
+
+    print(ENT3C_OUT)
+
+    if ENT3C_OUT[(ENT3C_OUT["GROUP"] == group1) | (ENT3C_OUT["GROUP"] == group2)].empty:
+        sys.exit(
+            f"Error: {entropy_out_FN} does not contain {group1} and {group2} samples."
+        )
 
     n_group1 = ENT3C_OUT[ENT3C_OUT["GROUP"] == group1]["Name"].unique().shape[0]
     n_group2 = ENT3C_OUT[ENT3C_OUT["GROUP"] == group2]["Name"].unique().shape[0]
-    cmap1 = plt.cm.get_cmap("Greys", n_group1).reversed()
-    cmap1 = [mcolors.rgb2hex(cmap1(j)) for j in np.linspace(0, 0.5, n_group1)]
-    cmap2 = plt.cm.get_cmap("Oranges", n_group2).reversed()
-    cmap2 = [mcolors.rgb2hex(cmap2(j)) for j in np.linspace(0, 0.5, n_group2)]
+
+    cmap = mcolors.LinearSegmentedColormap.from_list(
+        "black_to_grey", ["black", "grey"], n_group1
+    )
+    cmap1 = [mcolors.to_hex(cmap(i)) for i in np.linspace(0, 1, n_group1)]
+
+    cmap = mcolors.LinearSegmentedColormap.from_list(
+        "red_to_magenta", ["darkred", "red", "magenta"], n_group2
+    )
+    # cmap = plt.cm.get_cmap("rainbow_r", n_group2).reversed()
+    cmap2 = [mcolors.to_hex(cmap(i)) for i in np.linspace(0, 1, n_group2)]
+
     # print(list(zip(ENT3C_OUT[ENT3C_OUT["GROUP"] == group1]["Name"].unique(), cmap1)))
 
     colormap = {}
@@ -53,53 +68,69 @@ def locate_largest_euclidean_diff(config_file, group1, group2):
         colormap[name] = color
 
     ENT3C_OUT["Color"] = ENT3C_OUT["Name"].map(colormap)
+    EUCLIDEAN = pd.DataFrame()
+
+    eucl_out_FN = f"{OUT_DIR}/{OUT_PREFIX}_Eucl_{group1}vs{group2}.csv"
 
     for Resolution in RESOLUTIONS:
         with PdfPages(
-            f"{OUT_DIR}/{OUT_PREFIX}_distances_{Resolution / 1e3}kb.pdf",
+            f"{OUT_DIR}/{OUT_PREFIX}_Eucl_{int(Resolution / 1e3)}kb_{group1}vs{group2}.pdf",
         ) as pdf:
             for i, ChrNr in enumerate(CHROMOSOMES):
                 fig, axs = plt.subplots(
-                    nrows=2, ncols=1, figsize=(8, 4), constrained_layout=False
+                    nrows=3, ncols=1, figsize=(8, 4), constrained_layout=False
                 )
 
                 fig.suptitle(
-                    f"{Resolution / 1e3}kb Largest Differences across {group1} and {group2} Chr{ChrNr}"
+                    f"{Resolution / 1e3}kb Largest Differences across {group1} and {group2} Chr{ChrNr}",
+                    fontsize=9,
                 )
 
-                upper_ax, lower_ax = axs
-
+                upper_ax, mid_ax, lower_ax = axs
                 DF = ENT3C_OUT[
                     (ENT3C_OUT["ChrNr"] == ChrNr)
                     & (ENT3C_OUT["Resolution"] == Resolution)
+                    & ((ENT3C_OUT["GROUP"] == group1) | (ENT3C_OUT["GROUP"] == group2))
                 ]
-                # print(DF)
-                # print(DF["Name"].unique())
-
-                # ax = axs[0]
-                # for name, group_df in DF.groupby("Name"):
-                #    x = range(0, len(group_df["S"]))
-                #    ax.plot(x, group_df["S"], label=name)
-                #### zscores
-                DF.loc[:, "S"] = DF.groupby("Name")["S"].transform(
+                DF = DF.copy()
+                #### centering: mean = 0
+                # DF.loc[:, "S_centered"] = DF.groupby("START")["S"].transform(
+                #    lambda S: (S - S.mean())
+                # )
+                #### zscores: mean = 0 and std=1
+                DF.loc[:, "S_zscore"] = DF.groupby("Name")["S"].transform(
                     lambda S: (S - S.mean()) / S.std()
                 )
+
                 for name, group_df in DF.groupby("Name"):
-                    x = range(0, len(group_df["S"]))
                     COLOR = group_df["Color"].unique()[0]
                     upper_ax.plot(
-                        x, group_df["S"], label=name, color=COLOR, linewidth=0.3
+                        # group_df["START"],
+                        group_df["START"],
+                        group_df["S"],
+                        label=name,
+                        color=COLOR,
+                        linewidth=0.3,
+                        alpha=0.9,
+                    )
+                    mid_ax.plot(
+                        group_df["START"],
+                        group_df["S_zscore"],
+                        label=name,
+                        color=COLOR,
+                        linewidth=0.3,
+                        alpha=0.4,
                     )
 
-                G1 = DF[DF["GROUP"] == group1][["S", "Name", "START"]].reset_index(
-                    drop=True
-                )
-                G1 = G1.pivot(index="START", columns="Name", values="S")
+                G1 = DF[DF["GROUP"] == group1][
+                    ["S_zscore", "Name", "START"]
+                ].reset_index(drop=True)
+                G1 = G1.pivot(index="START", columns="Name", values="S_zscore")
 
-                G2 = DF[DF["GROUP"] == group2][["S", "Name", "START"]].reset_index(
-                    drop=True
-                )
-                G2 = G2.pivot(index="START", columns="Name", values="S")
+                G2 = DF[DF["GROUP"] == group2][
+                    ["S_zscore", "Name", "START"]
+                ].reset_index(drop=True)
+                G2 = G2.pivot(index="START", columns="Name", values="S_zscore")
 
                 G1 = G1.to_numpy().T  # (n1, n_bins)
                 G2 = G2.to_numpy().T  # (n2, n_bins)
@@ -109,7 +140,9 @@ def locate_largest_euclidean_diff(config_file, group1, group2):
                 DIFF = np.abs(G1 - G2)
                 # print(DIFF.shape)  # (n1, n2, n_bins)
 
-                DIFFERENCES = DF.drop_duplicates("binNrStart")[["START", "END"]].copy()
+                DIFFERENCES = DF.drop_duplicates("binNrStart")[
+                    ["Resolution", "ChrNr", "START", "END"]
+                ].copy()
                 DIFFERENCES["meanS_Euclidean"] = np.mean(DIFF, axis=(0, 1))
 
                 G1 = np.squeeze(G1)
@@ -118,55 +151,48 @@ def locate_largest_euclidean_diff(config_file, group1, group2):
                 G2 = np.mean(G2, axis=0)
 
                 DIFF2 = abs(G1 - G2)
-                DIFFERENCES["mean_EuclideanD"] = DIFF2
 
-                x_positions = DIFFERENCES.index
-                x_labels = DIFFERENCES["START"].astype(str)
-
+                x_positions = DIFFERENCES["START"]
+                x_labels = (
+                    DIFFERENCES["START"].astype(str)
+                    + "-"
+                    + DIFFERENCES["END"].astype(str)
+                )
                 lower_ax.plot(
-                    x_positions,
-                    DIFFERENCES["mean_EuclideanD"],
-                    # DIFFERENCES["meanS_Euclidean"],
-                    label=name,
+                    DIFFERENCES["START"],
+                    DIFFERENCES["meanS_Euclidean"],
                     color="black",
                     linewidth=1,
                 )
-
                 tick_positions = x_positions[::16]
                 tick_labels = x_labels[::16]
 
-                lower_ax.set_xticks(tick_positions)
-                lower_ax.set_xticklabels(tick_labels, rotation=45, fontsize=6)
+                for ax in [upper_ax, mid_ax, lower_ax]:
+                    ax.autoscale(enable=True, axis="both", tight=True)
+                    ax.set_xticks(tick_positions)
+                    ax.xaxis.label.set_fontsize(3)
+                    ax.tick_params(axis="y", which="major", labelsize=8)
+                    ax.grid(True)
 
-                upper_ax.set_xticks(tick_positions)
-                upper_ax.set_xticklabels(tick_labels, rotation=45, fontsize=6)
+                for ax in [upper_ax, mid_ax]:
+                    ax.tick_params(axis="x", labelbottom=True)
+                    ax.set_xticklabels([])
 
-                upper_ax.autoscale(enable=True, axis="both", tight=True)
-                lower_ax.autoscale(enable=True, axis="both", tight=True)
+                lower_ax.set_xticklabels(tick_labels, rotation=90, fontsize=6.5)
 
-                lower_ax.xaxis.label.set_fontsize(5)
-                lower_ax.tick_params(axis="y", which="major", labelsize=8)
                 lower_ax.set_title(
-                    # f"Euclidean distance between average S of {group1} and {group2}",
-                    f"Average of pairwise Euclidean distance between S of {group1} and {group2}",
-                    fontsize=9,
+                    f"Euclidean distance between average z-scores of S over {group1} and {group2}",
+                    fontsize=7,
                 )
-                lower_ax.set_ylim(0, 1)
+                # lower_ax.set_ylim(0, 2)
 
-                upper_ax.xaxis.label.set_fontsize(5)
-                upper_ax.tick_params(axis="y", which="major", labelsize=8)
-                upper_ax.set_title("Zscores ENT3C", fontsize=9)
-
-                lower_ax.grid(True)
-                upper_ax.grid(True)
+                # upper_ax.set_ylabel(r"$z-score$ of centered $S$", fontsize=5)
+                upper_ax.set_title(r"raw $S$", fontsize=8)
+                mid_ax.set_title(r"$z$-scores $S$", fontsize=8)
 
                 handles, labels = upper_ax.get_legend_handles_labels()
                 labels, handles = zip(
-                    *sorted(zip(labels, handles), key=lambda t: t[0].lower())
-                )
-                # legend does not fit
-                fig.subplots_adjust(
-                    left=0.1, right=0.85, top=0.8, bottom=0.2, hspace=0.8
+                    *sorted(zip(labels, handles), key=lambda t: utils.natural_key(t[0]))
                 )
 
                 leg = upper_ax.legend(
@@ -175,8 +201,9 @@ def locate_largest_euclidean_diff(config_file, group1, group2):
                     loc="upper right",
                     bbox_to_anchor=(1, 0.9),
                     borderaxespad=0.0,
-                    handlelength=1,  # legend line thickness
-                    fontsize="x-small",  # smaller legend text
+                    handlelength=1,
+                    handleheight=1,
+                    fontsize="x-small",
                     frameon=False,
                     bbox_transform=fig.transFigure,
                 )
@@ -184,11 +211,26 @@ def locate_largest_euclidean_diff(config_file, group1, group2):
                 for line in leg.get_lines():
                     line.set_linewidth(1)
 
+                # legend does not fit
+                fig.subplots_adjust(
+                    left=0.1, right=0.85, top=0.9, bottom=0.3, hspace=0.35
+                )
+
                 pdf.savefig(fig)
                 plt.close(fig)
 
-                DIFFERENCES = DIFFERENCES.sort_values(
-                    "mean_EuclideanD", ascending=False
-                ).reset_index(drop=True)
+                EUCLIDEAN = pd.concat([EUCLIDEAN, DIFFERENCES])
 
-    return DIFFERENCES
+        EUCLIDEAN = EUCLIDEAN.sort_values(
+            "meanS_Euclidean", ascending=False
+        ).reset_index(drop=True)
+
+        print(EUCLIDEAN)
+
+    EUCLIDEAN.to_csv(
+        eucl_out_FN,
+        index=False,
+        sep="\t",
+    )
+
+    return EUCLIDEAN

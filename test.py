@@ -13,21 +13,19 @@ import ENT3C
 
 print(ENT3C.__file__)
 
-# ENT3C_OUT = ENT3C.run_get_entropy("config/test.sc.40kb.json")
-# Similarity = ENT3C.run_get_similarity("config/test.sc.40kb.json")
+C_FN = "config/config.json"
+group1 = "HFFc6"
+group2 = "G401"
 
-# ENT3C_OUT, Similarity = ENT3C.run_all("config/.json")
+# ENT3C_OUT = ENT3C.run_get_entropy(C_FN)
+Similarity = ENT3C.run_get_similarity(C_FN)
+# ENT3C_OUT, Similarity = ENT3C.run_all(C_FN)
 
 
-group1 = "ODC_AD"
-group2 = "ODC_CTL"
-
-Similarity = ENT3C.run_get_similarity("./config/config.10kb.json")
-DIFFERENCE = ENT3C.run_locate_largest_euclidean_diff(
-    "./config/AD.CTL.config.10kb.json", group1, group2
+EUCLIDEAN = ENT3C.run_compare_groups(
+    C_FN,
+    group1,
+    group2,
 )
 
-Similarity = ENT3C.run_get_similarity("./config/config.5kb.json")
-DIFFERENCE = ENT3C.run_locate_largest_euclidean_diff(
-    "./config/AD.CTL.config.5kb.json", group1, group2
-)
+# print(EUCLIDEAN)

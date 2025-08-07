@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ENT3C"
-version = "2.1.2" # dont forget to change in __init__!!
+version = "2.2.0" # dont forget to change in __init__!!
 description = "Compute similarity between genomic contact matrices with \"Entropy 3C\" "
 requires-python = ">=3.11"
 license = "GPL-3.0-or-later"
@@ -19,7 +19,6 @@ dependencies = [
   "matplotlib>=3.6.0",
   "numpy>=2.0.0",
   "pandas>=2.3.0"
-  "dtaidistance"
     ]
 
 # one entry, subcommands in argparse!

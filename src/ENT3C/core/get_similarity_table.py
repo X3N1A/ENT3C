@@ -27,10 +27,6 @@ def get_similarity(config_file):
     ENT3C_OUT = pd.read_csv(f"{entropy_out_FN}", sep="\t", dtype={"ChrNr": str})
 
     SAMPLES = set(ENT3C_OUT["Name"])
-    if any("BR" in element for element in SAMPLES):
-        Biological_replicates = True
-    else:
-        Biological_replicates = False
 
     Similarity = pd.DataFrame(
         {
@@ -47,11 +43,11 @@ def get_similarity(config_file):
 
     # print(all_samples)
     # print(cell_types)
-    meta = pd.DataFrame({"Sample": all_samples, "cell_type": cell_types})
-    # print(meta)
-
+    if BR:
+        meta = pd.DataFrame({"Sample": all_samples, "cell_type": cell_types})
+    else:
+        meta = pd.DataFrame({"Sample": all_samples, "cell_type": all_samples})
     color_schemes = utils.get_color_schemes(meta)
-    # print(color_schemes)
 
     cols = int(np.ceil(np.sqrt(len(CHROMOSOMES))))
     rows = int(np.ceil(len(CHROMOSOMES) / cols))
@@ -59,27 +55,20 @@ def get_similarity(config_file):
         comparisons = list(itertools.combinations(SAMPLES, 2))
         for Resolution in RESOLUTIONS:
             fig, axs = plt.subplots(
-                nrows=rows, ncols=cols, figsize=(cols * 8, rows * 4)
+                nrows=rows,
+                ncols=cols,
+                figsize=(cols * 8, rows * 4),
             )  # Width, height in inches
             fig.suptitle(f"{Resolution / 1e3}kb")
 
-            figZ, axsZ = plt.subplots(
-                nrows=rows, ncols=cols, figsize=(cols * 8, rows * 4)
-            )
-            fig.suptitle(f"Zscores {Resolution / 1e3}kb")
-
             if isinstance(axs, np.ndarray):
                 axs = axs.flatten()
-                axsZ = axsZ.flatten()
             else:
                 axs = np.array([axs])
-                axsZ = np.array([axsZ])
 
             for i, ChrNr in enumerate(CHROMOSOMES):
                 ax = axs[i]
-                axZ = axsZ[i]
                 ax.set_title(f"Chr{ChrNr}")
-                axZ.set_title(f"Chr{ChrNr}")
 
                 plotted = set()
                 # print(comparisons)
@@ -91,8 +80,8 @@ def get_similarity(config_file):
                         & (ENT3C_OUT["Resolution"] == Resolution)
                     ]["S"]
                     S1 = np.array(S1, dtype=np.float64)
-                    Z1 = S1.copy()
-                    Z1 = (Z1 - Z1.mean()) / Z1.std()
+                    # Z1 = S1.copy()
+                    # Z1 = (Z1 - Z1.mean()) / Z1.std()
                     # print(np.mean(S1))
                     # print(np.mean(Z1))
 
@@ -102,8 +91,8 @@ def get_similarity(config_file):
                         & (ENT3C_OUT["Resolution"] == Resolution)
                     ]["S"]
                     S2 = np.array(S2, dtype=np.float64)
-                    Z2 = S2.copy()
-                    Z2 = (Z2 - Z2.mean()) / Z2.std()
+                    # Z2 = S2.copy()
+                    # Z2 = (Z2 - Z2.mean()) / Z2.std()
 
                     non_nan_idx = ~np.isnan(S1) & ~np.isnan(S2)
                     Q = np.corrcoef(S1[non_nan_idx], S2[non_nan_idx])[0, 1]
@@ -119,22 +108,18 @@ def get_similarity(config_file):
                     )
 
                     Similarity = pd.concat([Similarity, new_row], ignore_index=True)
-
                     if comp[0] not in plotted:
                         clr = utils.get_color_by_replicate(comp[0], color_schemes)
-                        # print(clr)
                         ax.plot(S1, label=f"{comp[0]}", color=clr, linewidth=0.7)
-                        axZ.plot(Z1, label=f"{comp[0]}", color=clr, linewidth=0.7)
                         plotted.add(comp[0])
                         i += 1
                     if comp[1] not in plotted:
                         clr = utils.get_color_by_replicate(comp[1], color_schemes)
                         ax.plot(S2, label=f"{comp[1]}", color=clr, linewidth=0.7)
-                        axZ.plot(Z2, label=f"{comp[1]}", color=clr, linewidth=0.7)
                         plotted.add(comp[1])
                         i += 1
 
-                if Biological_replicates:
+                if BR:
                     # print(Similarity)
                     Q_BR = Similarity[
                         (Similarity["ChrNr"] == ChrNr)
@@ -163,7 +148,6 @@ def get_similarity(config_file):
                         + rf"$\overline{{Q}}_{{NR}} = {Q_NR:.2f}$"
                     )
                     ax.set_title(title_str, fontsize=25)
-                    axZ.set_title(title_str, fontsize=25)
                 else:
                     Q_NR = Similarity[
                         (Similarity["ChrNr"] == ChrNr)
@@ -175,61 +159,40 @@ def get_similarity(config_file):
                     ]["Q"].mean()
                     title_str = rf"Chr{ChrNr}" + rf"$\overline{{Q}} = {Q_NR:.2f}$"
                     ax.set_title(title_str, fontsize=25)
-                    axZ.set_title(title_str, fontsize=25)
 
                 ax.tick_params(labelsize=15)
-                axZ.tick_params(labelsize=15)
                 ax.title.set_fontsize(15)
-                axZ.title.set_fontsize(15)
                 ax.xaxis.label.set_fontsize(15)
-                axZ.xaxis.label.set_fontsize(15)
                 ax.yaxis.label.set_fontsize(15)
-                axZ.yaxis.label.set_fontsize(15)
                 ax.autoscale(enable=True, axis="both", tight=True)
-                axZ.autoscale(enable=True, axis="both", tight=True)
 
-            if ChrNr == CHROMOSOMES[-1]:
-                plotted = [p.replace("_", " ") for p in plotted]
-                handles, labels = ax.get_legend_handles_labels()
+            plotted = [p.replace("_", " ") for p in plotted]
+            handles, labels = axs[0].get_legend_handles_labels()
+            labels, handles = zip(
+                *sorted(zip(labels, handles), key=lambda t: utils.natural_key(t[0]))
+            )
 
-                labels, handles = zip(
-                    *sorted(zip(labels, handles), key=lambda t: t[0].lower())
-                )
-                # print()
-                ax.legend(
-                    handles,
-                    labels,
-                    loc="upper right",
-                    bbox_to_anchor=(1.2, 1),
-                    borderaxespad=0.0,
-                )
-                axZ.legend(
-                    handles,
-                    labels,
-                    loc="upper right",
-                    bbox_to_anchor=(1.2, 1),
-                    borderaxespad=0.0,
-                )
-                print(f"{ChrNr}")
+            fig.legend(
+                handles,
+                labels,
+                loc="upper right",
+                # bbox_to_anchor=(1.05, 1),
+                bbox_transform=plt.gcf().transFigure,
+                handlelength=1,
+                handleheight=1,
+                fontsize=16,
+                frameon=False,
+            )
 
             for i in range(len(CHROMOSOMES), len(axs)):
                 axs[i].axis("off")
-                axsZ[i].axis("off")
 
-            fig.tight_layout()
-            figZ.savefig(
-                f"{OUT_DIR}/{OUT_PREFIX}_{Resolution / 1e3}kb_ENT3C_signals.pdf",
-                format="pdf",
-                bbox_inches="tight",
-            )  # bbox_inches trims whitespace
-
-            figZ.tight_layout()
-            figZ.savefig(
-                f"{OUT_DIR}/{OUT_PREFIX}_{Resolution / 1e3}kb_ENT3C_Zscores.pdf",
+            fig.subplots_adjust(right=0.9, hspace=0.35)
+            fig.savefig(
+                f"{OUT_DIR}/{OUT_PREFIX}_{int(Resolution / 1e3)}kb_ENT3C_signals.pdf",
                 format="pdf",
                 bbox_inches="tight",
             )
-
     print("Output similarity table:")
     print(Similarity)
 
