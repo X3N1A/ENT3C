@@ -73,6 +73,7 @@ def vN_entropy(M, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, BIN_TABLE):
                 P[SDs, :] = 0
                 P[:, SDs] = 0
                 P[np.isnan(P)] = 0  #
+                P = np.abs(P)
                 np.fill_diagonal(P, 1.0)
                 rho = P / P.shape[0]
                 # Compute the eigenvalues of a complex Hermitian or real symmetric matrix.

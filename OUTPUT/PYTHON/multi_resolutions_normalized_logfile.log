@@ -1,0 +1,66 @@
+2025-08-11 15:00:38,830 - INFO - Inputs: G401, A549, LNCap, HFFc6, H1-hESC
+2025-08-11 15:00:38,831 - INFO - Apply cooler weights? yes. Name in cooler:w, e, i, g, h, t
+2025-08-11 15:00:38,831 - INFO - CHRSPLIT: 10
+2025-08-11 15:00:38,831 - INFO - Sub matrix size PHI: nan
+2025-08-11 15:00:38,831 - INFO - Window shift phi: 1
+2025-08-11 15:00:38,831 - INFO - Chromosomes: ['20', '21', '22']
+2025-08-11 15:00:38,831 - INFO - Resolutions: [40000, 100000]
+2025-08-11 15:00:38,831 - INFO - Namespace(command='run_all', config='config/config.multiResolution.pooledBRs.json')
+2025-08-11 15:00:38,831 - INFO - Inputs: G401, A549, LNCap, HFFc6, H1-hESC
+2025-08-11 15:00:38,831 - INFO - Apply cooler weights? yes. Name in cooler:w, e, i, g, h, t
+2025-08-11 15:00:38,831 - INFO - CHRSPLIT: 10
+2025-08-11 15:00:38,831 - INFO - Sub matrix size PHI: nan
+2025-08-11 15:00:38,831 - INFO - Window shift phi: 1
+2025-08-11 15:00:38,831 - INFO - Chromosomes: ['20', '21', '22']
+2025-08-11 15:00:38,831 - INFO - Resolutions: [40000, 100000]
+2025-08-11 15:00:38,835 - INFO - Inputs: G401, A549, LNCap, HFFc6, H1-hESC
+2025-08-11 15:00:38,835 - INFO - Apply cooler weights? yes. Name in cooler:w, e, i, g, h, t
+2025-08-11 15:00:38,835 - INFO - CHRSPLIT: 10
+2025-08-11 15:00:38,835 - INFO - Sub matrix size PHI: nan
+2025-08-11 15:00:38,835 - INFO - Window shift phi: 1
+2025-08-11 15:00:38,835 - INFO - Chromosomes: ['20', '21', '22']
+2025-08-11 15:00:38,835 - INFO - Resolutions: [40000, 100000]
+2025-08-11 15:00:41,519 - INFO - SUB_M_SIZE 146 ,WN 1318, phi 1
+2025-08-11 15:00:41,529 - INFO - Chr20 40.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR079VIJ_G401/PreProcessed/ENCSR079VIJ_G401combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:43,553 - INFO - Chr20 40.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR444WCZ_A549/PreProcessed/ENCSR444WCZ_A549combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:45,559 - INFO - Chr20 40.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR346DCU_LNCaP/PreProcessed/ENCSR346DCU_LNCaPcombined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:47,614 - INFO - Chr20 40.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/4DNESWST3UBH_HFFc6/PreProcessed/4DNESWST3UBH_HFFc6combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:49,477 - INFO - Chr20 40.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/4DNFI9GMP2J8_H1-hESC/PreProcessed/4DNFI9GMP2J8_H1-hESCcombined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:50,178 - INFO - SUB_M_SIZE 80 ,WN 719, phi 1
+2025-08-11 15:00:50,183 - INFO - Chr21 40.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR079VIJ_G401/PreProcessed/ENCSR079VIJ_G401combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:50,641 - INFO - Chr21 40.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR444WCZ_A549/PreProcessed/ENCSR444WCZ_A549combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:51,108 - INFO - Chr21 40.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR346DCU_LNCaP/PreProcessed/ENCSR346DCU_LNCaPcombined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:51,590 - INFO - Chr21 40.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/4DNESWST3UBH_HFFc6/PreProcessed/4DNESWST3UBH_HFFc6combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:52,079 - INFO - Chr21 40.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/4DNFI9GMP2J8_H1-hESC/PreProcessed/4DNFI9GMP2J8_H1-hESCcombined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:52,710 - INFO - SUB_M_SIZE 78 ,WN 707, phi 1
+2025-08-11 15:00:52,715 - INFO - Chr22 40.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR079VIJ_G401/PreProcessed/ENCSR079VIJ_G401combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:53,126 - INFO - Chr22 40.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR444WCZ_A549/PreProcessed/ENCSR444WCZ_A549combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:53,554 - INFO - Chr22 40.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR346DCU_LNCaP/PreProcessed/ENCSR346DCU_LNCaPcombined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:53,986 - INFO - Chr22 40.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/4DNESWST3UBH_HFFc6/PreProcessed/4DNESWST3UBH_HFFc6combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:54,446 - INFO - Chr22 40.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/4DNFI9GMP2J8_H1-hESC/PreProcessed/4DNFI9GMP2J8_H1-hESCcombined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:54,898 - INFO - SUB_M_SIZE 57 ,WN 518, phi 1
+2025-08-11 15:00:54,902 - INFO - Chr20 100.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR079VIJ_G401/PreProcessed/ENCSR079VIJ_G401combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:55,138 - INFO - Chr20 100.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR444WCZ_A549/PreProcessed/ENCSR444WCZ_A549combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:55,377 - INFO - Chr20 100.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR346DCU_LNCaP/PreProcessed/ENCSR346DCU_LNCaPcombined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:55,644 - INFO - Chr20 100.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/4DNESWST3UBH_HFFc6/PreProcessed/4DNESWST3UBH_HFFc6combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:55,903 - INFO - Chr20 100.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/4DNFI9GMP2J8_H1-hESC/PreProcessed/4DNFI9GMP2J8_H1-hESCcombined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:56,111 - INFO - SUB_M_SIZE 32 ,WN 289, phi 1
+2025-08-11 15:00:56,113 - INFO - Chr21 100.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR079VIJ_G401/PreProcessed/ENCSR079VIJ_G401combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:56,212 - INFO - Chr21 100.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR444WCZ_A549/PreProcessed/ENCSR444WCZ_A549combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:56,313 - INFO - Chr21 100.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR346DCU_LNCaP/PreProcessed/ENCSR346DCU_LNCaPcombined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:56,426 - INFO - Chr21 100.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/4DNESWST3UBH_HFFc6/PreProcessed/4DNESWST3UBH_HFFc6combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:56,536 - INFO - Chr21 100.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/4DNFI9GMP2J8_H1-hESC/PreProcessed/4DNFI9GMP2J8_H1-hESCcombined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:56,741 - INFO - SUB_M_SIZE 31 ,WN 280, phi 1
+2025-08-11 15:00:56,743 - INFO - Chr22 100.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR079VIJ_G401/PreProcessed/ENCSR079VIJ_G401combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:56,843 - INFO - Chr22 100.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR444WCZ_A549/PreProcessed/ENCSR444WCZ_A549combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:56,943 - INFO - Chr22 100.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/ENCSR346DCU_LNCaP/PreProcessed/ENCSR346DCU_LNCaPcombined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:57,055 - INFO - Chr22 100.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/4DNESWST3UBH_HFFc6/PreProcessed/4DNESWST3UBH_HFFc6combined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:57,164 - INFO - Chr22 100.0kb for /HDD3/DocumentsHDD3/07_2022-/Mapping/4DNFI9GMP2J8_H1-hESC/PreProcessed/4DNFI9GMP2J8_H1-hESCcombined.mcool written to OUTPUT/PYTHON/multi_resolutions_normalized_ENT3C_OUT.csv
+2025-08-11 15:00:57,172 - INFO - Inputs: G401, A549, LNCap, HFFc6, H1-hESC
+2025-08-11 15:00:57,172 - INFO - Apply cooler weights? yes. Name in cooler:w, e, i, g, h, t
+2025-08-11 15:00:57,172 - INFO - CHRSPLIT: 10
+2025-08-11 15:00:57,172 - INFO - Sub matrix size PHI: nan
+2025-08-11 15:00:57,173 - INFO - Window shift phi: 1
+2025-08-11 15:00:57,173 - INFO - Chromosomes: ['20', '21', '22']
+2025-08-11 15:00:57,173 - INFO - Resolutions: [40000, 100000]
+2025-08-11 15:00:58,068 - INFO - Namespace(command='run_all', config='config/config.multiResolution.pooledBRs.json')

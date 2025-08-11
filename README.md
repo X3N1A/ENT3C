@@ -239,7 +239,7 @@ export PATH="$PATH:/path/to/exe/"
 
 
 3) ```<OUT_DIR>/<OUTPUT_PREFIX>_Eucl_<group1>vs<group2>.csv``` $\dots$ Euclidean distance between average z-scores of S over ```<group1>``` and ```<group2>```:
-	(here group1=HFFc6, group2=G401)
+	(here group1=HFFc6, group2=G401). Arranged in descending order of $meanS_Euclidean$.
 
 	```
 	Resolution	ChrNr	START	END	meanS_Euclidean

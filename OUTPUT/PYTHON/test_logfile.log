@@ -1,7 +1,0 @@
-2025-08-04 14:29:42,809 - INFO - Inputs: G401_BR1, G401_BR2, H1-hESC_BR1, H1-hESC_BR2
-2025-08-04 14:29:42,809 - INFO - Apply cooler weights? no.
-2025-08-04 14:29:42,809 - INFO - CHRSPLIT: 10
-2025-08-04 14:29:42,810 - INFO - Sub matrix size PHI: nan
-2025-08-04 14:29:42,810 - INFO - Window shift phi: 1
-2025-08-04 14:29:42,810 - INFO - Chromosomes: ['14']
-2025-08-04 14:29:42,810 - INFO - Resolutions: [40000]

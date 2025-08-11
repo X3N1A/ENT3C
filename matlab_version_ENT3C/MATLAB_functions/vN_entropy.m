@@ -54,7 +54,7 @@ for rr=1:WN
         P(SDs,:)=0;
         P(:,SDs)=0;
         P(isnan(P))=0;% can still happen if two columns identical...(also float int difference) m=[1,2,3;11,2,33;111,2,333]
-
+	    P = abs(P);
 
         rho=P./size(P,1);
 

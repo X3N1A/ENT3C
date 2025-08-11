@@ -30,7 +30,7 @@ https://github.com/X3N1A/ENT3C
 
     	Commands:
             get_entropy        Generates entropy output file <entropy_out_FN> .
-            get_sim            Generates similarity output file <similarity_out_FN> from <entropy_out_FN>.
+            get_similarity           Generates similarity output file <similarity_out_FN> from <entropy_out_FN>.
             run_all            Generates <entropy_out_FN> and <similarity_out_FN>.
             compare_groups     Compare signal groups (requires --group1 and --group2 options)
 

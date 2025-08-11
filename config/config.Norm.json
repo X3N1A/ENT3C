@@ -1,0 +1,38 @@
+{
+  "PHI_MAX": 1e3,
+  "CHRSPLIT": null,
+  "SUB_M_SIZE_FIX": 500,
+  "ChrNr": "2,4,6,8,10,12,14,16,18,20,22,X",
+  "Resolution": "40000",
+  "phi": 1,
+  "NormM": 1,
+  "WEIGHTS_NAME": "weight",
+  "DATA_PATH": "./DATA",
+  "FILES": [
+	"ENCSR079VIJ.BioRep1.40kb.cool",
+	"G401_BR1",
+	"ENCSR079VIJ.BioRep2.40kb.cool",
+	"G401_BR2",
+	"ENCSR444WCZ.BioRep1.40kb.cool",
+	"A549_BR1",
+	"ENCSR444WCZ.BioRep2.40kb.cool",
+	"A549_BR2",
+	"ENCSR346DCU.BioRep1.40kb.cool",
+	"LNCap_BR1",
+	"ENCSR346DCU.BioRep2.40kb.cool",
+	"LNCap_BR2",
+	"4DNESWST3UBH.BioRep1.40kb.cool",
+	"HFFc6_BR1",
+	"4DNESWST3UBH.BioRep2.40kb.cool",
+	"HFFc6_BR2",
+	"4DNESWST3UBH.BioRep3.40kb.cool",
+	"HFFc6_BR3",
+	"4DNFI9GMP2J8.BioRep1.40kb.cool",
+	"H1-hESC_BR1",
+	"4DNFI9GMP2J8.BioRep2.40kb.cool",
+	"H1-hESC_BR2"
+	],
+  "OUT_DIR": "./OUTPUT",
+  "OUT_PREFIX": "EvenChromosomes_Weights"
+}
+
