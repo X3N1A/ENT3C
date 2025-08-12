@@ -13,3 +13,4 @@ dist/
 .pypirc
 recipe*
 config/test.sc*
+*log

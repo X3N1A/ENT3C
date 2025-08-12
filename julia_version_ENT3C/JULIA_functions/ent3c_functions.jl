@@ -210,7 +210,6 @@ function vN_entropy(M::Matrix{Float64}, SUB_M_SIZE_FIX, CHRSPLIT, PHI_MAX, phi, 
             P[SDs[1, :], :] .= 0
             P[:,SDs[1,:]] .= 0
             replace!(P, NaN => 0)
-            P = abs.(P)
             rho = P ./ size(P, 1)
 
             #lam = eigen(rho);lam = lam.values

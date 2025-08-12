@@ -26,7 +26,7 @@ def get_similarity(config_file):
 
     ENT3C_OUT = pd.read_csv(f"{entropy_out_FN}", sep="\t", dtype={"ChrNr": str})
 
-    SAMPLES = set(ENT3C_OUT["Name"])
+    SAMPLES = ENT3C_OUT["Name"].unique()
 
     Similarity = pd.DataFrame(
         {

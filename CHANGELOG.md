@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [2.2.2] - 2025-08-12
+### Changed 
+- reverted last fix [2.2.1]. Pearson matrix may contain negative entries! 
+
+- in get_similarity_table
+  ```SAMPLES = ENT3C_OUT["Name"].unique()``` to preserve order of similarity table
+
 ## [2.2.1] - 2025-08-11
 ### Changed 
 - fixed bug in vN_entropy

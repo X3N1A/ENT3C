@@ -173,8 +173,6 @@ export PATH="$PATH:/path/to/exe/"
 	11) ```"PHI_MAX": <integer>``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
 
 
-
-
 ### Julia version
 
 * initial call for global package installation (see "initial julia set-up"): 
@@ -203,27 +201,13 @@ export PATH="$PATH:/path/to/exe/"
 # Output files:
 
 1) ```<OUT_DIR>/<OUTPUT_PREFIX>_ENT3C_similarity.csv``` $\dots$ will contain all combinations of comparisons. The second two columns contain the short names specified in ```FILES``` and the third column ```Q``` the corresponding similarity score.  
-	```
-	Resolution	ChrNr	Sample1	Sample2	Q
-	40000	2	HFFc6_BR3	A549_BR2	0.6132789056404898
-	40000	2	HFFc6_BR3	LNCap_BR2	0.3126805134567409
-	40000	2	HFFc6_BR3	LNCap_BR1	0.4221187669214683
-	40000	2	HFFc6_BR3	HFFc6_BR2	0.9632461160758761
-	.		.	.		.	.	.		.		.		.		.
-	.		.	.		.	.	.		.		.		.		.
-	.		.	.		.	.	.		.		.		.		.
+	```	
 	```
 
 2) ```<OUT_DIR>/<OUTPUT_PREFIX>_ENT3C_OUT.csv``` $\dots$ ENT3C output table. 
 
 	```
-	Name	ChrNr	Resolution	n	PHI	phi	binNrStart	binNrEND	START	END	S
-	G401_BR1	2	40000	500	918	6	0	499	0	20000000	3.7896426915562462
-	G401_BR1	2	40000	500	918	6	6	505	240000	20240000	3.789044181663418
-	G401_BR1	2	40000	500	918	6	12	511	480000	20480000	3.7918253959272032
-	.		.	.		.	.	.		.		.		.		.
-	.		.	.		.	.	.		.		.		.		.
-	.		.	.		.	.	.		.		.		.		.
+
 	```
 
 	Each row corresponds to an evaluated submatrix with fields ```Name``` (the short name specified in ```FILES```), ```ChrNr```, ```Resolution```, the sub-matrix dimension ```sub_m_dim```, ```PHI=1+floor((N-SUB_M_SIZE)./phi)```, ```binNrStart``` and ```binNrEnd``` correspond to the start and end bin of the submatrix, ```START``` and ```END``` are the corresponding genomic coordinates and ```S``` is the computed von Neumann entropy.
@@ -242,10 +226,7 @@ export PATH="$PATH:/path/to/exe/"
 	(here group1=HFFc6, group2=G401). Arranged in descending order of $meanS_Euclidean$.
 
 	```
-	Resolution	ChrNr	START	END	meanS_Euclidean
-	40000	6	62360000	82360000	3.3625023926723685
-	40000	6	62120000	82120000	3.3546076641065095
-	40000	6	61880000	81880000	3.3441925121710026
+
 	```
 
 	- Example of first page of output generated for ```ENT3C compare_groups --config=config/myconfig.json --group1 = HFFc6 group2 = "G401"```

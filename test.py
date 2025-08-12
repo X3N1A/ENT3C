@@ -13,12 +13,12 @@ import ENT3C
 
 print(ENT3C.__file__)
 
-C_FN = "config/config.multiResolution.pooledBRs.json"
+C_FN = "config/config.json"
 group1 = "HFFc6"
 group2 = "G401"
 
-ENT3C_OUT = ENT3C.run_get_entropy(C_FN)
-Similarity = ENT3C.run_get_similarity(C_FN)
+# ENT3C_OUT = ENT3C.run_get_entropy(C_FN)
+# Similarity = ENT3C.run_get_similarity(C_FN)
 ENT3C_OUT, Similarity = ENT3C.run_all(C_FN)
 
 
