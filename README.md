@@ -109,7 +109,7 @@ export PATH="$PATH:/path/to/exe/"
             ENT3C compare_groups --config=configs/myconfig.json --group1=H1-hESC --group2=K562
 	```
 
-* Careful to use linux executable call: ```ENT3C_exe <command> --config=<path/to/config.json> [options]```
+* For linux executable use: ```ENT3C_exe <command> --config=<path/to/config.json> [options]```
 
 * alternatively run ENT3C in python as:
 
@@ -140,7 +140,7 @@ export PATH="$PATH:/path/to/exe/"
 
 			where ```N``` is the size of the input contact matrix, ```phi``` is the window shift, ```PHI``` is the number of evaluated submatrices (consequently the 	number of data points in $S$).
 
-		* ```"CHRSPLIT": <integer>``` $\dots$ number of submatrices into which the contact matrix is partitioned into. If specified, then ``"SUB_M_SIZE_FIX": null`` otherwise ``"CHRSPLIT": null``. 
+		* ```"CHRSPLIT": <integer>``` $\dots$ number of times into which a $N \times N$ contact matrix is partitioned into which defining ```SUB_M_SIZE_FIX = floor(N/CHRSPLIT+0.5)```. If specified, then ``"SUB_M_SIZE_FIX": null`` otherwise ``"CHRSPLIT": null``. 
 
 	2) ```"DATA_PATH": </path/to/data> ``` $\dots$ input data path. 
 
