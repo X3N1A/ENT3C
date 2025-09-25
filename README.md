@@ -125,6 +125,31 @@ export PATH="$PATH:/path/to/exe/"
 	EUCLIDEAN = ENT3C.run_compare_groups("config/myconfig.json",group1,group2)
 
 	```
+### Julia version
+
+* initial call for global package installation (see "initial julia set-up"): 
+	```
+	julia ENT3C.jl --config-file=config/config.test.json --install-deps=yes
+	```
+* after initialization: 
+	```
+	julia ENT3C.jl --config-file=config/config.json
+	```
+
+* alternativly load the predefined enviornments for julia 1.10.4 or 1.11.2  
+	```
+	julia ENT3C.jl --config-file=config/config.json --resolve-env=yes --julia-version=<v.v.v>
+	```
+
+&#128161; note the matlab and julia implementations will always generate both the entropy and similarity dataframes
+
+### Matlab version:
+
+```matlab -nodesktop -nosplash -nodisplay -r "ENT3C('config/config.json'); exit"```
+
+&#128161; note the matlab and julia implementations will always generate the entropy and similarity dataframes
+
+# Input Parameters 
 
 * all ENT3C parameters are defined in .json files ```config/config.json```. Examples can be found in ```config``` directory.
 
@@ -172,33 +197,7 @@ export PATH="$PATH:/path/to/exe/"
 
 	11) ```"PHI_MAX": <integer>``` $\dots$ number of submatrices; i.e. number of data points in entropy signal $S$. If set, $\varphi$ is increased until $\Phi \approx \Phi\_{\max}$.
 
-
-### Julia version
-
-* initial call for global package installation (see "initial julia set-up"): 
-	```
-	julia ENT3C.jl --config-file=config/config.test.json --install-deps=yes
-	```
-* after initialization: 
-	```
-	julia ENT3C.jl --config-file=config/config.json
-	```
-
-* alternativly load the predefined enviornments for julia 1.10.4 or 1.11.2  
-	```
-	julia ENT3C.jl --config-file=config/config.json --resolve-env=yes --julia-version=<v.v.v>
-	```
-
-&#128161; note the matlab and julia implementations will always generate both the entropy and similarity dataframes
-
-### Matlab version:
-
-```matlab -nodesktop -nosplash -nodisplay -r "ENT3C('config/config.json'); exit"```
-
-&#128161; note the matlab and julia implementations will always generate the entropy and similarity dataframes
-
-
-# Output files:
+# Output Files
 
 1) ```<OUT_DIR>/<OUTPUT_PREFIX>_ENT3C_similarity.csv``` $\dots$ will contain all combinations of comparisons. The second two columns contain the short names specified in ```FILES``` and the third column ```Q``` the corresponding similarity score. ```OUTPUT/PYTHON/EvenChromosomes_NoWeights_ENT3C_similarity.csv```:
 	```	
