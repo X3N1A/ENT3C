@@ -5,7 +5,7 @@
 # 
 
 ENT3C is a method for qunatifying the similarity of micro-C/Hi-C derived chromosomal contact matrices. It is based on the von Neumann entropy<sup>1</sup> and recent work on entropy quantification of Pearson correlation matrices<sup>2</sup>.
-For a contact matrix, ENT3C records the change in local pattern *complexity* of smaller Pearson-transformed submatrices along a matrix diagonal to generate a characteristic signal. Similarity is defined as the Pearson correlation between the respective entropy signals of two contact matrices.
+For a contact matrix, ENT3C records the change in local *pattern complexity* of smaller Pearson-transformed submatrices along a matrix diagonal to generate a characteristic signal. Similarity between two contact matrices is quantified as the Pearson correlation between their respective entropy signals.
 
 https://doi.org/10.1093/nargab/lqae076
 
